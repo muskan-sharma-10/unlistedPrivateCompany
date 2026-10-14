@@ -28,7 +28,7 @@ export const EnquiryModal: React.FC<EnquiryModalProps> = ({ isOpen, onClose }) =
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs animate-in fade-in">
+    <div className="fixed inset-0 z-[110] flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs animate-in fade-in">
       <div className="bg-white w-full max-w-lg rounded-3xl shadow-2xl border border-[#dce8e5] overflow-hidden">
         {/* Modal Header */}
         <div className="bg-[#082029] p-6 text-white flex items-center justify-between">

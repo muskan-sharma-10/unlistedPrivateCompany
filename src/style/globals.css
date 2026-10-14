@@ -97,3 +97,23 @@ body {
 .pulse-dot {
   animation: pulseDot 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
+
+/* Compliance Ticker Marquee Animation */
+@keyframes complianceMarquee {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-compliance-marquee {
+  display: flex;
+  width: max-content;
+  animation: complianceMarquee 28s linear infinite;
+}
+
+.animate-compliance-marquee:hover {
+  animation-play-state: paused;
+}

@@ -34,7 +34,7 @@ export const StockDetailModal: React.FC<StockDetailModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs animate-in fade-in">
+    <div className="fixed inset-0 z-[110] flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs animate-in fade-in">
       <div className="bg-white w-full max-w-2xl rounded-3xl shadow-2xl border border-[#dce8e5] overflow-hidden max-h-[90vh] flex flex-col">
         {/* Header */}
         <div className="bg-[#082029] p-6 text-white flex items-center justify-between shrink-0">
