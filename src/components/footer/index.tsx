@@ -1,10 +1,16 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Shield, MapPin, Mail, Phone, ExternalLink, ArrowRight } from 'lucide-react';
+import { getPortalWebsiteSettings, PortalSettings } from '@/lib/supabase/queries';
 
 export const Footer: React.FC = () => {
+  const [settings, setSettings] = useState<PortalSettings | null>(null);
+
+  useEffect(() => {
+    getPortalWebsiteSettings().then(setSettings).catch(() => {});
+  }, []);
   return (
     <footer className="bg-[#05171d] text-slate-300 pt-16 sm:pt-24 pb-12 border-t border-[#0d2e38]">
       <div className="max-w-[1520px] mx-auto px-6 sm:px-10 lg:px-14 xl:px-16">
@@ -60,7 +66,7 @@ export const Footer: React.FC = () => {
                   Registered Office
                 </span>
                 <span>
-                  8th Floor, Majestic Signia, Plot No. A-27, Block A, Industrial Area, Sector 62, Noida, Uttar Pradesh 201301
+                  {settings?.officeAddress || '8th Floor, Majestic Signia, Plot No. A-27, Block A, Industrial Area, Sector 62, Noida, Uttar Pradesh 201301'}
                 </span>
               </div>
             </div>

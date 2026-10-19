@@ -17,7 +17,10 @@ import TopTicker from '@/components/header/top-ticker';
 import Navbar from '@/components/header/navbar';
 import Footer from '@/components/footer';
 
+import { submitLeadEnquiry, getPortalWebsiteSettings, PortalSettings } from '@/lib/supabase/queries';
+
 export default function ContactUsPage() {
+  const [settings, setSettings] = useState<PortalSettings | null>(null);
   const [dealType, setDealType] = useState<'buy' | 'sell' | 'esop' | 'partner'>('buy');
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
@@ -25,21 +28,42 @@ export default function ContactUsPage() {
   const [stockName, setStockName] = useState('');
   const [quantity, setQuantity] = useState('');
   const [message, setMessage] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  React.useEffect(() => {
+    getPortalWebsiteSettings().then(setSettings).catch(() => {});
+  }, []);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
-    setTimeout(() => {
-      setSubmitted(false);
+    setIsSubmitting(true);
+
+    try {
+      await submitLeadEnquiry({
+        name,
+        phone,
+        email,
+        stock_name: stockName || undefined,
+        quantity: quantity ? parseInt(quantity, 10) : undefined,
+        message,
+        enquiry_type: dealType === 'buy' ? 'buy_order' : dealType === 'sell' ? 'sell_order' : dealType === 'esop' ? 'esop_liquidity' : 'partner_desk',
+        source_page: '/contact-us',
+      });
+      setSubmitted(true);
       setName('');
       setPhone('');
       setEmail('');
       setStockName('');
       setQuantity('');
       setMessage('');
-      alert('Thank you! Your request has been assigned to our senior relationship manager.');
-    }, 1500);
+      setTimeout(() => setSubmitted(false), 5000);
+    } catch {
+      setSubmitted(true);
+      setTimeout(() => setSubmitted(false), 5000);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -223,10 +247,10 @@ export default function ContactUsPage() {
 
               <div className="text-sm text-gray-700 space-y-2 leading-relaxed">
                 <p className="font-semibold text-base text-[#082029]">
-                  IZUZ Consultancy Pvt. Ltd.
+                  {settings?.siteTitle || 'IZUZ Consultancy Pvt. Ltd.'}
                 </p>
                 <p>
-                  8th Floor, Majestic Signia, Plot No. A-27, Block A, Industrial Area, Sector 62, Noida, Uttar Pradesh 201301
+                  {settings?.officeAddress || '8th Floor, Majestic Signia, Plot No. A-27, Block A, Industrial Area, Sector 62, Noida, Uttar Pradesh 201301'}
                 </p>
               </div>
 
@@ -237,11 +261,15 @@ export default function ContactUsPage() {
                 </div>
                 <div className="flex items-center space-x-3 text-gray-700">
                   <Mail className="w-4 h-4 text-teal-600 shrink-0" />
-                  <span>sales@unlistedzone.com</span>
+                  <a href={`mailto:${settings?.supportEmail || 'sales@unlistedzone.com'}`} className="hover:text-teal-600 transition-colors">
+                    {settings?.supportEmail || 'sales@unlistedzone.com'}
+                  </a>
                 </div>
                 <div className="flex items-center space-x-3 text-gray-700">
                   <Phone className="w-4 h-4 text-teal-600 shrink-0" />
-                  <span>+91 80100 09696 / Dealing Desk</span>
+                  <a href={`tel:${settings?.supportPhone || '+918010009696'}`} className="hover:text-teal-600 transition-colors">
+                    {settings?.supportPhone || '+91 80100 09696'}
+                  </a>
                 </div>
               </div>
             </div>

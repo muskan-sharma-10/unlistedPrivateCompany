@@ -18,13 +18,21 @@ import TopTicker from '@/components/header/top-ticker';
 import Navbar from '@/components/header/navbar';
 import Footer from '@/components/footer';
 import EnquiryModal from '@/components/ui/enquiry-modal';
+import { getPortalResearchReports, ResearchEntity } from '@/lib/supabase/queries';
 
 export default function ResearchReportsPage() {
   const [filterTag, setFilterTag] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
   const [isEnquiryOpen, setIsEnquiryOpen] = useState(false);
+  const [reports, setReports] = useState<ResearchEntity[]>([]);
 
-  const reports = [
+  React.useEffect(() => {
+    getPortalResearchReports().then((data) => {
+      if (data && data.length > 0) setReports(data);
+    });
+  }, []);
+
+  const fallbackReports = [
     {
       id: 'inox-air-products-drhp',
       title: "INOX Air Products DRHP Analysis: Linde India's Biggest Rival Goes Public",
@@ -131,7 +139,9 @@ export default function ResearchReportsPage() {
 
   const tags = ['All', 'DRHP Note', 'Valuation Note', 'Tech Deep-Dive', 'Bluechip Deep-Dive', 'Special Situation', 'Hypergrowth'];
 
-  const filtered = reports.filter((r) => {
+  const activeReports = reports.length > 0 ? reports : fallbackReports;
+
+  const filtered = activeReports.filter((r) => {
     const matchesTag = filterTag === 'All' || r.tag === filterTag;
     const matchesSearch =
       r.title.toLowerCase().includes(searchQuery.toLowerCase()) ||

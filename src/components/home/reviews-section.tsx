@@ -1,31 +1,38 @@
-'use client';
-
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { getPortalTestimonials } from '@/lib/supabase/queries';
 
 export const ReviewsSection: React.FC = () => {
-  const reviews = [
+  const fallbackReviews = [
     {
       initials: 'GD',
       name: 'Gopinath Damodaran',
       role: 'Long-term investor',
-      rating: '★★★★★',
-      text: 'Lightning fast. Shares were credited immediately on settlement, and the lower denominations they offer made it easy to start small.',
+      rating: 5,
+      review: 'Lightning fast. Shares were credited immediately on settlement, and the lower denominations they offer made it easy to start small.',
     },
     {
       initials: 'ND',
       name: 'Nilesh Dahiwalkar',
       role: 'Equity investor',
-      rating: '★★★★★',
-      text: 'Excellent and trustworthy. My experience buying private equity through them was smooth end to end. Recommended for unlisted dealing.',
+      rating: 5,
+      review: 'Excellent and trustworthy. My experience buying private equity through them was smooth end to end. Recommended for unlisted dealing.',
     },
     {
       initials: 'RG',
       name: 'Rahul Gupta',
       role: 'Private-market investor',
-      rating: '★★★★★',
-      text: 'The promoters are genuine and very professional — prompt with documents and funds, thorough, and genuinely helpful throughout.',
+      rating: 5,
+      review: 'The promoters are genuine and very professional — prompt with documents and funds, thorough, and genuinely helpful throughout.',
     },
   ];
+
+  const [reviews, setReviews] = useState<any[]>(fallbackReviews);
+
+  useEffect(() => {
+    getPortalTestimonials().then((data) => {
+      if (data && data.length > 0) setReviews(data);
+    });
+  }, []);
 
   return (
     <section className="py-14 sm:py-16 bg-[#f3f8f7] border-b border-[#dce8e5]">
@@ -97,11 +104,11 @@ export const ReviewsSection: React.FC = () => {
                 </div>
 
                 <div className="text-[#f59e0b] tracking-[2px] text-[13px] mb-3">
-                  {r.rating}
+                  {typeof r.rating === 'number' ? '★'.repeat(r.rating) : r.rating || '★★★★★'}
                 </div>
 
                 <p className="text-[14px] text-gray-600 italic leading-relaxed">
-                  &ldquo;{r.text}&rdquo;
+                  &ldquo;{r.review || r.text}&rdquo;
                 </p>
               </div>
             </div>

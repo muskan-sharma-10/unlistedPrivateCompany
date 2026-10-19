@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { ChevronRight, ArrowRight } from 'lucide-react';
 import { StockItem } from '@/data/unlisted-data';
+import { getPortalShares } from '@/lib/supabase/queries';
 
 interface HeroSectionProps {
   onSelectStock: (stock: StockItem) => void;
@@ -25,7 +26,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
     return () => clearInterval(interval);
   }, []);
 
-  const featuredStocks: StockItem[] = [
+  const [featuredStocks, setFeaturedStocks] = useState<StockItem[]>([
     {
       id: 'msei',
       name: 'Metropolitan Stock Exchange (MSEI) Unlisted Shares',
@@ -66,7 +67,17 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
       sparkline: [40, 42, 43, 44, 46],
       logo: '/logos/onix.webp',
     },
-  ];
+  ]);
+
+  useEffect(() => {
+    getPortalShares()
+      .then((shares) => {
+        if (shares && shares.length >= 3) {
+          setFeaturedStocks(shares.slice(0, 3));
+        }
+      })
+      .catch(() => {});
+  }, []);
 
   return (
     <section className="relative bg-[#082029] text-white overflow-hidden pt-14 pb-20 lg:pt-20 lg:pb-28 border-b border-[#0f3442]">

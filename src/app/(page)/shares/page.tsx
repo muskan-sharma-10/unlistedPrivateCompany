@@ -15,25 +15,56 @@ import {
 import TopTicker from '@/components/header/top-ticker';
 import Navbar from '@/components/header/navbar';
 import Footer from '@/components/footer';
+import { useSearchParams } from 'next/navigation';
 import { STOCKS_DATA, StockItem } from '@/data/unlisted-data';
+import { getPortalShares } from '@/lib/supabase/queries';
 
 export default function AllSharesPage() {
-  const [filterSector, setFilterSector] = useState<string>('All');
+  return (
+    <React.Suspense fallback={<div className="min-h-screen bg-[#f3f8f7] flex items-center justify-center font-medium text-gray-500">Loading shares directory...</div>}>
+      <AllSharesContent />
+    </React.Suspense>
+  );
+}
+
+function AllSharesContent() {
+  const searchParams = useSearchParams();
+  const initialSector = searchParams.get('sector') || 'All';
+
+  const [stocks, setStocks] = useState<StockItem[]>(STOCKS_DATA);
+  const [filterSector, setFilterSector] = useState<string>(initialSector);
   const [filterCategory, setFilterCategory] = useState<string>('All');
   const [searchQuery, setSearchQuery] = useState('');
   const [sortBy, setSortBy] = useState<'name' | 'priceAsc' | 'priceDesc' | 'gainers'>('name');
 
+  React.useEffect(() => {
+    getPortalShares().then((data) => {
+      if (data && data.length > 0) {
+        setStocks(data);
+      }
+    });
+  }, []);
+
+  React.useEffect(() => {
+    const sec = searchParams.get('sector');
+    if (sec) {
+      setFilterSector(sec);
+    }
+  }, [searchParams]);
+
   const sectors = ['All', 'Financial Services', 'Consumer Services', 'Automobile', 'Energy & Power', 'Renewable Energy', 'Manufacturing'];
   const categories = ['All', 'Popular', 'Recently Updated', 'Pre-IPO', 'DRHP Filed'];
 
-  const filteredStocks = STOCKS_DATA.filter((stock) => {
+  const filteredStocks = stocks.filter((stock) => {
     const matchesSearch =
       stock.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       stock.sector.toLowerCase().includes(searchQuery.toLowerCase()) ||
       (stock.ticker && stock.ticker.toLowerCase().includes(searchQuery.toLowerCase()));
 
     const matchesSector =
-      filterSector === 'All' || stock.sector.toLowerCase() === filterSector.toLowerCase();
+      filterSector === 'All' ||
+      stock.sector.toLowerCase().includes(filterSector.toLowerCase()) ||
+      filterSector.toLowerCase().includes(stock.sector.toLowerCase());
 
     const matchesCategory =
       filterCategory === 'All' || stock.category === filterCategory;

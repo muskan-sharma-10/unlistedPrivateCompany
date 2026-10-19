@@ -20,92 +20,19 @@ import Navbar from '@/components/header/navbar';
 import Footer from '@/components/footer';
 import EnquiryModal from '@/components/ui/enquiry-modal';
 import { STOCKS_DATA } from '@/data/unlisted-data';
+import { getPortalDRHP, DRHPEntity } from '@/lib/supabase/queries';
 
 export default function DrhpFiledPage() {
   const [searchQuery, setSearchQuery] = useState('');
   const [filterStatus, setFilterStatus] = useState('All');
   const [isEnquiryOpen, setIsEnquiryOpen] = useState(false);
+  const [drhpList, setDrhpList] = useState<DRHPEntity[]>([]);
 
-  const drhpList = [
-    {
-      id: 'hyundai-motor-india',
-      name: 'Hyundai Motor India Limited',
-      sector: 'Automobile',
-      issueSize: '₹ 25,000 Cr',
-      filingDate: '15 Jun 2024',
-      status: 'SEBI Cleared',
-      statusType: 'cleared',
-      brlm: 'Kotak Mahindra, Morgan Stanley, Citi',
-      indicativePrice: 1960,
-      minLot: 10,
-      description: '100% Offer For Sale (OFS) of 14.21 crore shares by South Korean parent Hyundai Motor Company in India’s largest-ever IPO.',
-    },
-    {
-      id: 'swiggy',
-      name: 'Swiggy Limited',
-      sector: 'Consumer Services / Tech',
-      issueSize: '₹ 10,414 Cr',
-      filingDate: '26 Apr 2024',
-      status: 'SEBI Approved',
-      statusType: 'approved',
-      brlm: 'Kotak Mahindra, JP Morgan, BofA Securities',
-      indicativePrice: 485,
-      minLot: 100,
-      description: 'Fresh issue of ₹3,750 Cr plus OFS of ₹6,664 Cr by major venture investors including Prosus and SoftBank.',
-    },
-    {
-      id: 'inox-air-products',
-      name: 'Inox Air Products Limited',
-      sector: 'Industrial Gases & Healthcare',
-      issueSize: '₹ 6,500 Cr',
-      filingDate: '01 Oct 2026',
-      status: 'Under Review',
-      statusType: 'review',
-      brlm: 'ICICI Securities, Axis Capital, Jefferies',
-      indicativePrice: 850,
-      minLot: 50,
-      description: '100% Offer For Sale of 7.72 crore shares by promoters and Air Products USA from 689-page draft prospectus.',
-    },
-    {
-      id: 'hdb-financial',
-      name: 'HDB Financial Services',
-      sector: 'Financial Services / NBFC',
-      issueSize: '₹ 12,500 Cr',
-      filingDate: '20 Sep 2024',
-      status: 'Board Approved',
-      statusType: 'approved',
-      brlm: 'HDFC Bank, Morgan Stanley, Nomura',
-      indicativePrice: 1380,
-      minLot: 50,
-      description: 'Mandatory upper-layer NBFC listing approved by parent HDFC Bank (holding 94.6% stake) compliant with RBI rules.',
-    },
-    {
-      id: 'boat-imagine-marketing',
-      name: 'Imagine Marketing (boAt)',
-      sector: 'Consumer Electronics',
-      issueSize: '₹ 2,000 Cr',
-      filingDate: '18 Jan 2024',
-      status: 'Pre-IPO Complete',
-      statusType: 'review',
-      brlm: 'Credit Suisse, BofA Securities, Axis Capital',
-      indicativePrice: 640,
-      minLot: 75,
-      description: 'India’s leading wearable and audio brand with fresh issue and OFS backed by Warburg Pincus and Qualcomm.',
-    },
-    {
-      id: 'nse-india',
-      name: 'National Stock Exchange (NSE India)',
-      sector: 'Financial Services',
-      issueSize: '₹ 15,000 Cr (Est.)',
-      filingDate: 'Board Cleared',
-      status: 'Awaiting SEBI NOC',
-      statusType: 'review',
-      brlm: 'Global Syndicate',
-      indicativePrice: 2095,
-      minLot: 25,
-      description: 'Board has passed resolution seeking formal NOC from SEBI to refile draft documents for world’s largest derivatives exchange.',
-    }
-  ];
+  React.useEffect(() => {
+    getPortalDRHP().then((data) => {
+      setDrhpList(data);
+    });
+  }, []);
 
   const filtered = drhpList.filter((item) => {
     const matchesSearch =

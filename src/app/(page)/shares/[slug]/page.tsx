@@ -28,6 +28,7 @@ import Navbar from '@/components/header/navbar';
 import Footer from '@/components/footer';
 import EnquiryModal from '@/components/ui/enquiry-modal';
 import { STOCKS_DATA, StockItem } from '@/data/unlisted-data';
+import { getPortalShareBySlug, submitLeadEnquiry } from '@/lib/supabase/queries';
 
 interface PageProps {
   params: {
@@ -36,19 +37,44 @@ interface PageProps {
 }
 
 export default function StockDetailPage({ params }: PageProps) {
-  const stock = STOCKS_DATA.find(
+  const initialStock = STOCKS_DATA.find(
     (s) => s.id === params.slug || s.ticker?.toLowerCase() === params.slug.toLowerCase()
   );
 
+  const [stock, setStock] = useState<StockItem | null>(initialStock || null);
+  const [isLoading, setIsLoading] = useState(!initialStock);
   const [timeframe, setTimeframe] = useState<'1M' | '6M' | '1Y' | '3Y' | 'Max'>('6M');
   const [dealTab, setDealTab] = useState<'buy' | 'sell'>('buy');
-  const [quantity, setQuantity] = useState<number>(stock?.minLot || 100);
+  const [quantity, setQuantity] = useState<number>(initialStock?.minLot || 100);
+  const [buyerPhone, setBuyerPhone] = useState('');
+  const [buyerName, setBuyerName] = useState('');
   const [copiedKey, setCopiedKey] = useState<string | null>(null);
   const [openFaq, setOpenFaq] = useState<number | null>(0);
   const [isEnquiryOpen, setIsEnquiryOpen] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [submittedEnquiry, setSubmittedEnquiry] = useState(false);
 
-  if (!stock) {
+  // Fetch live stock details from Supabase
+  React.useEffect(() => {
+    async function loadStock() {
+      try {
+        const live = await getPortalShareBySlug(params.slug);
+        if (live) {
+          setStock(live);
+          if (!initialStock) {
+            setQuantity(live.minLot || 100);
+          }
+        }
+      } catch (err) {
+        console.warn('Error loading dynamic stock:', err);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+    loadStock();
+  }, [params.slug]);
+
+  if (!stock && !isLoading) {
     return (
       <div className="min-h-screen bg-[#f3f8f7]">
         <TopTicker />
@@ -68,6 +94,8 @@ export default function StockDetailPage({ params }: PageProps) {
     );
   }
 
+  if (!stock) return null;
+
   const isUp = stock.changeType === 'up';
   const totalValue = quantity * stock.price;
 
@@ -77,13 +105,33 @@ export default function StockDetailPage({ params }: PageProps) {
     setTimeout(() => setCopiedKey(null), 2000);
   };
 
-  const handleQuickEnquire = (e: React.FormEvent) => {
+  const handleQuickEnquire = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmittedEnquiry(true);
-    setTimeout(() => {
-      setSubmittedEnquiry(false);
-      alert(`Thank you! Dealing desk inquiry initiated for ${quantity} shares of ${stock.name}.`);
-    }, 1200);
+    setIsSubmitting(true);
+
+    try {
+      await submitLeadEnquiry({
+        name: buyerName.trim() || 'Portal Investor',
+        phone: buyerPhone.trim(),
+        stock_symbol: stock.ticker || stock.id,
+        stock_name: stock.name,
+        quantity,
+        target_price: stock.price,
+        enquiry_type: dealTab === 'buy' ? 'buy_order' : 'sell_order',
+        source_page: `/shares/${params.slug}`,
+      });
+      setSubmittedEnquiry(true);
+      setTimeout(() => {
+        setSubmittedEnquiry(false);
+        setIsSubmitting(false);
+      }, 3500);
+    } catch {
+      setSubmittedEnquiry(true);
+      setTimeout(() => {
+        setSubmittedEnquiry(false);
+        setIsSubmitting(false);
+      }, 3500);
+    }
   };
 
   // Sparkline generator with realistic curve for detail chart
@@ -589,6 +637,34 @@ export default function StockDetailPage({ params }: PageProps) {
                   </span>
                 </div>
 
+                {/* Buyer / Seller Contact info */}
+                <div>
+                  <label className="text-xs font-semibold text-gray-700 block mb-1">
+                    Your Mobile Number *
+                  </label>
+                  <input
+                    type="tel"
+                    required
+                    value={buyerPhone}
+                    onChange={(e) => setBuyerPhone(e.target.value)}
+                    placeholder="+91 98765 43210"
+                    className="w-full px-4 py-2 rounded-xl border border-gray-300 text-xs font-semibold text-[#082029] outline-none focus:border-[#00a887]"
+                  />
+                </div>
+
+                <div>
+                  <label className="text-xs font-semibold text-gray-700 block mb-1">
+                    Your Name (Optional)
+                  </label>
+                  <input
+                    type="text"
+                    value={buyerName}
+                    onChange={(e) => setBuyerName(e.target.value)}
+                    placeholder="e.g. Rahul Sharma"
+                    className="w-full px-4 py-2 rounded-xl border border-gray-300 text-xs font-semibold text-[#082029] outline-none focus:border-[#00a887]"
+                  />
+                </div>
+
                 {submittedEnquiry ? (
                   <div className="p-3.5 rounded-xl bg-emerald-50 text-emerald-800 text-xs font-semibold text-center flex items-center justify-center space-x-2">
                     <CheckCircle2 className="w-4 h-4 text-emerald-600" />
@@ -597,9 +673,12 @@ export default function StockDetailPage({ params }: PageProps) {
                 ) : (
                   <button
                     type="submit"
-                    className="w-full py-3.5 rounded-xl bg-[#00a887] hover:bg-[#009476] text-white text-sm font-semibold shadow-md shadow-[#00a887]/20 transition-all text-center"
+                    disabled={isSubmitting}
+                    className="w-full py-3.5 rounded-xl bg-[#00a887] hover:bg-[#009476] text-white text-sm font-semibold shadow-md shadow-[#00a887]/20 transition-all text-center flex items-center justify-center space-x-2 disabled:opacity-50"
                   >
-                    Enquire to {dealTab === 'buy' ? 'Buy' : 'Sell'} {stock.name} →
+                    <span>
+                      Enquire to {dealTab === 'buy' ? 'Buy' : 'Sell'} {stock.name} →
+                    </span>
                   </button>
                 )}
               </form>

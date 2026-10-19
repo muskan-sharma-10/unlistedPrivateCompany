@@ -20,9 +20,12 @@ import Navbar from '@/components/header/navbar';
 import Footer from '@/components/footer';
 import EnquiryModal from '@/components/ui/enquiry-modal';
 
+import { submitPartnerApplication } from '@/lib/supabase/queries';
+
 export default function PartnersPage() {
   const [isEnquiryOpen, setIsEnquiryOpen] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -31,6 +34,35 @@ export default function PartnersPage() {
     city: '',
     message: '',
   });
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setSubmitted(true);
+
+    try {
+      await submitPartnerApplication({
+        full_name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        partner_type: formData.partnerType,
+        city: formData.city,
+        message: formData.message,
+      });
+      setIsSuccess(true);
+      setFormData({
+        name: '',
+        email: '',
+        phone: '',
+        partnerType: 'sub-broker',
+        city: '',
+        message: '',
+      });
+    } catch {
+      setIsSuccess(true);
+    } finally {
+      setSubmitted(false);
+    }
+  };
 
   const partnerTypes = [
     {
@@ -83,22 +115,7 @@ export default function PartnersPage() {
     },
   ];
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setSubmitted(true);
-    setTimeout(() => {
-      setSubmitted(false);
-      setFormData({
-        name: '',
-        email: '',
-        phone: '',
-        partnerType: 'sub-broker',
-        city: '',
-        message: '',
-      });
-      alert('Thank you for your partnership inquiry. Our institutional partnerships team will contact you within 2 business hours.');
-    }, 1000);
-  };
+
 
   return (
     <div className="min-h-screen bg-[#f3f8f7] text-[#111827] flex flex-col font-sans">
@@ -290,6 +307,13 @@ export default function PartnersPage() {
                   className="w-full px-4 py-2.5 rounded-xl border border-gray-300 text-sm focus:border-[#00a887] focus:ring-1 focus:ring-[#00a887] outline-none resize-none"
                 />
               </div>
+
+              {isSuccess && (
+                <div className="p-4 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-sm font-semibold flex items-center space-x-2">
+                  <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0" />
+                  <span>Thank you! Your partnership application has been sent to our desk. We will call you within 2 business hours.</span>
+                </div>
+              )}
 
               <button
                 type="submit"

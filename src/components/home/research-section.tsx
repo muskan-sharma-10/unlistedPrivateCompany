@@ -11,7 +11,7 @@ export const ResearchSection: React.FC = () => {
       date: '13 Oct 2026',
       badge: 'MS',
       category: 'Knowledge',
-      url: '/library?type=videos',
+      url: '/blogs',
       bgGrad: 'from-[#082029] to-[#00a887]',
     },
     {
@@ -19,7 +19,7 @@ export const ResearchSection: React.FC = () => {
       date: '25 Sept 2026',
       badge: 'IG',
       category: 'Knowledge',
-      url: '/library?type=videos',
+      url: '/blogs',
       bgGrad: 'from-[#0e313d] to-[#124d5e]',
     },
     {
@@ -27,7 +27,7 @@ export const ResearchSection: React.FC = () => {
       date: '25 Sept 2026',
       badge: 'OM',
       category: 'Knowledge',
-      url: '/library?type=videos',
+      url: '/blogs',
       bgGrad: 'from-[#05171d] to-[#082029]',
     },
   ];
@@ -40,7 +40,7 @@ export const ResearchSection: React.FC = () => {
       views: '53',
       excerpt: 'India has only about 20,000 aerial work platforms, while the US and China run lakhs of them. MTandT Rentals wants to close that gap. Its revenue grew…',
       image: '/posts/mtandt.png',
-      url: '/library',
+      url: '/research',
     },
     {
       title: '63SATS H1 FY27: What management just told investors',
@@ -49,7 +49,7 @@ export const ResearchSection: React.FC = () => {
       views: '111',
       excerpt: '63SATS Cybertech, the cybersecurity arm of 63 moons, billed ₹218 crore in just six months, more than double all of last year. Management now expects ₹…',
       image: '/posts/63sats.png',
-      url: '/library',
+      url: '/research',
     },
     {
       title: "INOX Air Products Files DRHP: Linde India's Biggest Rival Is Going Public. We Read All 689 Pages",
@@ -58,7 +58,7 @@ export const ResearchSection: React.FC = () => {
       views: '394',
       excerpt: "INOX Air Products, the 50:50 joint venture between America's Air Products and the INOX Group, has filed its DRHP for a 100% offer for sale of 7.72 cro…",
       image: '/posts/inox.png',
-      url: '/library',
+      url: '/research',
     },
   ];
 
@@ -80,7 +80,7 @@ export const ResearchSection: React.FC = () => {
               </p>
             </div>
             <Link
-              href="/library?type=videos"
+              href="/blogs"
               className="text-[13.5px] font-semibold text-[#00a887] inline-flex items-center gap-1.5 border border-[#dce8e5] hover:border-[#00a887] px-5 py-2 rounded-2xl self-start sm:self-auto transition-all bg-white"
             >
               All videos →
@@ -143,7 +143,7 @@ export const ResearchSection: React.FC = () => {
               </p>
             </div>
             <Link
-              href="/library?type=blog"
+              href="/research"
               className="text-[13.5px] font-semibold text-[#00a887] inline-flex items-center gap-1.5 border border-[#dce8e5] hover:border-[#00a887] px-5 py-2 rounded-2xl self-start sm:self-auto transition-all"
             >
               View all →

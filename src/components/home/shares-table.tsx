@@ -1,8 +1,9 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { StockItem } from '@/data/unlisted-data';
+import { getPortalShares } from '@/lib/supabase/queries';
 
 interface SharesTableProps {
   onSelectStock: (stock: StockItem) => void;
@@ -14,6 +15,13 @@ export const SharesTable: React.FC<SharesTableProps> = ({
   onSelectStock,
   onOpenEnquiry,
 }) => {
+  const [liveShares, setLiveShares] = useState<StockItem[]>([]);
+
+  useEffect(() => {
+    getPortalShares().then((data) => {
+      if (data && data.length > 0) setLiveShares(data);
+    });
+  }, []);
   // Exact 4 Popular Shares from unlistedzone.com
   const popularShares: StockItem[] = [
     {
@@ -154,7 +162,7 @@ export const SharesTable: React.FC<SharesTableProps> = ({
 
           {/* 4 Cards Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-            {popularShares.map((stock) => (
+            {(liveShares.length > 0 ? liveShares.slice(0, 4) : popularShares).map((stock) => (
               <div
                 key={stock.id}
                 className="rounded-2xl border border-[#dce8e5] bg-white p-5 hover:border-[#00a887] hover:shadow-xl hover:shadow-[#00a887]/5 hover:-translate-y-1 transition-all flex flex-col justify-between"

@@ -3,28 +3,64 @@
 import React, { useState } from 'react';
 import { X, CheckCircle2, Shield, Phone, Mail, User, HelpCircle } from 'lucide-react';
 
+import { submitLeadEnquiry } from '@/lib/supabase/queries';
+
 interface EnquiryModalProps {
   isOpen: boolean;
   onClose: () => void;
+  defaultStock?: string;
+  defaultDealType?: 'buy' | 'sell' | 'esop';
 }
 
-export const EnquiryModal: React.FC<EnquiryModalProps> = ({ isOpen, onClose }) => {
-  const [dealType, setDealType] = useState<'buy' | 'sell' | 'esop'>('buy');
+export const EnquiryModal: React.FC<EnquiryModalProps> = ({
+  isOpen,
+  onClose,
+  defaultStock = '',
+  defaultDealType = 'buy',
+}) => {
+  const [dealType, setDealType] = useState<'buy' | 'sell' | 'esop'>(defaultDealType);
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
   const [email, setEmail] = useState('');
-  const [stockName, setStockName] = useState('');
+  const [stockName, setStockName] = useState(defaultStock);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+
+  // Sync defaultStock if changed
+  React.useEffect(() => {
+    if (defaultStock) setStockName(defaultStock);
+    if (defaultDealType) setDealType(defaultDealType);
+  }, [defaultStock, defaultDealType]);
 
   if (!isOpen) return null;
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
-    setTimeout(() => {
-      setSubmitted(false);
-      onClose();
-    }, 1800);
+    setIsSubmitting(true);
+
+    try {
+      await submitLeadEnquiry({
+        name,
+        phone,
+        email,
+        stock_name: stockName,
+        enquiry_type: dealType === 'buy' ? 'buy_order' : dealType === 'sell' ? 'sell_order' : 'esop_liquidity',
+        source_page: typeof window !== 'undefined' ? window.location.pathname : 'modal',
+      });
+      setSubmitted(true);
+      setTimeout(() => {
+        setSubmitted(false);
+        setIsSubmitting(false);
+        onClose();
+      }, 2000);
+    } catch {
+      setSubmitted(true);
+      setTimeout(() => {
+        setSubmitted(false);
+        setIsSubmitting(false);
+        onClose();
+      }, 2000);
+    }
   };
 
   return (

@@ -17,67 +17,22 @@ import TopTicker from '@/components/header/top-ticker';
 import Navbar from '@/components/header/navbar';
 import Footer from '@/components/footer';
 import { VIDEOS_DATA } from '@/data/unlisted-data';
+import { getPortalBlogs, getPortalVideos, BlogEntity } from '@/lib/supabase/queries';
 
 export default function BlogsPage() {
   const [activeCategory, setActiveCategory] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
+  const [articles, setArticles] = useState<BlogEntity[]>([]);
+  const [videos, setVideos] = useState(VIDEOS_DATA);
 
-  const articles = [
-    {
-      id: 'how-to-buy-unlisted-shares-guide',
-      title: 'The Complete Step-by-Step Guide to Buying Unlisted Shares in India (2026)',
-      category: 'Beginner Guide',
-      date: '05 Oct 2026',
-      readTime: '6 min read',
-      author: 'Private Market Editorial',
-      summary: 'From Client Master Report (CMR) verification to depository bank transfers and CDSL/NSDL credits within 24 hours. A complete walkthrough of how institutional concierge deals work without secondary trading risks.',
-    },
-    {
-      id: 'sebi-6-month-lock-in-rules',
-      title: 'SEBI 6-Month Lock-in Period for Pre-IPO Shares: Full Legal Breakdown',
-      category: 'Regulatory',
-      date: '02 Oct 2026',
-      readTime: '5 min read',
-      author: 'Compliance Desk',
-      summary: 'SEBI revised the pre-IPO lock-in from 1 year to 6 months starting August 2021. Learn how holding dates are counted, what happens on listing day, and why SME IPOs follow separate 1-year lock-in guidelines.',
-    },
-    {
-      id: 'budget-2024-unlisted-taxation',
-      title: 'Budget 2024 Tax Changes: How the 12.5% Flat LTCG Rate Applies to Unlisted Equities',
-      category: 'Taxation & Legal',
-      date: '28 Sep 2026',
-      readTime: '7 min read',
-      author: 'Chartered Advisory Desk',
-      summary: 'Detailed tax advisory regarding the removal of indexation benefits and the transition to a flat 12.5% long-term capital gains tax for unlisted shares held beyond 24 months.',
-    },
-    {
-      id: 'esop-liquidity-guide',
-      title: 'How Startup Employees Can Monetize Unvested & Vested ESOP Shares',
-      category: 'ESOP Solutions',
-      date: '22 Sep 2026',
-      readTime: '6 min read',
-      author: 'Wealth Advisory',
-      summary: 'Are you holding shares in Zepto, Swiggy, or boAt? Understand exercise costs, perquisite tax calculations, and how to safely liquidate unlisted holdings through corporate escrow.',
-    },
-    {
-      id: 'how-to-verify-cdsl-nsdl-credit',
-      title: 'How to Verify Unlisted Shares Credit in NSDL or CDSL Demat Accounts',
-      category: 'Tutorial',
-      date: '15 Sep 2026',
-      readTime: '4 min read',
-      author: 'Depository Operations',
-      summary: 'Learn how to read your CAS (Consolidated Account Statement), identify unique ISIN alphanumeric codes, and track T+1 depository settlement slips in your broker app.',
-    },
-    {
-      id: 'pre-ipo-vs-listed-stocks',
-      title: 'Pre-IPO Shares vs Listed Stocks: Understanding Asymmetric Risk & Alpha Potential',
-      category: 'Investment Strategy',
-      date: '09 Sep 2026',
-      readTime: '8 min read',
-      author: 'Research Team',
-      summary: 'Why institutional investors allocate 5–15% of high-yield portfolios to private market champions before the general retail public participates on listing day.',
-    }
-  ];
+  React.useEffect(() => {
+    getPortalBlogs().then((data) => {
+      if (data && data.length > 0) setArticles(data);
+    });
+    getPortalVideos().then((vids) => {
+      if (vids && vids.length > 0) setVideos(vids);
+    });
+  }, []);
 
   const categories = ['All', 'Beginner Guide', 'Regulatory', 'Taxation & Legal', 'ESOP Solutions', 'Tutorial', 'Investment Strategy'];
 
@@ -149,9 +104,10 @@ export default function BlogsPage() {
         {/* 2-Column Articles Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10">
           {filtered.map((item) => (
-            <article
+            <Link
               key={item.id}
-              className="bg-white rounded-3xl p-7 sm:p-9 border border-[#dce8e5] hover:border-[#00a887] shadow-xs hover:shadow-xl transition-all duration-200 flex flex-col justify-between group"
+              href={`/blogs/${item.slug || item.id}`}
+              className="bg-white rounded-3xl p-7 sm:p-9 border border-[#dce8e5] hover:border-[#00a887] shadow-xs hover:shadow-xl transition-all duration-200 flex flex-col justify-between group block"
             >
               <div>
                 <div className="flex items-center justify-between text-xs font-semibold text-gray-500 mb-4">
@@ -182,7 +138,7 @@ export default function BlogsPage() {
                   <ArrowRight className="w-4 h-4" />
                 </span>
               </div>
-            </article>
+            </Link>
           ))}
         </div>
 

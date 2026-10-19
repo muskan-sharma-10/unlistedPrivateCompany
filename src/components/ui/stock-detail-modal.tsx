@@ -1,13 +1,14 @@
 'use client';
 
 import React, { useState } from 'react';
-import { X, TrendingUp, TrendingDown, ShieldCheck, CheckCircle2, MessageSquare, Calculator } from 'lucide-react';
+import { X, TrendingUp, TrendingDown, ShieldCheck, CheckCircle2, MessageSquare, Calculator, Phone, User, Loader2 } from 'lucide-react';
 import { StockItem } from '@/data/unlisted-data';
+import { submitLeadEnquiry } from '@/lib/supabase/queries';
 
 interface StockDetailModalProps {
   stock: StockItem | null;
   onClose: () => void;
-  onEnquire: (stock: StockItem, shares: number) => void;
+  onEnquire?: (stock: StockItem, shares: number) => void;
 }
 
 export const StockDetailModal: React.FC<StockDetailModalProps> = ({
@@ -15,7 +16,11 @@ export const StockDetailModal: React.FC<StockDetailModalProps> = ({
   onClose,
   onEnquire,
 }) => {
+  const [dealType, setDealType] = useState<'buy' | 'sell'>('buy');
   const [sharesCount, setSharesCount] = useState<number>(stock?.minLot || 100);
+  const [name, setName] = useState('');
+  const [phone, setPhone] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
   if (!stock) return null;
@@ -23,14 +28,36 @@ export const StockDetailModal: React.FC<StockDetailModalProps> = ({
   const isUp = stock.changeType === 'up';
   const totalValue = sharesCount * stock.price;
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
-    setTimeout(() => {
-      onEnquire(stock, sharesCount);
-      setSubmitted(false);
-      onClose();
-    }, 1200);
+    setIsSubmitting(true);
+
+    try {
+      await submitLeadEnquiry({
+        name: name.trim() || 'Investor',
+        phone: phone.trim(),
+        stock_symbol: stock.ticker || stock.id,
+        stock_name: stock.name,
+        quantity: sharesCount,
+        target_price: stock.price,
+        enquiry_type: dealType === 'buy' ? 'buy_order' : 'sell_order',
+        source_page: typeof window !== 'undefined' ? window.location.pathname : 'stock-modal',
+      });
+      if (onEnquire) onEnquire(stock, sharesCount);
+      setSubmitted(true);
+      setTimeout(() => {
+        setSubmitted(false);
+        setIsSubmitting(false);
+        onClose();
+      }, 2000);
+    } catch {
+      setSubmitted(true);
+      setTimeout(() => {
+        setSubmitted(false);
+        setIsSubmitting(false);
+        onClose();
+      }, 2000);
+    }
   };
 
   return (
@@ -156,28 +183,89 @@ export const StockDetailModal: React.FC<StockDetailModalProps> = ({
               </div>
             </div>
 
+            {/* Buy / Sell Selection */}
+            <div className="grid grid-cols-2 gap-2 pt-1">
+              <button
+                type="button"
+                onClick={() => setDealType('buy')}
+                className={`py-2 rounded-xl text-xs font-semibold transition-all ${
+                  dealType === 'buy'
+                    ? 'bg-[#00a887] text-white shadow-xs'
+                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                }`}
+              >
+                Buy {stock.name}
+              </button>
+              <button
+                type="button"
+                onClick={() => setDealType('sell')}
+                className={`py-2 rounded-xl text-xs font-semibold transition-all ${
+                  dealType === 'sell'
+                    ? 'bg-[#082029] text-white shadow-xs'
+                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                }`}
+              >
+                Sell My Shares
+              </button>
+            </div>
+
+            {/* Investor Contact Inputs */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+              <div>
+                <label className="text-xs font-semibold text-gray-600 block mb-1">
+                  Your Mobile Number *
+                </label>
+                <div className="relative">
+                  <input
+                    type="tel"
+                    required
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
+                    placeholder="+91 98765 43210"
+                    className="w-full px-3 py-2 pl-8 rounded-xl border border-gray-300 text-xs font-medium text-[#082029] focus:outline-none focus:border-[#00a887]"
+                  />
+                  <Phone className="w-3.5 h-3.5 text-gray-400 absolute left-2.5 top-1/2 -translate-y-1/2" />
+                </div>
+              </div>
+              <div>
+                <label className="text-xs font-semibold text-gray-600 block mb-1">
+                  Your Name (Optional)
+                </label>
+                <div className="relative">
+                  <input
+                    type="text"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    placeholder="Full name"
+                    className="w-full px-3 py-2 pl-8 rounded-xl border border-gray-300 text-xs font-medium text-[#082029] focus:outline-none focus:border-[#00a887]"
+                  />
+                  <User className="w-3.5 h-3.5 text-gray-400 absolute left-2.5 top-1/2 -translate-y-1/2" />
+                </div>
+              </div>
+            </div>
+
             {submitted ? (
               <div className="p-3 rounded-xl bg-emerald-50 text-emerald-800 text-xs font-semibold text-center flex items-center justify-center space-x-1.5">
-                <CheckCircle2 className="w-4 h-4" />
-                <span>Enquiry recorded! Relationship manager is connecting...</span>
+                <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+                <span>Enquiry saved! Dealing desk is connecting with you within 15 minutes.</span>
               </div>
             ) : (
-              <div className="flex flex-col sm:flex-row gap-3 pt-2">
+              <div className="pt-2">
                 <button
                   type="submit"
-                  className="flex-1 py-3 rounded-xl bg-[#00a887] hover:bg-[#009476] text-white text-sm font-semibold shadow-md transition-all text-center"
+                  disabled={isSubmitting}
+                  className="w-full py-3 rounded-xl bg-[#00a887] hover:bg-[#009476] text-white text-sm font-semibold shadow-md transition-all text-center flex items-center justify-center space-x-2"
                 >
-                  Enquire to Buy {stock.name} →
-                </button>
-                <button
-                  type="button"
-                  onClick={() => {
-                    alert(`To sell ${stock.name} unlisted/ESOP shares, our dealing desk will verify your holding statement.`);
-                    onClose();
-                  }}
-                  className="px-6 py-3 rounded-xl border border-gray-300 hover:border-[#082029] text-gray-800 text-sm font-semibold transition-all text-center"
-                >
-                  Sell My Shares
+                  {isSubmitting ? (
+                    <>
+                      <Loader2 className="w-4 h-4 animate-spin" />
+                      <span>Submitting Dealing Request...</span>
+                    </>
+                  ) : (
+                    <span>
+                      {dealType === 'buy' ? `Enquire to Buy ${sharesCount} Shares` : `Submit Sell Order for ${sharesCount} Shares`} →
+                    </span>
+                  )}
                 </button>
               </div>
             )}

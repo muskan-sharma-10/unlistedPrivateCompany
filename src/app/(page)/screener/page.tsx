@@ -18,18 +18,28 @@ import TopTicker from '@/components/header/top-ticker';
 import Navbar from '@/components/header/navbar';
 import Footer from '@/components/footer';
 import { STOCKS_DATA, StockItem } from '@/data/unlisted-data';
+import { getPortalShares } from '@/lib/supabase/queries';
 
 export default function ScreenerPage() {
+  const [stocks, setStocks] = useState<StockItem[]>(STOCKS_DATA);
   const [selectedSector, setSelectedSector] = useState('All');
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [priceRange, setPriceRange] = useState<'All' | 'under100' | '100to1000' | 'above1000'>('All');
   const [searchQuery, setSearchQuery] = useState('');
   const [sortBy, setSortBy] = useState<'name' | 'priceAsc' | 'priceDesc' | 'gainers'>('name');
 
+  React.useEffect(() => {
+    getPortalShares().then((data) => {
+      if (data && data.length > 0) {
+        setStocks(data);
+      }
+    });
+  }, []);
+
   const sectors = ['All', 'Financial Services', 'Consumer Services', 'Automobile', 'Energy & Power', 'Renewable Energy', 'Manufacturing'];
   const categories = ['All', 'Popular', 'Pre-IPO', 'DRHP Filed', 'Recently Updated'];
 
-  const filtered = STOCKS_DATA.filter((stock) => {
+  const filtered = stocks.filter((stock) => {
     const matchesSearch =
       stock.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       stock.sector.toLowerCase().includes(searchQuery.toLowerCase()) ||

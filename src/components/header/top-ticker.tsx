@@ -1,15 +1,35 @@
 'use client';
 
-import React from 'react';
-import { ShieldCheck } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { ShieldCheck, Flame } from 'lucide-react';
+import { getPortalHomepageHero } from '@/lib/supabase/queries';
 
 export const TopTicker: React.FC = () => {
+  const [announcement, setAnnouncement] = useState<string | null>(null);
+
+  useEffect(() => {
+    getPortalHomepageHero().then((hero) => {
+      if (hero && hero.showAnnouncement && hero.announcementBar) {
+        setAnnouncement(hero.announcementBar);
+      }
+    });
+  }, []);
+
   return (
     <div className="bg-[#05171d] text-[#cbd5e1] text-[12px] sm:text-[12.5px] border-b border-[#0d2e38] py-2 overflow-hidden select-none">
       <div className="max-w-[1520px] mx-auto px-6 sm:px-10 lg:px-14 flex items-center justify-between gap-4">
         {/* Compliance Marquee with authentic unlistedzone.com text */}
         <div className="flex-1 overflow-hidden">
           <div className="animate-compliance-marquee flex items-center gap-6 whitespace-nowrap">
+            {announcement && (
+              <>
+                <span className="inline-flex items-center gap-1.5 text-amber-300 font-semibold bg-amber-950/40 px-2.5 py-0.5 rounded-full border border-amber-500/30">
+                  <Flame className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+                  <span>{announcement}</span>
+                </span>
+                <span className="w-1.5 h-1.5 rounded-full bg-[#00a887]/60" />
+              </>
+            )}
             <span className="inline-flex items-center gap-1.5">
               <ShieldCheck className="w-3.5 h-3.5 text-[#00a887]" />
               <span>An <strong className="text-white font-semibold">information platform</strong> for unlisted &amp; pre-IPO shares</span>
