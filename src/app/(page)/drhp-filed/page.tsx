@@ -130,9 +130,24 @@ export default function DrhpFiledPage() {
                       {item.name.slice(0, 2).toUpperCase()}
                     </div>
                     <div>
-                      <h2 className="text-xl sm:text-2xl font-semibold text-[#082029] group-hover:text-[#00a887] transition-colors">
-                        {item.name}
-                      </h2>
+                      <div className="flex items-center space-x-2 flex-wrap gap-y-1">
+                        <h2 className="text-xl sm:text-2xl font-semibold text-[#082029] group-hover:text-[#00a887] transition-colors">
+                          {item.name}
+                        </h2>
+                        {item.companyUrl && (
+                          <a
+                            href={item.companyUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center space-x-1 px-2.5 py-0.5 rounded-full bg-teal-50 text-[#00a887] border border-teal-200 hover:bg-[#00a887] hover:text-white transition-all text-xs font-medium"
+                            title={`Visit ${item.name} website`}
+                            onClick={(e) => e.stopPropagation()}
+                          >
+                            <span>Website</span>
+                            <ExternalLink className="w-3 h-3" />
+                          </a>
+                        )}
+                      </div>
                       <span className="text-xs text-gray-500 font-medium">
                         {item.sector}
                       </span>
@@ -171,14 +186,29 @@ export default function DrhpFiledPage() {
               </div>
 
               {/* Actions Footer */}
-              <div className="mt-8 pt-5 border-t border-gray-100 flex items-center justify-between gap-3">
-                <Link
-                  href={`/shares/${item.id}`}
-                  className="px-5 py-2.5 rounded-xl bg-[#082029] hover:bg-[#00a887] text-white text-xs sm:text-sm font-semibold transition-all inline-flex items-center space-x-1.5"
-                >
-                  <span>View Stock Breakdown</span>
-                  <ArrowRight className="w-4 h-4" />
-                </Link>
+              <div className="mt-8 pt-5 border-t border-gray-100 flex items-center justify-between gap-3 flex-wrap">
+                <div className="flex items-center gap-2">
+                  <Link
+                    href={`/shares/${item.id}`}
+                    className="px-5 py-2.5 rounded-xl bg-[#082029] hover:bg-[#00a887] text-white text-xs sm:text-sm font-semibold transition-all inline-flex items-center space-x-1.5"
+                  >
+                    <span>View Stock Breakdown</span>
+                    <ArrowRight className="w-4 h-4" />
+                  </Link>
+
+                  {item.companyUrl && (
+                    <a
+                      href={item.companyUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="px-3.5 py-2.5 rounded-xl border border-teal-200 bg-teal-50/70 hover:bg-[#00a887] hover:text-white text-[#00a887] text-xs sm:text-sm font-semibold transition-all inline-flex items-center space-x-1.5"
+                      title="Visit official company website"
+                    >
+                      <span>Official Site</span>
+                      <ExternalLink className="w-3.5 h-3.5" />
+                    </a>
+                  )}
+                </div>
 
                 <button
                   onClick={() => setIsEnquiryOpen(true)}

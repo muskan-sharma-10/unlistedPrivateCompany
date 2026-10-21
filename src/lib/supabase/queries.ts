@@ -136,6 +136,7 @@ export interface DRHPEntity {
   indicativePrice: number;
   minLot: number;
   description: string;
+  companyUrl?: string;
 }
 
 export async function getPortalDRHP(): Promise<DRHPEntity[]> {
@@ -206,19 +207,33 @@ export async function getPortalDRHP(): Promise<DRHPEntity[]> {
 
     if (error || !data || data.length === 0) return fallback;
 
-    return data.map((row: any) => ({
-      id: row.slug || row.id,
-      name: row.company_name,
-      sector: row.industry,
-      issueSize: row.issue_size_cr ? `₹ ${row.issue_size_cr} Cr` : 'TBD',
-      filingDate: row.filing_date_text || (row.filing_date ? new Date(row.filing_date).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }) : '2026'),
-      status: row.regulatory_status || (row.status === 'published' ? 'SEBI Cleared' : 'Under Review'),
-      statusType: (row.status_type as any) || 'cleared',
-      brlm: row.lead_managers || 'Marquee Merchant Bankers',
-      indicativePrice: Number(row.indicative_price || 0),
-      minLot: Number(row.min_lot || 50),
-      description: row.description || `${row.company_name} has filed its DRHP with SEBI.`,
-    }));
+    return data.map((row: any) => {
+      const extractedUrl =
+        row.company_url ||
+        row.company_link ||
+        (row.description && typeof row.description === 'string'
+          ? (row.description.match(/<!--company_url:(.*?)-->/) || [])[1]?.trim()
+          : undefined);
+
+      const cleanedDesc = row.description
+        ? row.description.replace(/<!--company_url:[^>]*-->/g, '').trim()
+        : '';
+
+      return {
+        id: row.slug || row.id,
+        name: row.company_name,
+        sector: row.industry,
+        issueSize: row.issue_size_cr ? `₹ ${row.issue_size_cr} Cr` : 'TBD',
+        filingDate: row.filing_date_text || (row.filing_date ? new Date(row.filing_date).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }) : '2026'),
+        status: row.regulatory_status || (row.status === 'published' ? 'SEBI Cleared' : 'Under Review'),
+        statusType: (row.status_type as any) || 'cleared',
+        brlm: row.lead_managers || 'Marquee Merchant Bankers',
+        indicativePrice: Number(row.indicative_price || 0),
+        minLot: Number(row.min_lot || 50),
+        description: cleanedDesc || `${row.company_name} has filed its DRHP with SEBI.`,
+        companyUrl: extractedUrl || undefined,
+      };
+    });
   } catch (err) {
     console.warn('[Portal Supabase] Fallback to local DRHP:', err);
     return fallback;
