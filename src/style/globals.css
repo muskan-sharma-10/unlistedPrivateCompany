@@ -1,37 +1,86 @@
-@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500;1,6..72,600&display=swap');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --font-manrope: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --font-newsreader: 'Newsreader', Georgia, serif;
+@layer base {
+  :root {
+    --background: 210 40% 98%;          /* #F8FAFC - Clean financial slate */
+    --foreground: 222.2 84% 4.9%;       /* #0F172A - Deep slate text */
+
+    --card: 0 0% 100%;                  /* #FFFFFF - Pure white surface */
+    --card-foreground: 222.2 84% 4.9%;  /* #0F172A */
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+
+    --primary: 221.2 83.2% 47.8%;       /* #1D4ED8 - Financial Blue */
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 210 40% 96.1%;         /* #F1F5F9 */
+    --secondary-foreground: 222.2 47.4% 11.2%;
+
+    --muted: 210 40% 96.1%;             /* #F1F5F9 */
+    --muted-foreground: 215.4 16.3% 46.9%; /* #64748B - Secondary metadata */
+
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+
+    --destructive: 0 84.2% 41.8%;       /* #B91C1C - Negative market red */
+    --destructive-foreground: 210 40% 98%;
+
+    --success: 142.1 70.6% 29.2%;       /* #15803D - Positive market green */
+    --success-foreground: 210 40% 98%;
+
+    --warning: 37.7 89% 32.5%;          /* #A16207 - Warning / Under Review */
+    --warning-foreground: 210 40% 98%;
+
+    --border: 214.3 31.8% 91.4%;        /* #E2E8F0 - Crisp 1px borders */
+    --input: 214.3 31.8% 91.4%;         /* #E2E8F0 */
+    --ring: 221.2 83.2% 47.8%;          /* #1D4ED8 */
+
+    --radius: 0.5rem;                   /* 8px standard */
+  }
+
+  * {
+    @apply border-border;
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 80px;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+    line-height: 1.6;
+  }
 }
 
-* {
-  box-sizing: border-box;
+/* Tabular Financial Numbers for Indian Market Data */
+.tabular-nums, .num, .font-mono {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'tnum', 'cv02', 'cv03', 'cv04', 'cv11';
 }
 
-html {
-  scroll-behavior: smooth;
-  scroll-padding-top: 96px;
+/* Financial Cards & Containers */
+.fin-card {
+  background: #ffffff;
+  border: 1px solid hsl(var(--border));
+  border-radius: var(--radius);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
 
-body {
-  font-family: var(--font-manrope);
-  background-color: #f3f8f7;
-  color: #111827;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  line-height: 1.7;
-  letter-spacing: -0.01em;
+.fin-card:hover {
+  border-color: #cbd5e1;
+  box-shadow: 0 1px 3px 0 rgba(15, 23, 42, 0.05);
 }
 
-/* Elegant Scrollbar */
+/* Subtle Institutional Scrollbar */
 ::-webkit-scrollbar {
-  width: 9px;
-  height: 9px;
+  width: 7px;
+  height: 7px;
 }
 
 ::-webkit-scrollbar-track {
@@ -41,61 +90,11 @@ body {
 ::-webkit-scrollbar-thumb {
   background: #cbd5e1;
   border-radius: 999px;
-  border: 2px solid #f1f5f9;
+  border: 1px solid #f1f5f9;
 }
 
 ::-webkit-scrollbar-thumb:hover {
   background: #94a3b8;
-}
-
-/* Luxury Glassmorphism & Card Utilities */
-.glass-hero-card {
-  background: rgba(255, 255, 255, 0.98);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(220, 232, 229, 0.9);
-  box-shadow: 0 20px 40px -15px rgba(8, 32, 41, 0.12), 0 0 1px 1px rgba(8, 32, 41, 0.04);
-}
-
-.premium-card {
-  background: #ffffff;
-  border: 1px solid #dce8e5;
-  box-shadow: 0 4px 20px -4px rgba(8, 32, 41, 0.04), 0 2px 6px -2px rgba(8, 32, 41, 0.02);
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.premium-card:hover {
-  border-color: rgba(0, 168, 135, 0.5);
-  box-shadow: 0 20px 40px -12px rgba(8, 32, 41, 0.1), 0 4px 12px -2px rgba(8, 32, 41, 0.04);
-  transform: translateY(-2px);
-}
-
-/* Soft Ambient Background Mesh */
-.mesh-glow-teal {
-  background: radial-gradient(circle at 50% 0%, rgba(0, 168, 135, 0.15) 0%, rgba(8, 32, 41, 0) 70%);
-}
-
-.mesh-glow-mint {
-  background: radial-gradient(circle at 100% 50%, rgba(45, 212, 191, 0.08) 0%, transparent 60%);
-}
-
-/* Pulse animation */
-@keyframes pulseDot {
-
-  0%,
-  100% {
-    opacity: 1;
-    transform: scale(1);
-  }
-
-  50% {
-    opacity: 0.35;
-    transform: scale(0.85);
-  }
-}
-
-.pulse-dot {
-  animation: pulseDot 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
 /* Compliance Ticker Marquee Animation */
@@ -116,4 +115,40 @@ body {
 
 .animate-compliance-marquee:hover {
   animation-play-state: paused;
+}
+
+/* Pulse indicator animation */
+@keyframes pulseDot {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.4;
+    transform: scale(0.85);
+  }
+}
+
+.pulse-dot {
+  animation: pulseDot 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Backwards-compatibility aliases for existing cards until migrated */
+.premium-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.75rem;
+  transition: all 0.2s ease;
+}
+
+.premium-card:hover {
+  border-color: #94a3b8;
+  box-shadow: 0 4px 12px -2px rgba(15, 23, 42, 0.06);
+}
+
+.glass-hero-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.75rem;
+  box-shadow: 0 1px 3px 0 rgba(15, 23, 42, 0.05);
 }

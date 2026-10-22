@@ -12,7 +12,9 @@ import {
   Eye,
   CheckCircle,
   TrendingUp,
-  Share2
+  Share2,
+  ExternalLink,
+  ShieldCheck
 } from 'lucide-react';
 import TopTicker from '@/components/header/top-ticker';
 import Navbar from '@/components/header/navbar';
@@ -150,43 +152,43 @@ export default function ResearchReportsPage() {
   });
 
   return (
-    <div className="min-h-screen bg-[#f3f8f7] text-[#111827] flex flex-col font-sans">
+    <div className="min-h-screen bg-slate-50 text-slate-900 flex flex-col font-sans">
       <TopTicker />
       <Navbar onOpenEnquiry={() => setIsEnquiryOpen(true)} />
 
-      {/* Hero Banner with Dark Teal Theme */}
-      <section className="bg-[#082029] text-white py-16 sm:py-24 border-b border-[#0d2e38] relative overflow-hidden">
-        <div className="absolute top-0 right-1/4 w-96 h-96 bg-[#00a887]/15 rounded-full blur-[120px] pointer-events-none" />
+      {/* Hero Banner with Deep Navy Institutional Theme */}
+      <section className="bg-[#0B132B] text-white py-14 sm:py-20 border-b border-slate-800 relative overflow-hidden">
+        <div className="absolute top-0 right-1/4 w-96 h-96 bg-blue-600/10 rounded-full blur-3xl pointer-events-none" />
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-8 relative z-10">
-          <div className="max-w-3xl space-y-4">
-            <div className="inline-flex items-center space-x-2 text-xs sm:text-sm font-semibold tracking-wider text-[#c5a880] uppercase">
-              <span className="w-6 h-[2px] bg-[#c5a880]" />
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="max-w-3xl space-y-3.5">
+            <div className="inline-flex items-center space-x-2 text-xs font-semibold tracking-wider text-blue-400 uppercase">
+              <span className="w-5 h-[2px] bg-blue-500" />
               <span>Independent Intelligence · For Information &amp; Research Only</span>
             </div>
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-semibold tracking-tight text-white leading-tight">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-white leading-tight">
               Company Research &amp; Valuation Reports
             </h1>
-            <p className="text-base sm:text-lg text-slate-300 font-normal leading-relaxed">
-              Institutional-grade breakdowns of unlisted balance sheets, DRHP prospectuses, and private-market valuations prepared by our independent research desk.
+            <p className="text-sm sm:text-base text-slate-300 font-normal leading-relaxed">
+              Institutional-grade breakdowns of unlisted balance sheets, DRHP draft prospectuses, and private-market valuations prepared by our research desk.
             </p>
           </div>
         </div>
       </section>
 
       {/* Main Content Area */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-8 py-12 sm:py-16 w-full flex-1 space-y-10">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14 w-full flex-1 space-y-8">
         {/* Filter & Search Bar */}
-        <div className="bg-white rounded-3xl p-6 sm:p-7 border border-[#dce8e5] shadow-xs flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4">
+        <div className="bg-white rounded-xl p-4 sm:p-5 border border-slate-200 shadow-xs flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4">
           <div className="flex items-center space-x-2 overflow-x-auto scrollbar-none pb-1 md:pb-0">
             {tags.map((t) => (
               <button
                 key={t}
                 onClick={() => setFilterTag(t)}
-                className={`text-xs sm:text-sm font-semibold px-4 py-2 rounded-xl whitespace-nowrap transition-all ${
+                className={`text-xs font-semibold px-3.5 py-1.5 rounded-lg whitespace-nowrap transition-colors ${
                   filterTag === t
-                    ? 'bg-[#00a887] text-white shadow-xs'
-                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                    ? 'bg-blue-700 text-white shadow-xs'
+                    : 'bg-slate-100 text-slate-700 hover:bg-slate-200 border border-slate-200/60'
                 }`}
               >
                 {t}
@@ -199,68 +201,81 @@ export default function ResearchReportsPage() {
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search reports by keyword..."
-              className="w-full text-sm text-[#082029] bg-[#f8fafc] border border-gray-300 rounded-xl pl-10 pr-4 py-2.5 outline-none focus:border-[#00a887]"
+              placeholder="Search reports by company or keyword..."
+              className="w-full text-xs sm:text-sm text-slate-900 bg-slate-50 border border-slate-200 rounded-lg pl-9 pr-4 py-2 outline-none focus:bg-white focus:border-blue-600 focus:ring-1 focus:ring-blue-600 transition-colors"
             />
-            <Search className="w-4 h-4 text-gray-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+            <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
           </div>
         </div>
 
-        {/* Spacious Research Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10">
+        {/* Research Cards Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
           {filtered.map((item) => (
             <div
               key={item.id}
-              className="bg-white rounded-3xl p-7 sm:p-9 border border-[#dce8e5] hover:border-[#00a887] shadow-xs hover:shadow-xl transition-all duration-200 flex flex-col justify-between group"
+              className="bg-white rounded-xl p-6 sm:p-7 border border-slate-200 hover:border-blue-300 hover:shadow-md transition-all duration-200 flex flex-col justify-between group"
             >
               <div>
-                <div className="flex items-center justify-between text-xs font-semibold text-gray-500 mb-4">
-                  <span className="text-[#00a887] bg-[#e6f7f3] px-3 py-1 rounded-full">
+                <div className="flex items-center justify-between text-xs font-medium text-slate-500 mb-3.5">
+                  <span className="text-blue-700 bg-blue-50 border border-blue-200/60 px-2.5 py-0.5 rounded-md font-semibold text-[11px]">
                     {item.tag}
                   </span>
-                  <div className="flex items-center space-x-3 text-gray-400">
+                  <div className="flex items-center space-x-2.5 text-slate-500 tabular-nums text-xs">
                     <span className="flex items-center space-x-1">
-                      <Clock className="w-3.5 h-3.5" />
+                      <Clock className="w-3.5 h-3.5 text-slate-400" />
                       <span>{item.readTime}</span>
                     </span>
-                    <span>·</span>
+                    <span className="text-slate-300">·</span>
                     <span>{item.date}</span>
                   </div>
                 </div>
 
-                <h2 className="text-xl sm:text-2xl font-semibold text-[#082029] group-hover:text-[#00a887] transition-colors leading-snug mb-4">
-                  {item.title}
-                </h2>
+                <Link href={`/research/${item.id}`}>
+                  <h2 className="text-lg sm:text-xl font-bold text-[#0B132B] group-hover:text-blue-700 transition-colors leading-snug mb-3">
+                    {item.title}
+                  </h2>
+                </Link>
 
-                <p className="text-sm sm:text-base text-gray-700 font-normal leading-relaxed mb-6">
+                <p className="text-xs sm:text-sm text-slate-600 font-normal leading-relaxed mb-5 line-clamp-3">
                   {item.summary}
                 </p>
 
                 {/* Key Takeaways Box */}
-                <div className="p-4 sm:p-5 rounded-2xl bg-[#f8fafc] border border-gray-100 text-xs sm:text-sm text-gray-700 space-y-2 mb-6">
-                  <span className="text-xs font-semibold uppercase text-gray-400 tracking-wider block mb-1">
+                <div className="p-3.5 sm:p-4 rounded-lg bg-slate-50 border border-slate-200/80 text-xs text-slate-700 space-y-2 mb-5">
+                  <span className="text-[11px] font-bold uppercase text-slate-500 tracking-wider block">
                     Key Investment Takeaways
                   </span>
                   {item.keyTakeaways.map((point, idx) => (
                     <div key={idx} className="flex items-start space-x-2">
-                      <CheckCircle className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
-                      <span>{point}</span>
+                      <CheckCircle className="w-3.5 h-3.5 text-emerald-600 shrink-0 mt-0.5" />
+                      <span className="leading-relaxed">{point}</span>
                     </div>
                   ))}
                 </div>
               </div>
 
               {/* Action Links */}
-              <div className="pt-6 border-t border-gray-100 flex items-center justify-between text-xs sm:text-sm font-semibold">
-                <span className="text-gray-400">{item.analyst}</span>
+              <div className="pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-semibold">
+                <span className="text-slate-500">{item.analyst}</span>
 
-                <Link
-                  href={`/shares/${item.stockSlug}`}
-                  className="px-5 py-2.5 rounded-xl bg-[#00a887] hover:bg-[#009476] text-white inline-flex items-center space-x-1.5 transition-all shadow-sm"
-                >
-                  <span>View Stock Data</span>
-                  <ArrowRight className="w-4 h-4" />
-                </Link>
+                <div className="flex items-center space-x-2">
+                  <Link
+                    href={`/research/${item.id}`}
+                    className="px-3 py-1.5 rounded-lg border border-slate-200 text-slate-700 hover:bg-slate-50 hover:text-blue-700 transition-colors inline-flex items-center space-x-1"
+                  >
+                    <span>Read Note</span>
+                  </Link>
+
+                  {item.stockSlug && (
+                    <Link
+                      href={`/shares/${item.stockSlug}`}
+                      className="px-3.5 py-1.5 rounded-lg bg-blue-700 hover:bg-blue-800 text-white inline-flex items-center space-x-1 transition-colors shadow-xs"
+                    >
+                      <span>Stock Data</span>
+                      <ArrowRight className="w-3.5 h-3.5" />
+                    </Link>
+                  )}
+                </div>
               </div>
             </div>
           ))}

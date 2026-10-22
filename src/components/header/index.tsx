@@ -1,12 +1,21 @@
-import React from 'react'
+import React from 'react';
+import TopTicker from './top-ticker';
+import Navbar from './navbar';
+import { StockItem } from '@/data/unlisted-data';
 
-const Header = () => {
-
-  return (
-    <>
-      header
-    </>
-  )
+interface HeaderProps {
+  onSelectStock?: (stock: StockItem) => void;
+  onOpenEnquiry?: () => void;
 }
 
-export default Header
+export const Header: React.FC<HeaderProps> = ({ onSelectStock, onOpenEnquiry }) => {
+  return (
+    <>
+      <TopTicker />
+      <Navbar onSelectStock={onSelectStock} onOpenEnquiry={onOpenEnquiry} />
+    </>
+  );
+};
+
+export default Header;
+export { TopTicker, Navbar };

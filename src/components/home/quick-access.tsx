@@ -49,63 +49,66 @@ export const QuickAccess: React.FC<QuickAccessProps> = ({ onCategoryClick }) => 
   ];
 
   return (
-    <section className="bg-[#f0f6f4] py-20 sm:py-28 lg:py-36 border-b border-[#dce8e5]">
-      <div className="max-w-[1520px] mx-auto px-6 sm:px-10 lg:px-14 xl:px-16">
-        {/* Section Header with generous margin */}
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-16 sm:mb-20">
+    <section className="bg-slate-50/70 py-12 sm:py-16 border-b border-slate-200">
+      <div className="max-w-[1520px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-14">
+        {/* Section Header */}
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8 sm:mb-10">
           <div>
-            <div className="inline-flex items-center space-x-3 text-xs sm:text-sm font-semibold tracking-wider text-[#00a887] uppercase mb-3.5">
-              <span className="w-10 h-[2.5px] bg-[#00a887]" />
-              <span>Quick Access Portals</span>
+            <div className="inline-flex items-center space-x-2 text-xs font-semibold tracking-wider text-blue-600 uppercase mb-2">
+              <span className="w-6 h-0.5 bg-blue-600" />
+              <span>Market Discovery</span>
             </div>
-            <h2 className="text-4xl sm:text-5xl lg:text-6xl font-semibold tracking-tight text-[#082029]">
+            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900">
               Explore the Unlisted Market
             </h2>
+            <p className="text-sm text-slate-500 mt-1 max-w-2xl">
+              Navigate structured segments of India&apos;s leading private equity and unlisted securities.
+            </p>
           </div>
 
           <Link
             href="/shares"
-            className="text-base sm:text-lg font-semibold text-[#00a887] hover:text-[#008f73] inline-flex items-center space-x-2 transition-colors group shrink-0"
+            className="text-sm font-semibold text-blue-600 hover:text-blue-700 inline-flex items-center space-x-1.5 transition-colors group shrink-0"
           >
-            <span>View all sections</span>
-            <ArrowRight className="w-5 h-5 group-hover:translate-x-1.5 transition-transform" />
+            <span>View All Categories</span>
+            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </Link>
         </div>
 
-        {/* 4 Ultra-Spacious Feature Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-7 xl:gap-8">
+        {/* 4 Feature Cards */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
           {cards.map((card) => {
             const Icon = card.icon;
             return (
               <Link
                 key={card.id}
                 href={card.href}
-                className="group bg-white rounded-[2.2rem] p-9 sm:p-10 xl:p-11 border border-[#dce8e5] hover:border-[#00a887] shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 flex flex-col justify-between min-h-[360px]"
+                className="group bg-white rounded-xl p-6 border border-slate-200 hover:border-blue-400/80 shadow-xs hover:shadow-md transition-all duration-200 flex flex-col justify-between"
               >
                 <div>
                   {/* Icon Header */}
-                  <div className="flex items-center justify-between mb-8">
-                    <div className="w-18 h-18 rounded-2xl bg-[#e6f7f3] text-[#00a887] flex items-center justify-center group-hover:bg-[#00a887] group-hover:text-white transition-all duration-300 shadow-xs">
-                      <Icon className="w-9 h-9" />
+                  <div className="flex items-center justify-between mb-5">
+                    <div className="w-11 h-11 rounded-lg bg-blue-50 border border-blue-100 text-blue-600 flex items-center justify-center group-hover:bg-blue-600 group-hover:text-white transition-colors duration-200">
+                      <Icon className="w-5 h-5" />
                     </div>
-                    <span className="text-xs font-semibold uppercase px-3.5 py-1.5 rounded-full bg-[#f1f5f9] text-slate-700 tracking-wider">
+                    <span className="text-[11px] font-semibold uppercase px-2.5 py-1 rounded-md bg-slate-100 text-slate-700 border border-slate-200 tracking-wider">
                       {card.badge}
                     </span>
                   </div>
 
                   {/* Title & Desc */}
-                  <h3 className="text-2xl sm:text-[26px] font-semibold text-[#082029] mb-3.5 group-hover:text-[#00a887] transition-colors leading-snug">
+                  <h3 className="text-lg font-bold text-slate-900 group-hover:text-blue-600 transition-colors leading-snug">
                     {card.title}
                   </h3>
-                  <p className="text-base text-gray-600 font-normal leading-relaxed">
+                  <p className="text-xs sm:text-sm text-slate-600 font-normal leading-relaxed mt-2">
                     {card.desc}
                   </p>
                 </div>
 
                 {/* Footer link */}
-                <div className="mt-10 pt-6 border-t border-gray-100 flex items-center text-base font-semibold text-[#00a887] group-hover:text-[#008f73]">
-                  <span>Explore section</span>
-                  <ArrowRight className="w-4.5 h-4.5 ml-2 group-hover:translate-x-2 transition-transform" />
+                <div className="mt-6 pt-4 border-t border-slate-100 flex items-center text-xs font-semibold text-blue-600 group-hover:text-blue-700">
+                  <span>Explore category</span>
+                  <ArrowRight className="w-3.5 h-3.5 ml-1.5 group-hover:translate-x-1 transition-transform" />
                 </div>
               </Link>
             );

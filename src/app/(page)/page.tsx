@@ -36,7 +36,7 @@ export default function HomePage() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#f3f8f7] text-[#111827]">
+    <div className="min-h-screen flex flex-col bg-background text-foreground font-sans antialiased">
       {/* 1. Top Ticker & Market Status */}
       <TopTicker />
 

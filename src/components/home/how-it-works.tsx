@@ -9,79 +9,79 @@ interface HowItWorksProps {
 
 export const HowItWorks: React.FC<HowItWorksProps> = ({ onOpenEnquiry }) => {
   return (
-    <section id="how" className="py-14 sm:py-16 bg-white border-b border-[#dce8e5]">
-      <div className="max-w-[1520px] mx-auto px-6 sm:px-10 lg:px-14">
+    <section id="how" className="py-12 sm:py-16 bg-white border-b border-slate-200">
+      <div className="max-w-[1520px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-14">
         {/* Section Header */}
-        <div className="mb-10">
-          <span className="inline-block text-[11px] font-bold tracking-[0.16em] uppercase text-[#00a887] bg-[#e6f7f3] px-3.5 py-1 rounded-full mb-2.5">
-            How it works
+        <div className="mb-8 sm:mb-10">
+          <span className="inline-block text-xs font-semibold tracking-wider uppercase text-blue-700 bg-blue-50 border border-blue-100 px-2.5 py-0.5 rounded mb-2">
+            Execution Process
           </span>
-          <h2 className="text-[28px] sm:text-[36px] font-bold text-[#082029] leading-tight">
-            From enquiry to <em className="font-serif italic text-[#00a887] font-medium">settlement</em>
+          <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 leading-tight">
+            From Enquiry to Settlement
           </h2>
-          <p className="text-[14.5px] text-gray-500 mt-1.5 max-w-[38em]">
-            A guided, concierge process — not a self-serve exchange.
+          <p className="text-sm text-slate-500 mt-1 max-w-xl">
+            A secure, institutional concierge workflow — complete with end-to-end documentation and demat transfer.
           </p>
         </div>
 
         {/* 3 Steps */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {/* Step 1 */}
-          <div className="p-7 rounded-2xl bg-[#f3f8f7] border border-[#dce8e5] flex flex-col justify-between hover:border-[#00a887] hover:shadow-lg hover:shadow-[#00a887]/5 transition-all">
+          <div className="p-6 rounded-xl bg-slate-50/70 border border-slate-200 flex flex-col justify-between hover:border-blue-500/80 hover:shadow-xs transition-all">
             <div>
-              <div className="flex items-center justify-between mb-6">
-                <div className="w-12 h-12 rounded-2xl bg-white border border-[#dce8e5] text-[#00a887] flex items-center justify-center shadow-xs">
-                  <MessageSquare className="w-6 h-6" />
+              <div className="flex items-center justify-between mb-5">
+                <div className="w-11 h-11 rounded-lg bg-blue-50 border border-blue-100 text-blue-700 flex items-center justify-center">
+                  <MessageSquare className="w-5 h-5" />
                 </div>
-                <span className="w-8 h-8 rounded-full bg-[#00a887]/10 text-[#00a887] text-[13px] font-bold flex items-center justify-center">
+                <span className="w-7 h-7 rounded-full bg-blue-100 text-blue-800 text-xs font-bold flex items-center justify-center tabular-nums">
                   1
                 </span>
               </div>
-              <h3 className="font-bold text-[20px] text-[#082029] mb-2.5">
-                Speak to our team
+              <h3 className="font-bold text-lg text-slate-900 mb-2">
+                Consult with Market Specialist
               </h3>
-              <p className="text-[14.5px] text-gray-600 leading-relaxed">
-                Tell a relationship manager what you want to buy or sell. They share the current indicative price and walk you through the share.
+              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                Connect with an experienced relationship manager. Receive current market depth, lot sizes, indicative pricing, and lot availability.
               </p>
             </div>
           </div>
 
           {/* Step 2 */}
-          <div className="p-7 rounded-2xl bg-[#f3f8f7] border border-[#dce8e5] flex flex-col justify-between hover:border-[#00a887] hover:shadow-lg hover:shadow-[#00a887]/5 transition-all">
+          <div className="p-6 rounded-xl bg-slate-50/70 border border-slate-200 flex flex-col justify-between hover:border-blue-500/80 hover:shadow-xs transition-all">
             <div>
-              <div className="flex items-center justify-between mb-6">
-                <div className="w-12 h-12 rounded-2xl bg-white border border-[#dce8e5] text-[#00a887] flex items-center justify-center shadow-xs">
-                  <CreditCard className="w-6 h-6" />
+              <div className="flex items-center justify-between mb-5">
+                <div className="w-11 h-11 rounded-lg bg-blue-50 border border-blue-100 text-blue-700 flex items-center justify-center">
+                  <CreditCard className="w-5 h-5" />
                 </div>
-                <span className="w-8 h-8 rounded-full bg-[#00a887]/10 text-[#00a887] text-[13px] font-bold flex items-center justify-center">
+                <span className="w-7 h-7 rounded-full bg-blue-100 text-blue-800 text-xs font-bold flex items-center justify-center tabular-nums">
                   2
                 </span>
               </div>
-              <h3 className="font-bold text-[20px] text-[#082029] mb-2.5">
-                Settlement
+              <h3 className="font-bold text-lg text-slate-900 mb-2">
+                Settlement &amp; Verification
               </h3>
-              <p className="text-[14.5px] text-gray-600 leading-relaxed">
-                On agreed terms, payment is made to our company bank account and our team begins processing your deal with full documentation.
+              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                Execute formal deal confirmation. Funds are routed via verified corporate banking channels with complete deal documentation.
               </p>
             </div>
           </div>
 
           {/* Step 3 */}
-          <div className="p-7 rounded-2xl bg-[#f3f8f7] border border-[#dce8e5] flex flex-col justify-between hover:border-[#00a887] hover:shadow-lg hover:shadow-[#00a887]/5 transition-all">
+          <div className="p-6 rounded-xl bg-slate-50/70 border border-slate-200 flex flex-col justify-between hover:border-blue-500/80 hover:shadow-xs transition-all">
             <div>
-              <div className="flex items-center justify-between mb-6">
-                <div className="w-12 h-12 rounded-2xl bg-white border border-[#dce8e5] text-[#00a887] flex items-center justify-center shadow-xs">
-                  <CheckCircle2 className="w-6 h-6" />
+              <div className="flex items-center justify-between mb-5">
+                <div className="w-11 h-11 rounded-lg bg-blue-50 border border-blue-100 text-blue-700 flex items-center justify-center">
+                  <CheckCircle2 className="w-5 h-5" />
                 </div>
-                <span className="w-8 h-8 rounded-full bg-[#00a887]/10 text-[#00a887] text-[13px] font-bold flex items-center justify-center">
+                <span className="w-7 h-7 rounded-full bg-blue-100 text-blue-800 text-xs font-bold flex items-center justify-center tabular-nums">
                   3
                 </span>
               </div>
-              <h3 className="font-bold text-[20px] text-[#082029] mb-2.5">
-                Shares delivered
+              <h3 className="font-bold text-lg text-slate-900 mb-2">
+                Direct Demat Credit
               </h3>
-              <p className="text-[14.5px] text-gray-600 leading-relaxed">
-                Once settled, shares are transferred to your demat — typically within 24 hours. We never route shares through third-party accounts.
+              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                Shares are transferred directly to your NSDL/CDSL demat account within 24 hours of settlement. No intermediary holding risk.
               </p>
             </div>
           </div>

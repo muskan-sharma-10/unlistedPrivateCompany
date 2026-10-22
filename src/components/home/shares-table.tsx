@@ -137,26 +137,26 @@ export const SharesTable: React.FC<SharesTableProps> = ({
   return (
     <div id="shares" className="bg-white">
       {/* SECTION 1: Popular unlisted shares (Top picks) */}
-      <section className="py-14 sm:py-16 border-b border-[#dce8e5]">
-        <div className="max-w-[1520px] mx-auto px-6 sm:px-10 lg:px-14">
+      <section className="py-12 sm:py-16 border-b border-slate-200">
+        <div className="max-w-[1520px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-14">
           {/* Header */}
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
             <div>
-              <span className="inline-block text-[11px] font-bold tracking-[0.16em] uppercase text-[#00a887] bg-[#e6f7f3] px-3.5 py-1 rounded-full mb-2.5">
-                Top picks
+              <span className="inline-block text-xs font-semibold tracking-wider uppercase text-blue-700 bg-blue-50 border border-blue-100 px-2.5 py-0.5 rounded mb-2">
+                Top Picks
               </span>
-              <h2 className="text-[28px] sm:text-[36px] font-bold text-[#082029] leading-tight">
-                Popular <em className="font-serif italic text-[#00a887] font-medium">unlisted</em> shares
+              <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 leading-tight">
+                Popular Unlisted Shares
               </h2>
-              <p className="text-[14.5px] text-gray-500 mt-1.5 max-w-[38em]">
-                The most-followed names with investors this month. Prices shown are indicative and for information only.
+              <p className="text-sm text-slate-500 mt-1 max-w-xl">
+                The most actively researched securities by private market investors. Indicative rates for research only.
               </p>
             </div>
             <Link
               href="/shares"
-              className="text-[13.5px] font-semibold text-[#00a887] inline-flex items-center gap-1.5 border border-[#dce8e5] hover:border-[#00a887] px-5 py-2 rounded-2xl self-start sm:self-auto transition-all"
+              className="text-xs sm:text-sm font-semibold text-blue-600 hover:text-blue-700 inline-flex items-center gap-1.5 border border-slate-200 hover:border-blue-500 px-4 py-2 rounded-lg self-start sm:self-auto transition-all"
             >
-              View all shares →
+              View All Shares →
             </Link>
           </div>
 
@@ -165,22 +165,22 @@ export const SharesTable: React.FC<SharesTableProps> = ({
             {(liveShares.length > 0 ? liveShares.slice(0, 4) : popularShares).map((stock) => (
               <div
                 key={stock.id}
-                className="rounded-2xl border border-[#dce8e5] bg-white p-5 hover:border-[#00a887] hover:shadow-xl hover:shadow-[#00a887]/5 hover:-translate-y-1 transition-all flex flex-col justify-between"
+                className="rounded-xl border border-slate-200 bg-white p-5 hover:border-blue-500/80 hover:shadow-md transition-all flex flex-col justify-between"
               >
                 <div>
                   <div className="flex items-start gap-3.5 mb-4">
-                    <div className="w-11 h-11 rounded-xl bg-[#e6f7f3] flex items-center justify-center shrink-0 overflow-hidden">
+                    <div className="w-11 h-11 rounded-lg bg-slate-100 border border-slate-200 flex items-center justify-center shrink-0 overflow-hidden p-1">
                       {stock.logo ? (
                         <img src={stock.logo} alt={stock.name} className="w-full h-full object-contain" />
                       ) : (
-                        <span className="font-bold text-[#00a887] text-sm">{stock.name.substring(0, 2)}</span>
+                        <span className="font-bold text-blue-700 text-xs">{stock.name.substring(0, 2).toUpperCase()}</span>
                       )}
                     </div>
-                    <div>
-                      <h3 className="font-semibold text-[14.5px] text-[#082029] leading-snug line-clamp-2">
+                    <div className="min-w-0">
+                      <h3 className="font-semibold text-sm text-slate-900 leading-snug line-clamp-2">
                         {stock.name}
                       </h3>
-                      <div className="text-[11.5px] text-gray-400 mt-0.5">
+                      <div className="text-xs text-slate-500 mt-0.5">
                         {stock.sector}
                       </div>
                     </div>
@@ -188,31 +188,31 @@ export const SharesTable: React.FC<SharesTableProps> = ({
 
                   {/* Price */}
                   <div className="pt-1 pb-4">
-                    <div className="text-[26px] font-bold text-[#082029] leading-none num">
-                      <span className="rupee">₹</span>{stock.price}
+                    <div className="text-2xl font-bold text-slate-900 leading-none tabular-nums">
+                      <span className="rupee">₹</span>{stock.price.toLocaleString('en-IN')}
                     </div>
-                    <div className="text-[10px] tracking-[0.12em] uppercase font-bold text-[#00a887] mt-1.5">
+                    <div className="text-[10px] tracking-wider uppercase font-semibold text-slate-500 mt-1.5">
                       Indicative
                     </div>
                   </div>
                 </div>
 
                 {/* Footer Buttons */}
-                <div className="flex items-center gap-2 pt-3 border-t border-[#f1f5f9] mt-auto">
+                <div className="flex items-center gap-2 pt-3 border-t border-slate-100 mt-auto">
                   <button
                     type="button"
                     onClick={() => {
                       if (onOpenEnquiry) onOpenEnquiry(stock.name);
                       else onSelectStock(stock);
                     }}
-                    className="flex-1 py-2.5 rounded-xl text-white font-bold text-[13px] bg-[#00a887] hover:bg-[#009476] shadow-sm shadow-[#00a887]/30 transition-all cursor-pointer"
+                    className="flex-1 py-2 rounded-lg text-white font-semibold text-xs bg-blue-600 hover:bg-blue-700 active:bg-blue-800 shadow-xs transition-colors cursor-pointer"
                   >
                     Enquire
                   </button>
                   <button
                     type="button"
                     onClick={() => onSelectStock(stock)}
-                    className="px-4 py-2.5 rounded-xl text-[#082029] font-semibold text-[13px] border border-[#dce8e5] hover:border-[#00a887] hover:text-[#00a887] transition-all cursor-pointer"
+                    className="px-3.5 py-2 rounded-lg text-slate-700 font-semibold text-xs border border-slate-200 hover:border-slate-300 hover:bg-slate-50 transition-colors cursor-pointer"
                   >
                     Details
                   </button>
@@ -224,26 +224,26 @@ export const SharesTable: React.FC<SharesTableProps> = ({
       </section>
 
       {/* SECTION 2: Fresh additions (New arrivals) */}
-      <section className="py-14 sm:py-16 border-b border-[#dce8e5]">
-        <div className="max-w-[1520px] mx-auto px-6 sm:px-10 lg:px-14">
+      <section className="py-12 sm:py-16 border-b border-slate-200">
+        <div className="max-w-[1520px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-14">
           {/* Header */}
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
             <div>
-              <span className="inline-block text-[11px] font-bold tracking-[0.16em] uppercase text-[#00a887] bg-[#e6f7f3] px-3.5 py-1 rounded-full mb-2.5">
-                Fresh additions
+              <span className="inline-block text-xs font-semibold tracking-wider uppercase text-blue-700 bg-blue-50 border border-blue-100 px-2.5 py-0.5 rounded mb-2">
+                Fresh Additions
               </span>
-              <h2 className="text-[28px] sm:text-[36px] font-bold text-[#082029] leading-tight">
-                New <em className="font-serif italic text-[#00a887] font-medium">arrivals</em>
+              <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 leading-tight">
+                New Arrivals
               </h2>
-              <p className="text-[14.5px] text-gray-500 mt-1.5 max-w-[38em]">
-                Recently added names. Research the company, then contact us when you’re ready.
+              <p className="text-sm text-slate-500 mt-1 max-w-xl">
+                Recently added private companies and upcoming IPO prospects. Research fundamentals before participating.
               </p>
             </div>
             <Link
               href="/shares"
-              className="text-[13.5px] font-semibold text-[#00a887] inline-flex items-center gap-1.5 border border-[#dce8e5] hover:border-[#00a887] px-5 py-2 rounded-2xl self-start sm:self-auto transition-all"
+              className="text-xs sm:text-sm font-semibold text-blue-600 hover:text-blue-700 inline-flex items-center gap-1.5 border border-slate-200 hover:border-blue-500 px-4 py-2 rounded-lg self-start sm:self-auto transition-all"
             >
-              View all →
+              View All →
             </Link>
           </div>
 
@@ -252,18 +252,18 @@ export const SharesTable: React.FC<SharesTableProps> = ({
             {newArrivals.map((stock) => (
               <div
                 key={stock.id}
-                className="rounded-2xl border border-[#dce8e5] bg-white p-5 hover:border-[#00a887] hover:shadow-xl hover:shadow-[#00a887]/5 hover:-translate-y-1 transition-all flex flex-col justify-between"
+                className="rounded-xl border border-slate-200 bg-white p-5 hover:border-blue-500/80 hover:shadow-md transition-all flex flex-col justify-between"
               >
                 <div>
                   <div className="flex items-start gap-3.5 mb-4">
-                    <div className="w-11 h-11 rounded-xl bg-[#e6f7f3] text-[#00a887] flex items-center justify-center font-bold text-[16px] shrink-0">
+                    <div className="w-11 h-11 rounded-lg bg-blue-50 border border-blue-100 text-blue-700 flex items-center justify-center font-bold text-sm shrink-0">
                       {stock.badge}
                     </div>
-                    <div>
-                      <h3 className="font-semibold text-[14.5px] text-[#082029] leading-snug line-clamp-2">
+                    <div className="min-w-0">
+                      <h3 className="font-semibold text-sm text-slate-900 leading-snug line-clamp-2">
                         {stock.name}
                       </h3>
-                      <div className="text-[11.5px] text-gray-400 mt-0.5">
+                      <div className="text-xs text-slate-500 mt-0.5">
                         {stock.sector}
                       </div>
                     </div>
@@ -271,37 +271,37 @@ export const SharesTable: React.FC<SharesTableProps> = ({
 
                   {/* Price */}
                   <div className="pt-1 pb-4">
-                    <div className="text-[26px] font-bold text-[#082029] leading-none num">
+                    <div className="text-2xl font-bold text-slate-900 leading-none tabular-nums">
                       {stock.price > 0 ? (
                         <>
                           <span className="rupee">₹</span>{stock.price.toLocaleString('en-IN')}
                         </>
                       ) : (
-                        <span className="text-[#00a887] text-[18px]">DRHP / Pre-IPO</span>
+                        <span className="text-blue-600 text-base font-semibold">DRHP / Pre-IPO</span>
                       )}
                     </div>
-                    <div className="text-[10px] tracking-[0.12em] uppercase font-bold text-[#00a887] mt-1.5">
+                    <div className="text-[10px] tracking-wider uppercase font-semibold text-slate-500 mt-1.5">
                       Indicative
                     </div>
                   </div>
                 </div>
 
                 {/* Footer Buttons */}
-                <div className="flex items-center gap-2 pt-3 border-t border-[#f1f5f9] mt-auto">
+                <div className="flex items-center gap-2 pt-3 border-t border-slate-100 mt-auto">
                   <button
                     type="button"
                     onClick={() => {
                       if (onOpenEnquiry) onOpenEnquiry(stock.name);
                       else onSelectStock(stock);
                     }}
-                    className="flex-1 py-2.5 rounded-xl text-white font-bold text-[13px] bg-[#00a887] hover:bg-[#009476] shadow-sm shadow-[#00a887]/30 transition-all cursor-pointer"
+                    className="flex-1 py-2 rounded-lg text-white font-semibold text-xs bg-blue-600 hover:bg-blue-700 active:bg-blue-800 shadow-xs transition-colors cursor-pointer"
                   >
                     Enquire
                   </button>
                   <button
                     type="button"
                     onClick={() => onSelectStock(stock)}
-                    className="px-4 py-2.5 rounded-xl text-[#082029] font-semibold text-[13px] border border-[#dce8e5] hover:border-[#00a887] hover:text-[#00a887] transition-all cursor-pointer"
+                    className="px-3.5 py-2 rounded-lg text-slate-700 font-semibold text-xs border border-slate-200 hover:border-slate-300 hover:bg-slate-50 transition-colors cursor-pointer"
                   >
                     Details
                   </button>
