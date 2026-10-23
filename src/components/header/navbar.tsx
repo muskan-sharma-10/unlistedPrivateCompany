@@ -19,10 +19,17 @@ import {
   Info,
   CheckCircle2,
   Lock,
-  MessageSquareShare
+  MessageSquareShare,
+  LogOut,
+  UserCheck,
+  Eye,
+  EyeOff,
+  AlertTriangle,
+  Loader2
 } from 'lucide-react';
 import { STOCKS_DATA, StockItem } from '@/data/unlisted-data';
 import EnquiryModal from '@/components/ui/enquiry-modal';
+import { useAuth } from '@/lib/supabase/auth-context';
 
 interface NavbarProps {
   onSelectStock?: (stock: StockItem) => void;
@@ -32,6 +39,7 @@ interface NavbarProps {
 export const Navbar: React.FC<NavbarProps> = ({ onSelectStock, onOpenEnquiry }) => {
   const pathname = usePathname();
   const router = useRouter();
+  const { user, signIn, signUp, signOut } = useAuth();
 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -42,11 +50,16 @@ export const Navbar: React.FC<NavbarProps> = ({ onSelectStock, onOpenEnquiry }) 
   // Fallback internal enquiry modal when onOpenEnquiry is not provided
   const [internalEnquiryOpen, setInternalEnquiryOpen] = useState(false);
 
-  // Sign In modal state
+  // Supabase Investor Sign In / Registration modal state
   const [isSignInOpen, setIsSignInOpen] = useState(false);
-  const [signInMobile, setSignInMobile] = useState('');
-  const [otpSent, setOtpSent] = useState(false);
-  const [otpValue, setOtpValue] = useState('');
+  const [authMode, setAuthMode] = useState<'signin' | 'signup'>('signin');
+  const [authEmail, setAuthEmail] = useState('');
+  const [authPassword, setAuthPassword] = useState('');
+  const [authFullName, setAuthFullName] = useState('');
+  const [authShowPassword, setAuthShowPassword] = useState(false);
+  const [authError, setAuthError] = useState<string | null>(null);
+  const [authSuccess, setAuthSuccess] = useState<string | null>(null);
+  const [isAuthSubmitting, setIsAuthSubmitting] = useState(false);
 
   // Dropdown states
   const [moreDropdownOpen, setMoreDropdownOpen] = useState(false);
@@ -358,14 +371,38 @@ export const Navbar: React.FC<NavbarProps> = ({ onSelectStock, onOpenEnquiry }) 
               </kbd>
             </button>
 
-            {/* Desktop Auth Button */}
-            <button
-              type="button"
-              onClick={() => setIsSignInOpen(true)}
-              className="hidden sm:inline-flex items-center h-9 px-3.5 rounded-md text-xs sm:text-[13px] font-medium text-slate-700 hover:text-primary border border-border hover:border-slate-300 hover:bg-slate-50 transition-colors bg-white shadow-2xs"
-            >
-              Sign in
-            </button>
+            {/* Desktop Auth Controls */}
+            {user ? (
+              <div className="hidden sm:inline-flex items-center space-x-1.5">
+                <Link
+                  href="/portfolio"
+                  className="inline-flex items-center space-x-1.5 h-9 px-3 rounded-md text-xs font-semibold text-blue-700 bg-blue-50 border border-blue-200 hover:bg-blue-100 transition-colors shadow-2xs"
+                >
+                  <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                  <span>My Portfolio</span>
+                </Link>
+                <button
+                  type="button"
+                  onClick={() => signOut()}
+                  className="h-9 px-2.5 rounded-md text-xs font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-100 border border-border transition-colors bg-white shadow-2xs"
+                  title="Sign Out"
+                >
+                  <LogOut className="w-3.5 h-3.5" />
+                </button>
+              </div>
+            ) : (
+              <button
+                type="button"
+                onClick={() => {
+                  setAuthError(null);
+                  setAuthSuccess(null);
+                  setIsSignInOpen(true);
+                }}
+                className="hidden sm:inline-flex items-center h-9 px-3.5 rounded-md text-xs sm:text-[13px] font-medium text-slate-700 hover:text-primary border border-border hover:border-slate-300 hover:bg-slate-50 transition-colors bg-white shadow-2xs"
+              >
+                Sign in
+              </button>
+            )}
 
             {/* Open Account CTA */}
             <button
@@ -485,16 +522,42 @@ export const Navbar: React.FC<NavbarProps> = ({ onSelectStock, onOpenEnquiry }) 
                 <ArrowRight className="w-4 h-4" />
               </button>
 
-              <button
-                type="button"
-                onClick={() => {
-                  setMobileMenuOpen(false);
-                  setIsSignInOpen(true);
-                }}
-                className="w-full text-center py-2.5 rounded-md border border-border text-xs sm:text-sm font-medium text-slate-700 hover:bg-slate-50 transition-colors"
-              >
-                Sign in
-              </button>
+              {user ? (
+                <div className="flex flex-col gap-2">
+                  <Link
+                    href="/portfolio"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="w-full text-center py-2.5 rounded-md bg-blue-50 border border-blue-200 text-xs sm:text-sm font-semibold text-blue-700 flex items-center justify-center space-x-2"
+                  >
+                    <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                    <span>My Portfolio ({user.email})</span>
+                  </Link>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setMobileMenuOpen(false);
+                      signOut();
+                    }}
+                    className="w-full text-center py-2.5 rounded-md border border-border text-xs sm:text-sm font-medium text-slate-700 hover:bg-slate-50 transition-colors flex items-center justify-center space-x-1.5"
+                  >
+                    <LogOut className="w-3.5 h-3.5" />
+                    <span>Sign out</span>
+                  </button>
+                </div>
+              ) : (
+                <button
+                  type="button"
+                  onClick={() => {
+                    setMobileMenuOpen(false);
+                    setAuthError(null);
+                    setAuthSuccess(null);
+                    setIsSignInOpen(true);
+                  }}
+                  className="w-full text-center py-2.5 rounded-md border border-border text-xs sm:text-sm font-medium text-slate-700 hover:bg-slate-50 transition-colors"
+                >
+                  Sign in
+                </button>
+              )}
             </div>
 
             {/* Direct Support Contact Bar */}
@@ -661,7 +724,9 @@ export const Navbar: React.FC<NavbarProps> = ({ onSelectStock, onOpenEnquiry }) 
                 <span className="text-[10px] font-semibold uppercase tracking-wider text-blue-400 block mb-0.5">
                   Private Market Demat Access
                 </span>
-                <h3 className="text-base font-bold text-white">Investor Sign In</h3>
+                <h3 className="text-base font-bold text-white">
+                  {authMode === 'signin' ? 'Investor Sign In' : 'Register Investor Account'}
+                </h3>
               </div>
               <button
                 type="button"
@@ -672,94 +737,203 @@ export const Navbar: React.FC<NavbarProps> = ({ onSelectStock, onOpenEnquiry }) 
               </button>
             </div>
 
+            {/* Auth Mode Switcher */}
+            <div className="grid grid-cols-2 p-1 bg-slate-100 border-b border-border text-xs">
+              <button
+                type="button"
+                onClick={() => {
+                  setAuthMode('signin');
+                  setAuthError(null);
+                  setAuthSuccess(null);
+                }}
+                className={`py-1.5 rounded-md font-semibold transition-all ${
+                  authMode === 'signin'
+                    ? 'bg-white text-primary shadow-xs'
+                    : 'text-slate-600 hover:text-slate-900'
+                }`}
+              >
+                Sign In
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  setAuthMode('signup');
+                  setAuthError(null);
+                  setAuthSuccess(null);
+                }}
+                className={`py-1.5 rounded-md font-semibold transition-all ${
+                  authMode === 'signup'
+                    ? 'bg-white text-primary shadow-xs'
+                    : 'text-slate-600 hover:text-slate-900'
+                }`}
+              >
+                Register (New Demat)
+              </button>
+            </div>
+
             {/* Form */}
             <div className="p-5 space-y-4">
-              {!otpSent ? (
-                <form
-                  onSubmit={(e) => {
-                    e.preventDefault();
-                    if (signInMobile.trim().length >= 10) setOtpSent(true);
-                  }}
-                  className="space-y-4"
-                >
-                  <p className="text-xs text-muted-foreground leading-relaxed">
-                    Enter your registered 10-digit mobile number or Client ID to access order tracking and transaction history.
-                  </p>
+              <form
+                onSubmit={async (e) => {
+                  e.preventDefault();
+                  setAuthError(null);
+                  setAuthSuccess(null);
+
+                  if (!authEmail || !authEmail.includes('@')) {
+                    setAuthError('Please enter a valid email address.');
+                    return;
+                  }
+
+                  if (!authPassword || authPassword.length < 6) {
+                    setAuthError('Password must be at least 6 characters long.');
+                    return;
+                  }
+
+                  if (authMode === 'signup' && !authFullName.trim()) {
+                    setAuthError('Please enter your full name.');
+                    return;
+                  }
+
+                  setIsAuthSubmitting(true);
+
+                  try {
+                    if (authMode === 'signin') {
+                      const result = await signIn(authEmail, authPassword);
+                      if (!result.success) {
+                        setAuthError(result.error || 'Authentication failed. Please verify your credentials.');
+                        setIsAuthSubmitting(false);
+                        return;
+                      }
+                      setAuthSuccess('Authenticated! Accessing portfolio...');
+                      setTimeout(() => {
+                        setIsSignInOpen(false);
+                        setIsAuthSubmitting(false);
+                        router.push('/portfolio');
+                      }, 800);
+                    } else {
+                      const result = await signUp(authEmail, authPassword, authFullName);
+                      if (!result.success) {
+                        setAuthError(result.error || 'Registration failed. Please try again.');
+                        setIsAuthSubmitting(false);
+                        return;
+                      }
+                      setAuthSuccess(result.message || 'Registration successful! Accessing portfolio...');
+                      setTimeout(() => {
+                        setIsSignInOpen(false);
+                        setIsAuthSubmitting(false);
+                        router.push('/portfolio');
+                      }, 1000);
+                    }
+                  } catch (err: any) {
+                    setAuthError('An unexpected authentication error occurred.');
+                    setIsAuthSubmitting(false);
+                  }
+                }}
+                className="space-y-3.5"
+              >
+                {authMode === 'signup' && (
                   <div>
                     <label className="text-xs font-medium text-slate-700 block mb-1">
-                      Mobile Number / Demat Client ID *
+                      Full Name *
                     </label>
                     <input
                       type="text"
                       required
-                      value={signInMobile}
-                      onChange={(e) => setSignInMobile(e.target.value)}
-                      placeholder="e.g. 9876543210"
+                      value={authFullName}
+                      onChange={(e) => setAuthFullName(e.target.value)}
+                      placeholder="e.g. Rahul Sharma"
                       className="w-full px-3 py-2 rounded-md border border-input text-xs sm:text-sm focus:border-primary focus:ring-1 focus:ring-primary outline-none"
                     />
                   </div>
-                  <button
-                    type="submit"
-                    className="w-full py-2.5 rounded-md bg-primary hover:bg-primary/90 text-white font-medium text-xs sm:text-sm transition-all shadow-xs"
-                  >
-                    Send One-Time Password (OTP)
-                  </button>
-                </form>
-              ) : (
-                <form
-                  onSubmit={(e) => {
-                    e.preventDefault();
-                    alert(`Welcome back! Demat portfolio authenticated for ${signInMobile}.`);
-                    setIsSignInOpen(false);
-                    setOtpSent(false);
-                  }}
-                  className="space-y-4"
-                >
-                  <div className="p-3 rounded-md bg-emerald-50 text-emerald-800 border border-emerald-200 text-xs font-medium flex items-center space-x-2">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-                    <span>OTP sent to +91 {signInMobile}. (Test demo OTP: 1234)</span>
-                  </div>
-                  <div>
-                    <label className="text-xs font-medium text-slate-700 block mb-1">
-                      Enter 4-Digit OTP *
-                    </label>
-                    <input
-                      type="text"
-                      maxLength={4}
-                      required
-                      value={otpValue}
-                      onChange={(e) => setOtpValue(e.target.value)}
-                      placeholder="1234"
-                      className="w-full px-3 py-2 rounded-md border border-input text-sm text-center font-mono tracking-widest text-base focus:border-primary focus:ring-1 focus:ring-primary outline-none"
-                    />
-                  </div>
-                  <button
-                    type="submit"
-                    className="w-full py-2.5 rounded-md bg-primary hover:bg-primary/90 text-white font-medium text-xs sm:text-sm transition-all shadow-xs"
-                  >
-                    Verify &amp; Access Portfolio
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setOtpSent(false)}
-                    className="w-full text-center text-xs text-muted-foreground hover:text-slate-800"
-                  >
-                    Change Mobile Number
-                  </button>
-                </form>
-              )}
+                )}
 
-              <div className="pt-2 border-t border-border text-center text-xs text-muted-foreground space-y-1">
-                <p>New to unlisted equities?</p>
+                <div>
+                  <label className="text-xs font-medium text-slate-700 block mb-1">
+                    Registered Email Address *
+                  </label>
+                  <input
+                    type="email"
+                    required
+                    value={authEmail}
+                    onChange={(e) => setAuthEmail(e.target.value)}
+                    placeholder="investor@example.com"
+                    className="w-full px-3 py-2 rounded-md border border-input text-xs sm:text-sm focus:border-primary focus:ring-1 focus:ring-primary outline-none"
+                  />
+                </div>
+
+                <div>
+                  <div className="flex items-center justify-between mb-1">
+                    <label className="text-xs font-medium text-slate-700">
+                      Password *
+                    </label>
+                    <span className="text-[10px] text-muted-foreground">Min 6 chars</span>
+                  </div>
+                  <div className="relative">
+                    <input
+                      type={authShowPassword ? 'text' : 'password'}
+                      required
+                      value={authPassword}
+                      onChange={(e) => setAuthPassword(e.target.value)}
+                      placeholder="••••••••"
+                      className="w-full pl-3 pr-9 py-2 rounded-md border border-input text-xs sm:text-sm focus:border-primary focus:ring-1 focus:ring-primary outline-none"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setAuthShowPassword(!authShowPassword)}
+                      className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
+                    >
+                      {authShowPassword ? <EyeOff className="w-3.5 h-3.5" /> : <Eye className="w-3.5 h-3.5" />}
+                    </button>
+                  </div>
+                </div>
+
+                {authError && (
+                  <div className="p-2.5 rounded-md bg-rose-50 border border-rose-200 text-rose-800 text-xs font-medium flex items-start space-x-1.5">
+                    <AlertTriangle className="w-4 h-4 text-rose-600 shrink-0 mt-0.5" />
+                    <span>{authError}</span>
+                  </div>
+                )}
+
+                {authSuccess && (
+                  <div className="p-2.5 rounded-md bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-medium flex items-start space-x-1.5">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+                    <span>{authSuccess}</span>
+                  </div>
+                )}
+
+                <button
+                  type="submit"
+                  disabled={isAuthSubmitting}
+                  className="w-full py-2.5 rounded-md bg-primary hover:bg-primary/90 text-white font-medium text-xs sm:text-sm transition-all shadow-xs flex items-center justify-center space-x-2 disabled:opacity-70 disabled:cursor-not-allowed"
+                >
+                  {isAuthSubmitting ? (
+                    <>
+                      <Loader2 className="w-4 h-4 animate-spin" />
+                      <span>{authMode === 'signin' ? 'Authenticating...' : 'Registering...'}</span>
+                    </>
+                  ) : (
+                    <span>{authMode === 'signin' ? 'Sign In to Demat Access →' : 'Complete Registration →'}</span>
+                  )}
+                </button>
+              </form>
+
+              <div className="pt-2 border-t border-border flex items-center justify-between text-xs text-muted-foreground">
+                <Link
+                  href="/login"
+                  onClick={() => setIsSignInOpen(false)}
+                  className="hover:text-primary transition-colors"
+                >
+                  Full Login Page ↗
+                </Link>
                 <button
                   type="button"
                   onClick={() => {
                     setIsSignInOpen(false);
                     triggerEnquiry();
                   }}
-                  className="text-primary font-medium hover:underline underline-offset-2"
+                  className="text-primary font-medium hover:underline"
                 >
-                  Open an account with our Dealing Desk →
+                  Dealing Desk Inquiry →
                 </button>
               </div>
             </div>

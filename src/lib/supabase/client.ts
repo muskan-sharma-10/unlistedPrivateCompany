@@ -1,3 +1,4 @@
+import { createBrowserClient } from '@supabase/ssr';
 import { createClient as createSupabaseClient } from '@supabase/supabase-js';
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://yxvfciewtuvpljaoukyu.supabase.co';
@@ -6,16 +7,24 @@ const supabaseKey =
   process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY ||
   'sb_publishable_RY-xubaK5noTlmrlrg0bIw_HahknsC4';
 
-let clientInstance: any = null;
+let browserClientInstance: any = null;
 
-export function getSupabase(): any {
-  if (!clientInstance && supabaseUrl && supabaseKey) {
-    clientInstance = createSupabaseClient(supabaseUrl, supabaseKey, {
-      auth: {
-        persistSession: true,
-        autoRefreshToken: true,
-      },
-    });
+/**
+ * Creates or retrieves a singleton browser Supabase client with SSR cookie support.
+ */
+export function getBrowserSupabase(): any {
+  if (typeof window === 'undefined') {
+    return createSupabaseClient(supabaseUrl, supabaseKey);
   }
-  return clientInstance;
+  if (!browserClientInstance && supabaseUrl && supabaseKey) {
+    browserClientInstance = createBrowserClient(supabaseUrl, supabaseKey);
+  }
+  return browserClientInstance;
+}
+
+/**
+ * Backward-compatible export for existing query modules
+ */
+export function getSupabase(): any {
+  return getBrowserSupabase();
 }

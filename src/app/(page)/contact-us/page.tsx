@@ -22,7 +22,7 @@ import { submitLeadEnquiry, getPortalWebsiteSettings, PortalSettings } from '@/l
 
 export default function ContactUsPage() {
   const [settings, setSettings] = useState<PortalSettings | null>(null);
-  const [dealType, setDealType] = useState<'buy' | 'sell' | 'esop' | 'partner'>('buy');
+  const [inquiryType, setInquiryType] = useState<string>('');
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
   const [email, setEmail] = useState('');
@@ -31,6 +31,7 @@ export default function ContactUsPage() {
   const [message, setMessage] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   React.useEffect(() => {
     getPortalWebsiteSettings().then(setSettings).catch(() => {});
@@ -38,30 +39,49 @@ export default function ContactUsPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setErrorMessage(null);
+
+    if (!inquiryType) {
+      setErrorMessage('Please select an Inquiry Type before submitting.');
+      return;
+    }
+
     setIsSubmitting(true);
 
     try {
-      await submitLeadEnquiry({
-        name,
-        phone,
-        email,
-        stock_name: stockName || undefined,
-        quantity: quantity ? parseInt(quantity, 10) : undefined,
-        message,
-        enquiry_type: dealType === 'buy' ? 'buy_order' : dealType === 'sell' ? 'sell_order' : dealType === 'esop' ? 'esop_liquidity' : 'partner_desk',
-        source_page: '/contact-us',
+      const response = await fetch('/api/inquiry/dealing', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          inquiryType,
+          name,
+          phone,
+          email: email || undefined,
+          stockName,
+          quantity: quantity || undefined,
+          message: message || undefined,
+          sourcePage: '/contact-us',
+        }),
       });
+
+      const data = await response.json();
+
+      if (!response.ok || !data.success) {
+        setErrorMessage(data.error || 'Failed to submit dealing inquiry. Please try again.');
+        return;
+      }
+
       setSubmitted(true);
+      setInquiryType('');
       setName('');
       setPhone('');
       setEmail('');
       setStockName('');
       setQuantity('');
       setMessage('');
-      setTimeout(() => setSubmitted(false), 5000);
-    } catch {
-      setSubmitted(true);
-      setTimeout(() => setSubmitted(false), 5000);
+      setTimeout(() => setSubmitted(false), 7000);
+    } catch (err: any) {
+      setErrorMessage('Network error while transmitting request. Please check your connection and retry.');
     } finally {
       setIsSubmitting(false);
     }
@@ -110,31 +130,31 @@ export default function ContactUsPage() {
                 </p>
               </div>
 
-              {/* Deal Type Switcher */}
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-1.5 p-1 bg-slate-100 rounded-lg">
-                {[
-                  { id: 'buy', label: 'Buy Shares' },
-                  { id: 'sell', label: 'Sell Shares' },
-                  { id: 'esop', label: 'Sell ESOPs' },
-                  { id: 'partner', label: 'Partner With Us' },
-                ].map((t) => (
-                  <button
-                    key={t.id}
-                    type="button"
-                    onClick={() => setDealType(t.id as any)}
-                    className={`py-2 rounded-md text-xs font-semibold transition-colors ${
-                      dealType === t.id
-                        ? 'bg-blue-700 text-white shadow-xs'
-                        : 'text-slate-700 hover:text-slate-900'
-                    }`}
-                  >
-                    {t.label}
-                  </button>
-                ))}
-              </div>
-
               {/* Form */}
               <form onSubmit={handleSubmit} className="space-y-4">
+                {/* Inquiry Type Mandatory Dropdown */}
+                <div>
+                  <label htmlFor="dealing-inquiry-type" className="text-xs font-semibold text-slate-700 block mb-1">
+                    Inquiry Type *
+                  </label>
+                  <select
+                    id="dealing-inquiry-type"
+                    required
+                    value={inquiryType}
+                    onChange={(e) => {
+                      setInquiryType(e.target.value);
+                      if (errorMessage) setErrorMessage(null);
+                    }}
+                    className="w-full text-xs sm:text-sm text-slate-900 bg-slate-50 border border-slate-200 rounded-lg px-3 py-2.5 outline-none focus:bg-white focus:border-blue-600 focus:ring-1 focus:ring-blue-600 transition-colors cursor-pointer"
+                  >
+                    <option value="" disabled>-- Select Inquiry Type * --</option>
+                    <option value="Buy Shares">Buy Shares</option>
+                    <option value="Sell Shares">Sell Shares</option>
+                    <option value="Sell ESOPs">Sell ESOPs</option>
+                    <option value="Partner With Us">Partner With Us</option>
+                  </select>
+                </div>
+
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <label className="text-xs font-semibold text-slate-700 block mb-1">
@@ -220,16 +240,23 @@ export default function ContactUsPage() {
                   />
                 </div>
 
+                {errorMessage && (
+                  <div className="p-3 rounded-lg bg-rose-50 border border-rose-200 text-rose-800 text-xs font-medium flex items-start space-x-2">
+                    <AlertTriangle className="w-4 h-4 text-rose-600 shrink-0 mt-0.5" />
+                    <span>{errorMessage}</span>
+                  </div>
+                )}
+
                 {submitted ? (
-                  <div className="p-3 rounded-lg bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-semibold text-center flex items-center justify-center space-x-1.5">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-600" />
-                    <span>Inquiry logged! Dealing desk calling you shortly.</span>
+                  <div className="p-3.5 rounded-lg bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-semibold text-center flex items-center justify-center space-x-2">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+                    <span>Inquiry logged &amp; delivered to dealing desk (info.biswal01@gmail.com)! Our dealing team is calling you shortly.</span>
                   </div>
                 ) : (
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full py-2.5 rounded-lg bg-blue-700 hover:bg-blue-800 text-white text-xs sm:text-sm font-semibold shadow-xs transition-colors text-center flex items-center justify-center space-x-2"
+                    className="w-full py-2.5 rounded-lg bg-blue-700 hover:bg-blue-800 text-white text-xs sm:text-sm font-semibold shadow-xs transition-colors text-center flex items-center justify-center space-x-2 disabled:opacity-70 disabled:cursor-not-allowed"
                   >
                     {isSubmitting ? (
                       <>

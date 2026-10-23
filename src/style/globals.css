@@ -4,41 +4,56 @@
 
 @layer base {
   :root {
-    --background: 210 40% 98%;          /* #F8FAFC - Clean financial slate */
-    --foreground: 222.2 84% 4.9%;       /* #0F172A - Deep slate text */
+    --background: 210 40% 98%;
+    /* #F8FAFC - Clean financial slate */
+    --foreground: 222.2 84% 4.9%;
+    /* #0F172A - Deep slate text */
 
-    --card: 0 0% 100%;                  /* #FFFFFF - Pure white surface */
-    --card-foreground: 222.2 84% 4.9%;  /* #0F172A */
+    --card: 0 0% 100%;
+    /* #FFFFFF - Pure white surface */
+    --card-foreground: 222.2 84% 4.9%;
+    /* #0F172A */
 
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
 
-    --primary: 221.2 83.2% 47.8%;       /* #1D4ED8 - Financial Blue */
+    --primary: 221.2 83.2% 47.8%;
+    /* #1D4ED8 - Financial Blue */
     --primary-foreground: 210 40% 98%;
 
-    --secondary: 210 40% 96.1%;         /* #F1F5F9 */
+    --secondary: 210 40% 96.1%;
+    /* #F1F5F9 */
     --secondary-foreground: 222.2 47.4% 11.2%;
 
-    --muted: 210 40% 96.1%;             /* #F1F5F9 */
-    --muted-foreground: 215.4 16.3% 46.9%; /* #64748B - Secondary metadata */
+    --muted: 210 40% 96.1%;
+    /* #F1F5F9 */
+    --muted-foreground: 215.4 16.3% 46.9%;
+    /* #64748B - Secondary metadata */
 
     --accent: 210 40% 96.1%;
     --accent-foreground: 222.2 47.4% 11.2%;
 
-    --destructive: 0 84.2% 41.8%;       /* #B91C1C - Negative market red */
+    --destructive: 0 84.2% 41.8%;
+    /* #B91C1C - Negative market red */
     --destructive-foreground: 210 40% 98%;
 
-    --success: 142.1 70.6% 29.2%;       /* #15803D - Positive market green */
+    --success: 142.1 70.6% 29.2%;
+    /* #15803D - Positive market green */
     --success-foreground: 210 40% 98%;
 
-    --warning: 37.7 89% 32.5%;          /* #A16207 - Warning / Under Review */
+    --warning: 37.7 89% 32.5%;
+    /* #A16207 - Warning / Under Review */
     --warning-foreground: 210 40% 98%;
 
-    --border: 214.3 31.8% 91.4%;        /* #E2E8F0 - Crisp 1px borders */
-    --input: 214.3 31.8% 91.4%;         /* #E2E8F0 */
-    --ring: 221.2 83.2% 47.8%;          /* #1D4ED8 */
+    --border: 214.3 31.8% 91.4%;
+    /* #E2E8F0 - Crisp 1px borders */
+    --input: 214.3 31.8% 91.4%;
+    /* #E2E8F0 */
+    --ring: 221.2 83.2% 47.8%;
+    /* #1D4ED8 */
 
-    --radius: 0.5rem;                   /* 8px standard */
+    --radius: 0.5rem;
+    /* 8px standard */
   }
 
   * {
@@ -59,7 +74,9 @@
 }
 
 /* Tabular Financial Numbers for Indian Market Data */
-.tabular-nums, .num, .font-mono {
+.tabular-nums,
+.num,
+.font-mono {
   font-variant-numeric: tabular-nums;
   font-feature-settings: 'tnum', 'cv02', 'cv03', 'cv04', 'cv11';
 }
@@ -102,6 +119,7 @@
   0% {
     transform: translateX(0%);
   }
+
   100% {
     transform: translateX(-50%);
   }
@@ -119,10 +137,13 @@
 
 /* Pulse indicator animation */
 @keyframes pulseDot {
-  0%, 100% {
+
+  0%,
+  100% {
     opacity: 1;
     transform: scale(1);
   }
+
   50% {
     opacity: 0.4;
     transform: scale(0.85);

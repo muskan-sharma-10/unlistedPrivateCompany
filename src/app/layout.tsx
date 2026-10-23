@@ -38,6 +38,8 @@ export const metadata: Metadata = {
   },
 };
 
+import { AuthProvider } from "@/lib/supabase/auth-context";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -46,7 +48,9 @@ export default function RootLayout({
   return (
     <html lang="en" className={`scroll-smooth ${inter.variable}`}>
       <body className="min-h-screen bg-background text-foreground font-sans antialiased">
-        {children}
+        <AuthProvider>
+          {children}
+        </AuthProvider>
       </body>
     </html>
   );
