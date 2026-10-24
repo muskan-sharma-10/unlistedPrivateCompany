@@ -61,6 +61,20 @@ export const Navbar: React.FC<NavbarProps> = ({ onSelectStock, onOpenEnquiry }) 
   const [authSuccess, setAuthSuccess] = useState<string | null>(null);
   const [isAuthSubmitting, setIsAuthSubmitting] = useState(false);
 
+  const openSignIn = () => {
+    setAuthMode('signin');
+    setAuthError(null);
+    setAuthSuccess(null);
+    setIsSignInOpen(true);
+  };
+
+  const openSignUp = () => {
+    setAuthMode('signup');
+    setAuthError(null);
+    setAuthSuccess(null);
+    setIsSignInOpen(true);
+  };
+
   // Dropdown states
   const [moreDropdownOpen, setMoreDropdownOpen] = useState(false);
   const moreDropdownRef = useRef<HTMLDivElement>(null);
@@ -182,7 +196,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onSelectStock, onOpenEnquiry }) 
     <>
       <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-border shadow-xs">
         <div className="max-w-[1520px] mx-auto px-4 sm:px-8 lg:px-12 py-2.5 sm:py-3 flex items-center justify-between gap-4">
-          
+
           {/* Brand Logo & Name */}
           <Link href="/" className="flex items-center space-x-3 shrink-0 group">
             <div className="w-10 h-10 rounded-lg bg-primary text-white flex items-center justify-center shadow-xs group-hover:bg-primary-dark transition-colors">
@@ -207,11 +221,10 @@ export const Navbar: React.FC<NavbarProps> = ({ onSelectStock, onOpenEnquiry }) 
           <nav className="hidden lg:flex items-center space-x-1 xl:space-x-1.5 text-[13px] xl:text-[14px] font-medium text-slate-600">
             <Link
               href="/shares"
-              className={`px-3 py-1.5 rounded-md transition-colors whitespace-nowrap relative ${
-                isActive('/shares')
+              className={`px-3 py-1.5 rounded-md transition-colors whitespace-nowrap relative ${isActive('/shares')
                   ? 'text-primary font-semibold bg-primary/10'
                   : 'hover:text-slate-900 hover:bg-slate-100/70'
-              }`}
+                }`}
             >
               All Shares
               {isActive('/shares') && (
@@ -221,11 +234,10 @@ export const Navbar: React.FC<NavbarProps> = ({ onSelectStock, onOpenEnquiry }) 
 
             <Link
               href="/drhp-filed"
-              className={`px-3 py-1.5 rounded-md transition-colors whitespace-nowrap relative ${
-                isActive('/drhp-filed')
+              className={`px-3 py-1.5 rounded-md transition-colors whitespace-nowrap relative ${isActive('/drhp-filed')
                   ? 'text-primary font-semibold bg-primary/10'
                   : 'hover:text-slate-900 hover:bg-slate-100/70'
-              }`}
+                }`}
             >
               DRHP Filed
               {isActive('/drhp-filed') && (
@@ -235,11 +247,10 @@ export const Navbar: React.FC<NavbarProps> = ({ onSelectStock, onOpenEnquiry }) 
 
             <Link
               href="/screener"
-              className={`px-3 py-1.5 rounded-md transition-colors whitespace-nowrap relative ${
-                isActive('/screener')
+              className={`px-3 py-1.5 rounded-md transition-colors whitespace-nowrap relative ${isActive('/screener')
                   ? 'text-primary font-semibold bg-primary/10'
                   : 'hover:text-slate-900 hover:bg-slate-100/70'
-              }`}
+                }`}
             >
               Screener
               {isActive('/screener') && (
@@ -249,11 +260,10 @@ export const Navbar: React.FC<NavbarProps> = ({ onSelectStock, onOpenEnquiry }) 
 
             <Link
               href="/research"
-              className={`px-3 py-1.5 rounded-md transition-colors whitespace-nowrap relative ${
-                isActive('/research')
+              className={`px-3 py-1.5 rounded-md transition-colors whitespace-nowrap relative ${isActive('/research')
                   ? 'text-primary font-semibold bg-primary/10'
                   : 'hover:text-slate-900 hover:bg-slate-100/70'
-              }`}
+                }`}
             >
               Research
               {isActive('/research') && (
@@ -263,11 +273,10 @@ export const Navbar: React.FC<NavbarProps> = ({ onSelectStock, onOpenEnquiry }) 
 
             <Link
               href="/partners"
-              className={`px-3 py-1.5 rounded-md transition-colors whitespace-nowrap relative ${
-                isActive('/partners')
+              className={`px-3 py-1.5 rounded-md transition-colors whitespace-nowrap relative ${isActive('/partners')
                   ? 'text-primary font-semibold bg-primary/10'
                   : 'hover:text-slate-900 hover:bg-slate-100/70'
-              }`}
+                }`}
             >
               Partner With Us
               {isActive('/partners') && (
@@ -280,17 +289,15 @@ export const Navbar: React.FC<NavbarProps> = ({ onSelectStock, onOpenEnquiry }) 
               <button
                 type="button"
                 onClick={() => setMoreDropdownOpen(!moreDropdownOpen)}
-                className={`flex items-center space-x-1 px-3 py-1.5 rounded-md transition-colors whitespace-nowrap ${
-                  isMoreActive
+                className={`flex items-center space-x-1 px-3 py-1.5 rounded-md transition-colors whitespace-nowrap ${isMoreActive
                     ? 'text-primary font-semibold bg-primary/10'
                     : 'hover:text-slate-900 hover:bg-slate-100/70'
-                }`}
+                  }`}
               >
                 <span>More</span>
                 <ChevronDown
-                  className={`w-3.5 h-3.5 transition-transform duration-200 ${
-                    moreDropdownOpen ? 'rotate-180 text-primary' : ''
-                  }`}
+                  className={`w-3.5 h-3.5 transition-transform duration-200 ${moreDropdownOpen ? 'rotate-180 text-primary' : ''
+                    }`}
                 />
               </button>
 
@@ -299,11 +306,10 @@ export const Navbar: React.FC<NavbarProps> = ({ onSelectStock, onOpenEnquiry }) 
                   <Link
                     href="/blogs"
                     onClick={() => setMoreDropdownOpen(false)}
-                    className={`flex items-center space-x-2.5 px-3 py-2 rounded-md text-xs sm:text-[13px] transition-colors ${
-                      isActive('/blogs')
+                    className={`flex items-center space-x-2.5 px-3 py-2 rounded-md text-xs sm:text-[13px] transition-colors ${isActive('/blogs')
                         ? 'bg-primary/10 text-primary font-medium'
                         : 'text-slate-700 hover:bg-slate-50 hover:text-slate-900'
-                    }`}
+                      }`}
                   >
                     <BookOpen className="w-4 h-4 text-primary" />
                     <span>Video Insights &amp; Blogs</span>
@@ -312,11 +318,10 @@ export const Navbar: React.FC<NavbarProps> = ({ onSelectStock, onOpenEnquiry }) 
                   <Link
                     href="/about-us"
                     onClick={() => setMoreDropdownOpen(false)}
-                    className={`flex items-center space-x-2.5 px-3 py-2 rounded-md text-xs sm:text-[13px] transition-colors ${
-                      isActive('/about-us')
+                    className={`flex items-center space-x-2.5 px-3 py-2 rounded-md text-xs sm:text-[13px] transition-colors ${isActive('/about-us')
                         ? 'bg-primary/10 text-primary font-medium'
                         : 'text-slate-700 hover:bg-slate-50 hover:text-slate-900'
-                    }`}
+                      }`}
                   >
                     <Info className="w-4 h-4 text-primary" />
                     <span>About Private Market</span>
@@ -325,11 +330,10 @@ export const Navbar: React.FC<NavbarProps> = ({ onSelectStock, onOpenEnquiry }) 
                   <Link
                     href="/contact-us"
                     onClick={() => setMoreDropdownOpen(false)}
-                    className={`flex items-center space-x-2.5 px-3 py-2 rounded-md text-xs sm:text-[13px] transition-colors ${
-                      isActive('/contact-us')
+                    className={`flex items-center space-x-2.5 px-3 py-2 rounded-md text-xs sm:text-[13px] transition-colors ${isActive('/contact-us')
                         ? 'bg-primary/10 text-primary font-medium'
                         : 'text-slate-700 hover:bg-slate-50 hover:text-slate-900'
-                    }`}
+                      }`}
                   >
                     <Phone className="w-4 h-4 text-primary" />
                     <span>Official Bank Details</span>
@@ -340,11 +344,10 @@ export const Navbar: React.FC<NavbarProps> = ({ onSelectStock, onOpenEnquiry }) 
 
             <Link
               href="/contact-us"
-              className={`px-3 py-1.5 rounded-md transition-colors whitespace-nowrap relative ${
-                isActive('/contact-us')
+              className={`px-3 py-1.5 rounded-md transition-colors whitespace-nowrap relative ${isActive('/contact-us')
                   ? 'text-primary font-semibold bg-primary/10'
                   : 'hover:text-slate-900 hover:bg-slate-100/70'
-              }`}
+                }`}
             >
               Contact Us
               {isActive('/contact-us') && (
@@ -391,28 +394,23 @@ export const Navbar: React.FC<NavbarProps> = ({ onSelectStock, onOpenEnquiry }) 
                 </button>
               </div>
             ) : (
-              <button
-                type="button"
-                onClick={() => {
-                  setAuthError(null);
-                  setAuthSuccess(null);
-                  setIsSignInOpen(true);
-                }}
-                className="hidden sm:inline-flex items-center h-9 px-3.5 rounded-md text-xs sm:text-[13px] font-medium text-slate-700 hover:text-primary border border-border hover:border-slate-300 hover:bg-slate-50 transition-colors bg-white shadow-2xs"
-              >
-                Sign in
-              </button>
+              <div className="hidden sm:flex items-center space-x-2">
+                <button
+                  type="button"
+                  onClick={openSignIn}
+                  className="inline-flex items-center h-9 px-3.5 rounded-md text-xs sm:text-[13px] font-medium text-slate-700 hover:text-primary border border-border hover:border-slate-300 hover:bg-slate-50 transition-colors bg-white shadow-2xs"
+                >
+                  Log in
+                </button>
+                <button
+                  type="button"
+                  onClick={openSignUp}
+                  className="inline-flex items-center h-9 px-4 rounded-md text-xs sm:text-[13px] font-medium text-white bg-primary hover:bg-primary/90 shadow-xs transition-all active:scale-[0.99]"
+                >
+                  Sign up
+                </button>
+              </div>
             )}
-
-            {/* Open Account CTA */}
-            <button
-              type="button"
-              onClick={triggerEnquiry}
-              className="hidden sm:inline-flex items-center space-x-1.5 h-9 px-4 rounded-md text-xs sm:text-[13px] font-medium text-white bg-primary hover:bg-primary/90 shadow-xs transition-all active:scale-[0.99]"
-            >
-              <span>Open an account</span>
-              <ArrowRight className="w-3.5 h-3.5" />
-            </button>
 
             {/* Mobile Menu Toggle Button */}
             <button
@@ -431,7 +429,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onSelectStock, onOpenEnquiry }) 
       {mobileMenuOpen && (
         <div className="lg:hidden fixed inset-0 z-[100] bg-slate-950/60 backdrop-blur-xs flex flex-col justify-start animate-in fade-in duration-150">
           <div className="bg-white border-b border-border px-5 py-4 space-y-4 max-h-[92vh] overflow-y-auto shadow-xl">
-            
+
             {/* Mobile Drawer Top Header with Logo and Close 'X' */}
             <div className="flex items-center justify-between pb-3 border-b border-border">
               <Link href="/" onClick={() => setMobileMenuOpen(false)} className="flex items-center space-x-2.5">
@@ -490,11 +488,10 @@ export const Navbar: React.FC<NavbarProps> = ({ onSelectStock, onOpenEnquiry }) 
                     key={item.href}
                     href={item.href}
                     onClick={() => setMobileMenuOpen(false)}
-                    className={`flex items-center justify-between px-3 py-2 rounded-md text-xs sm:text-sm font-medium transition-colors ${
-                      active
+                    className={`flex items-center justify-between px-3 py-2 rounded-md text-xs sm:text-sm font-medium transition-colors ${active
                         ? 'bg-primary/10 text-primary font-semibold'
                         : 'text-slate-700 hover:bg-slate-50'
-                    }`}
+                      }`}
                   >
                     <div className="flex items-center space-x-3">
                       <Icon className={`w-4 h-4 ${active ? 'text-primary' : 'text-slate-400'}`} />
@@ -510,18 +507,6 @@ export const Navbar: React.FC<NavbarProps> = ({ onSelectStock, onOpenEnquiry }) 
 
             {/* Mobile CTA Buttons */}
             <div className="pt-3 border-t border-border flex flex-col gap-2">
-              <button
-                type="button"
-                onClick={() => {
-                  setMobileMenuOpen(false);
-                  triggerEnquiry();
-                }}
-                className="w-full text-center py-2.5 rounded-md bg-primary hover:bg-primary/90 text-white text-xs sm:text-sm font-medium shadow-xs flex items-center justify-center space-x-2 active:scale-98 transition-transform"
-              >
-                <span>Open an account</span>
-                <ArrowRight className="w-4 h-4" />
-              </button>
-
               {user ? (
                 <div className="flex flex-col gap-2">
                   <Link
@@ -545,18 +530,28 @@ export const Navbar: React.FC<NavbarProps> = ({ onSelectStock, onOpenEnquiry }) 
                   </button>
                 </div>
               ) : (
-                <button
-                  type="button"
-                  onClick={() => {
-                    setMobileMenuOpen(false);
-                    setAuthError(null);
-                    setAuthSuccess(null);
-                    setIsSignInOpen(true);
-                  }}
-                  className="w-full text-center py-2.5 rounded-md border border-border text-xs sm:text-sm font-medium text-slate-700 hover:bg-slate-50 transition-colors"
-                >
-                  Sign in
-                </button>
+                <div className="flex flex-col gap-2">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setMobileMenuOpen(false);
+                      openSignUp();
+                    }}
+                    className="w-full text-center py-2.5 rounded-md bg-primary hover:bg-primary/90 text-white text-xs sm:text-sm font-medium shadow-xs flex items-center justify-center space-x-2 active:scale-98 transition-transform"
+                  >
+                    <span>Sign up</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setMobileMenuOpen(false);
+                      openSignIn();
+                    }}
+                    className="w-full text-center py-2.5 rounded-md border border-border text-xs sm:text-sm font-medium text-slate-700 hover:bg-slate-50 transition-colors"
+                  >
+                    Log in
+                  </button>
+                </div>
               )}
             </div>
 
@@ -668,9 +663,8 @@ export const Navbar: React.FC<NavbarProps> = ({ onSelectStock, onOpenEnquiry }) 
                     <div
                       key={stock.id}
                       onClick={() => handleStockClick(stock)}
-                      className={`flex items-center justify-between p-3 rounded-lg cursor-pointer transition-colors ${
-                        selectedIndex === idx ? 'bg-primary/10 text-primary border-l-2 border-primary' : 'hover:bg-slate-50'
-                      }`}
+                      className={`flex items-center justify-between p-3 rounded-lg cursor-pointer transition-colors ${selectedIndex === idx ? 'bg-primary/10 text-primary border-l-2 border-primary' : 'hover:bg-slate-50'
+                        }`}
                     >
                       <div className="flex items-center space-x-3">
                         <div className="w-9 h-9 rounded-md bg-slate-100 border border-border text-slate-700 flex items-center justify-center font-bold text-xs">
@@ -746,11 +740,10 @@ export const Navbar: React.FC<NavbarProps> = ({ onSelectStock, onOpenEnquiry }) 
                   setAuthError(null);
                   setAuthSuccess(null);
                 }}
-                className={`py-1.5 rounded-md font-semibold transition-all ${
-                  authMode === 'signin'
+                className={`py-1.5 rounded-md font-semibold transition-all ${authMode === 'signin'
                     ? 'bg-white text-primary shadow-xs'
                     : 'text-slate-600 hover:text-slate-900'
-                }`}
+                  }`}
               >
                 Sign In
               </button>
@@ -761,11 +754,10 @@ export const Navbar: React.FC<NavbarProps> = ({ onSelectStock, onOpenEnquiry }) 
                   setAuthError(null);
                   setAuthSuccess(null);
                 }}
-                className={`py-1.5 rounded-md font-semibold transition-all ${
-                  authMode === 'signup'
+                className={`py-1.5 rounded-md font-semibold transition-all ${authMode === 'signup'
                     ? 'bg-white text-primary shadow-xs'
                     : 'text-slate-600 hover:text-slate-900'
-                }`}
+                  }`}
               >
                 Register (New Demat)
               </button>
