@@ -38,7 +38,7 @@ export function formatInquiryTypeLabel(type: string): string {
 export async function sendDealingInquiryEmail(
   data: DealingInquiryEmailData,
   recipient: string = DEFAULT_DEALING_RECIPIENT
-): Promise<{ success: boolean; messageId?: string; simulated?: boolean; error?: string }> {
+): Promise<{ success: boolean; messageId?: string; configured?: boolean; error?: string }> {
   const typeLabel = formatInquiryTypeLabel(data.inquiryType);
   const timestamp = data.submittedAt || new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' });
   const recipientEmail = process.env.DEALING_INQUIRY_RECIPIENT_EMAIL || recipient;
@@ -156,6 +156,9 @@ Recipient: ${recipientEmail}
         port,
         secure,
         auth: { user, pass },
+        connectionTimeout: 10000,
+        greetingTimeout: 10000,
+        socketTimeout: 15000,
       });
 
       const info = await transporter.sendMail({
@@ -167,20 +170,21 @@ Recipient: ${recipientEmail}
       });
 
       console.log(`[Email Service] Delivered dealing inquiry to ${recipientEmail}, MessageId: ${info.messageId}`);
-      return { success: true, messageId: info.messageId };
+      return { success: true, configured: true, messageId: info.messageId };
     } catch (err: any) {
-      console.error('[Email Service Error] Failed to send email via SMTP:', err);
-      return { success: false, error: err.message || 'SMTP delivery failed' };
+      console.error('[Email Service Error] Failed to send email via SMTP:', err?.message || err);
+      return { success: false, configured: true, error: err?.message || 'SMTP delivery failed' };
     }
   }
 
-  // If SMTP is not yet configured in local environment, log details safely and simulate delivery
-  console.log(`\n======================================================`);
-  console.log(`[Email Service - Simulated Dev Mode] Email Dispatched!`);
-  console.log(`Recipient:   ${recipientEmail}`);
-  console.log(`Subject:     [Dealing Desk] ${typeLabel} - ${data.stockName} (${data.name})`);
-  console.log(`Payload:\n${textContent}`);
-  console.log(`======================================================\n`);
+  // If SMTP is not yet configured, log notification and return unconfigured status
+  console.warn(
+    `[Email Service Notice] SMTP credentials not set (SMTP_HOST, SMTP_USER, SMTP_PASS). Live email to ${recipientEmail} could not be dispatched.`
+  );
 
-  return { success: true, simulated: true };
+  return {
+    success: false,
+    configured: false,
+    error: 'SMTP email server is not configured in environment variables (SMTP_HOST, SMTP_USER, SMTP_PASS).',
+  };
 }

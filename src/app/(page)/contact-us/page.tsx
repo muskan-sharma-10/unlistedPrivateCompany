@@ -31,6 +31,7 @@ export default function ContactUsPage() {
   const [message, setMessage] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   React.useEffect(() => {
@@ -39,10 +40,27 @@ export default function ContactUsPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (isSubmitting) return; // Prevent duplicate submissions while in flight
     setErrorMessage(null);
+    setSuccessMessage(null);
 
     if (!inquiryType) {
       setErrorMessage('Please select an Inquiry Type before submitting.');
+      return;
+    }
+
+    if (!name.trim() || name.trim().length < 2) {
+      setErrorMessage('Please enter your full name (at least 2 characters).');
+      return;
+    }
+
+    if (!phone.trim() || phone.trim().length < 7) {
+      setErrorMessage('Please enter a valid mobile number.');
+      return;
+    }
+
+    if (!stockName.trim()) {
+      setErrorMessage('Please enter the Company / Unlisted Stock name.');
       return;
     }
 
@@ -54,12 +72,12 @@ export default function ContactUsPage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           inquiryType,
-          name,
-          phone,
-          email: email || undefined,
-          stockName,
-          quantity: quantity || undefined,
-          message: message || undefined,
+          name: name.trim(),
+          phone: phone.trim(),
+          email: email.trim() || undefined,
+          stockName: stockName.trim(),
+          quantity: quantity.trim() || undefined,
+          message: message.trim() || undefined,
           sourcePage: '/contact-us',
         }),
       });
@@ -72,6 +90,7 @@ export default function ContactUsPage() {
       }
 
       setSubmitted(true);
+      setSuccessMessage(data.message || 'Inquiry submitted successfully! Our dealing team will reach out shortly.');
       setInquiryType('');
       setName('');
       setPhone('');
@@ -79,7 +98,10 @@ export default function ContactUsPage() {
       setStockName('');
       setQuantity('');
       setMessage('');
-      setTimeout(() => setSubmitted(false), 7000);
+      setTimeout(() => {
+        setSubmitted(false);
+        setSuccessMessage(null);
+      }, 10000);
     } catch (err: any) {
       setErrorMessage('Network error while transmitting request. Please check your connection and retry.');
     } finally {
@@ -247,10 +269,10 @@ export default function ContactUsPage() {
                   </div>
                 )}
 
-                {submitted ? (
+                {submitted && successMessage ? (
                   <div className="p-3.5 rounded-lg bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-semibold text-center flex items-center justify-center space-x-2">
                     <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-                    <span>Inquiry logged &amp; delivered to dealing desk (info.biswal01@gmail.com)! Our dealing team is calling you shortly.</span>
+                    <span>{successMessage}</span>
                   </div>
                 ) : (
                   <button

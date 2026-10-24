@@ -25,7 +25,9 @@ import {
   Eye,
   EyeOff,
   AlertTriangle,
-  Loader2
+  Loader2,
+  User,
+  Briefcase
 } from 'lucide-react';
 import { STOCKS_DATA, StockItem } from '@/data/unlisted-data';
 import EnquiryModal from '@/components/ui/enquiry-modal';
@@ -77,7 +79,9 @@ export const Navbar: React.FC<NavbarProps> = ({ onSelectStock, onOpenEnquiry }) 
 
   // Dropdown states
   const [moreDropdownOpen, setMoreDropdownOpen] = useState(false);
+  const [accountMenuOpen, setAccountMenuOpen] = useState(false);
   const moreDropdownRef = useRef<HTMLDivElement>(null);
+  const accountMenuRef = useRef<HTMLDivElement>(null);
   const searchInputRef = useRef<HTMLInputElement>(null);
 
   // Active route detector
@@ -86,11 +90,14 @@ export const Navbar: React.FC<NavbarProps> = ({ onSelectStock, onOpenEnquiry }) 
     return pathname === href || pathname.startsWith(href + '/');
   };
 
-  // Close dropdown on outside click
+  // Close dropdowns on outside click
   useEffect(() => {
     const handleOutsideClick = (e: MouseEvent) => {
       if (moreDropdownRef.current && !moreDropdownRef.current.contains(e.target as Node)) {
         setMoreDropdownOpen(false);
+      }
+      if (accountMenuRef.current && !accountMenuRef.current.contains(e.target as Node)) {
+        setAccountMenuOpen(false);
       }
     };
     document.addEventListener('mousedown', handleOutsideClick);
@@ -108,6 +115,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onSelectStock, onOpenEnquiry }) 
         setIsSearchOpen(false);
         setMobileMenuOpen(false);
         setMoreDropdownOpen(false);
+        setAccountMenuOpen(false);
         setIsSignInOpen(false);
       }
     };
@@ -134,10 +142,11 @@ export const Navbar: React.FC<NavbarProps> = ({ onSelectStock, onOpenEnquiry }) 
     };
   }, [mobileMenuOpen, isSearchOpen, isSignInOpen]);
 
-  // Automatically close mobile menu on route change
+  // Automatically close menus on route change
   useEffect(() => {
     setMobileMenuOpen(false);
     setMoreDropdownOpen(false);
+    setAccountMenuOpen(false);
   }, [pathname]);
 
   const handleSearch = (query: string) => {
@@ -357,55 +366,111 @@ export const Navbar: React.FC<NavbarProps> = ({ onSelectStock, onOpenEnquiry }) 
           </nav>
 
           {/* Right Action Controls */}
-          <div className="flex items-center space-x-2 sm:space-x-2.5 shrink-0">
-            {/* Search Trigger Button with ⌘K shortcut */}
+          <div className="flex items-center space-x-2 shrink-0">
+            {/* Search Trigger Button (Compact Icon Button) */}
             <button
               type="button"
               onClick={() => setIsSearchOpen(true)}
-              className="h-9 px-3 rounded-md border border-border hover:border-slate-300 flex items-center space-x-2 text-muted-foreground hover:text-slate-800 transition-colors bg-slate-50/70 group"
+              className="h-9 w-9 rounded-lg border border-border hover:border-slate-300 flex items-center justify-center text-slate-600 hover:text-primary hover:bg-slate-50 transition-colors bg-white shadow-2xs focus:outline-none focus:ring-2 focus:ring-primary/20 group"
               aria-label="Search unlisted shares"
+              title="Search unlisted shares (⌘K)"
             >
-              <Search className="w-4 h-4 text-slate-400 group-hover:text-primary transition-colors" />
-              <span className="hidden xl:inline-block text-xs text-muted-foreground">
-                Search shares...
-              </span>
-              <kbd className="hidden sm:inline-block text-[10px] font-semibold px-1.5 py-0.5 rounded bg-white border border-border text-slate-500 shadow-2xs">
-                ⌘K
-              </kbd>
+              <Search className="w-4 h-4 text-slate-500 group-hover:text-primary transition-colors" />
             </button>
 
-            {/* Desktop Auth Controls */}
+            {/* Desktop Auth Controls / User Account Dropdown */}
             {user ? (
-              <div className="hidden sm:inline-flex items-center space-x-1.5">
-                <Link
-                  href="/portfolio"
-                  className="inline-flex items-center space-x-1.5 h-9 px-3 rounded-md text-xs font-semibold text-blue-700 bg-blue-50 border border-blue-200 hover:bg-blue-100 transition-colors shadow-2xs"
-                >
-                  <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                  <span>My Portfolio</span>
-                </Link>
+              <div className="relative" ref={accountMenuRef}>
+                {/* Recognizable User / Profile Icon Trigger */}
                 <button
                   type="button"
-                  onClick={() => signOut()}
-                  className="h-9 px-2.5 rounded-md text-xs font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-100 border border-border transition-colors bg-white shadow-2xs"
-                  title="Sign Out"
+                  onClick={() => setAccountMenuOpen((prev) => !prev)}
+                  className={`h-9 px-2.5 sm:px-3 rounded-lg border flex items-center space-x-2 transition-all shadow-2xs focus:outline-none focus:ring-2 focus:ring-primary/20 ${
+                    accountMenuOpen
+                      ? 'border-primary bg-primary/5 text-primary'
+                      : 'border-border hover:border-slate-300 text-slate-700 hover:text-primary bg-white'
+                  }`}
+                  aria-label="Investor account menu"
+                  aria-expanded={accountMenuOpen}
+                  title={`Account: ${user.email}`}
                 >
-                  <LogOut className="w-3.5 h-3.5" />
+                  <div className="relative flex items-center justify-center">
+                    <User className="w-4 h-4 text-primary" />
+                    <span className="absolute -top-0.5 -right-0.5 w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                  </div>
+                  <span className="hidden xl:inline-block text-xs font-semibold max-w-[120px] truncate text-slate-800">
+                    {user.user_metadata?.full_name || user.email?.split('@')[0] || 'Investor'}
+                  </span>
+                  <ChevronDown
+                    className={`w-3.5 h-3.5 text-slate-400 transition-transform duration-200 ${
+                      accountMenuOpen ? 'rotate-180 text-primary' : ''
+                    }`}
+                  />
                 </button>
+
+                {/* Account Dropdown Menu */}
+                {accountMenuOpen && (
+                  <div className="absolute right-0 top-full mt-2 w-64 bg-white rounded-xl shadow-xl border border-border p-2 space-y-1 animate-in fade-in zoom-in-95 duration-150 z-50">
+                    <div className="px-3 py-2 border-b border-border/80 mb-1">
+                      <span className="text-[10px] font-bold uppercase tracking-wider text-primary block">
+                        Verified Demat Access
+                      </span>
+                      <p className="text-xs font-semibold text-slate-900 truncate" title={user.email}>
+                        {user.email}
+                      </p>
+                    </div>
+
+                    <Link
+                      href="/portfolio"
+                      onClick={() => setAccountMenuOpen(false)}
+                      className={`flex items-center space-x-2.5 px-3 py-2 rounded-lg text-xs font-medium transition-colors ${
+                        isActive('/portfolio')
+                          ? 'bg-primary/10 text-primary font-semibold'
+                          : 'text-slate-700 hover:bg-slate-50 hover:text-slate-900'
+                      }`}
+                    >
+                      <Briefcase className="w-4 h-4 text-primary" />
+                      <span>My Portfolio &amp; Holdings</span>
+                    </Link>
+
+                    <Link
+                      href="/contact-us"
+                      onClick={() => setAccountMenuOpen(false)}
+                      className="flex items-center space-x-2.5 px-3 py-2 rounded-lg text-xs font-medium text-slate-700 hover:bg-slate-50 hover:text-slate-900 transition-colors"
+                    >
+                      <Phone className="w-4 h-4 text-primary" />
+                      <span>Dealing Desk Inquiries</span>
+                    </Link>
+
+                    <div className="pt-1 border-t border-border/80">
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setAccountMenuOpen(false);
+                          signOut();
+                        }}
+                        className="w-full flex items-center space-x-2.5 px-3 py-2 rounded-lg text-xs font-medium text-rose-600 hover:bg-rose-50 transition-colors"
+                      >
+                        <LogOut className="w-4 h-4 text-rose-500" />
+                        <span>Sign Out</span>
+                      </button>
+                    </div>
+                  </div>
+                )}
               </div>
             ) : (
               <div className="hidden sm:flex items-center space-x-2">
                 <button
                   type="button"
                   onClick={openSignIn}
-                  className="inline-flex items-center h-9 px-3.5 rounded-md text-xs sm:text-[13px] font-medium text-slate-700 hover:text-primary border border-border hover:border-slate-300 hover:bg-slate-50 transition-colors bg-white shadow-2xs"
+                  className="inline-flex items-center h-9 px-3.5 rounded-lg text-xs sm:text-[13px] font-medium text-slate-700 hover:text-primary border border-border hover:border-slate-300 hover:bg-slate-50 transition-colors bg-white shadow-2xs"
                 >
                   Log in
                 </button>
                 <button
                   type="button"
                   onClick={openSignUp}
-                  className="inline-flex items-center h-9 px-4 rounded-md text-xs sm:text-[13px] font-medium text-white bg-primary hover:bg-primary/90 shadow-xs transition-all active:scale-[0.99]"
+                  className="inline-flex items-center h-9 px-4 rounded-lg text-xs sm:text-[13px] font-medium text-white bg-primary hover:bg-primary/90 shadow-xs transition-all active:scale-[0.99]"
                 >
                   Sign up
                 </button>
@@ -416,8 +481,9 @@ export const Navbar: React.FC<NavbarProps> = ({ onSelectStock, onOpenEnquiry }) 
             <button
               type="button"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="lg:hidden p-2 rounded-md text-slate-700 hover:bg-slate-100 transition-colors"
+              className="lg:hidden p-2 rounded-lg text-slate-700 hover:bg-slate-100 transition-colors focus:outline-none focus:ring-2 focus:ring-primary/20"
               aria-label="Toggle Navigation Menu"
+              aria-expanded={mobileMenuOpen}
             >
               {mobileMenuOpen ? <X className="w-5 h-5 text-slate-900" /> : <Menu className="w-5 h-5 text-slate-900" />}
             </button>
@@ -509,23 +575,29 @@ export const Navbar: React.FC<NavbarProps> = ({ onSelectStock, onOpenEnquiry }) 
             <div className="pt-3 border-t border-border flex flex-col gap-2">
               {user ? (
                 <div className="flex flex-col gap-2">
-                  <Link
-                    href="/portfolio"
-                    onClick={() => setMobileMenuOpen(false)}
-                    className="w-full text-center py-2.5 rounded-md bg-blue-50 border border-blue-200 text-xs sm:text-sm font-semibold text-blue-700 flex items-center justify-center space-x-2"
-                  >
-                    <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                    <span>My Portfolio ({user.email})</span>
-                  </Link>
+                  <div className="p-3 rounded-lg bg-blue-50/70 border border-blue-200/80 space-y-2">
+                    <div className="flex items-center space-x-2 text-xs font-semibold text-slate-900">
+                      <User className="w-4 h-4 text-primary shrink-0" />
+                      <span className="truncate">{user.email}</span>
+                    </div>
+                    <Link
+                      href="/portfolio"
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="w-full text-center py-2 rounded-md bg-white border border-blue-300 text-xs font-semibold text-primary shadow-2xs flex items-center justify-center space-x-2"
+                    >
+                      <Briefcase className="w-3.5 h-3.5 text-primary" />
+                      <span>Open My Portfolio</span>
+                    </Link>
+                  </div>
                   <button
                     type="button"
                     onClick={() => {
                       setMobileMenuOpen(false);
                       signOut();
                     }}
-                    className="w-full text-center py-2.5 rounded-md border border-border text-xs sm:text-sm font-medium text-slate-700 hover:bg-slate-50 transition-colors flex items-center justify-center space-x-1.5"
+                    className="w-full text-center py-2.5 rounded-lg border border-border text-xs sm:text-sm font-medium text-rose-700 hover:bg-rose-50 transition-colors flex items-center justify-center space-x-1.5"
                   >
-                    <LogOut className="w-3.5 h-3.5" />
+                    <LogOut className="w-3.5 h-3.5 text-rose-600" />
                     <span>Sign out</span>
                   </button>
                 </div>
