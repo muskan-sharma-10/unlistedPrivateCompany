@@ -87,7 +87,7 @@ export default function HomePage() {
       {/* 11. Knowledge Centre: Research Reports & Videos */}
       <ResearchSection />
 
-      {/* 12. Mobile App Download Promo */}
+      {/* 12. Institutional Web Platform Showcase */}
       <AppBanner />
 
       {/* 13. Institutional Footer with SEBI Disclosure */}
