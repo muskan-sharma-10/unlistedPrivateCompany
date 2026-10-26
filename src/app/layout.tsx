@@ -14,17 +14,17 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: "Private Market — Discover India's Unlisted & Pre-IPO Shares",
+  title: "Unlisted Pond — Discover India's Unlisted & Pre-IPO Shares",
   description:
     "India's trusted platform for unlisted, pre-IPO and ESOP shares. Research-led insights and indicative prices for unlisted companies. Connect buyers and sellers safely.",
   keywords: [
+    "unlisted pond",
     "unlisted shares",
     "pre-IPO shares",
     "ESOP shares",
     "NSE unlisted share price",
     "unlisted share prices india",
-    "unlistedzone",
-    "private market india",
+    "unlisted pond india",
     "DRHP filed companies"
   ],
   icons: {

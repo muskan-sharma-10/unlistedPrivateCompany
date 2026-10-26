@@ -32,6 +32,7 @@ import {
 import { STOCKS_DATA, StockItem } from '@/data/unlisted-data';
 import EnquiryModal from '@/components/ui/enquiry-modal';
 import { useAuth } from '@/lib/supabase/auth-context';
+import BrandLogo from '@/components/ui/brand-logo';
 
 interface NavbarProps {
   onSelectStock?: (stock: StockItem) => void;
@@ -207,24 +208,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onSelectStock, onOpenEnquiry }) 
         <div className="max-w-[1520px] mx-auto px-4 sm:px-8 lg:px-12 py-2.5 sm:py-3 flex items-center justify-between gap-4">
 
           {/* Brand Logo & Name */}
-          <Link href="/" className="flex items-center space-x-3 shrink-0 group">
-            <div className="w-10 h-10 rounded-lg bg-primary text-white flex items-center justify-center shadow-xs group-hover:bg-primary-dark transition-colors">
-              <Shield className="w-5 h-5 text-white" />
-            </div>
-            <div>
-              <div className="flex items-center space-x-2">
-                <span className="font-bold text-lg sm:text-xl tracking-tight text-slate-900">
-                  PRIVATE MARKET
-                </span>
-                <span className="text-[10px] font-semibold uppercase px-1.5 py-0.5 rounded bg-blue-50 text-primary border border-blue-200/60 tracking-wider">
-                  UZ
-                </span>
-              </div>
-              <p className="text-[11px] text-muted-foreground font-medium tracking-wide hidden sm:block">
-                Research · Indicative Prices · Pre-IPO Equities
-              </p>
-            </div>
-          </Link>
+          <BrandLogo variant="light" size="md" />
 
           {/* Desktop Navigation Links */}
           <nav className="hidden lg:flex items-center space-x-1 xl:space-x-1.5 text-[13px] xl:text-[14px] font-medium text-slate-600">
@@ -333,7 +317,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onSelectStock, onOpenEnquiry }) 
                       }`}
                   >
                     <Info className="w-4 h-4 text-primary" />
-                    <span>About Private Market</span>
+                    <span>About Unlisted Pond</span>
                   </Link>
 
                   <Link
@@ -498,15 +482,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onSelectStock, onOpenEnquiry }) 
 
             {/* Mobile Drawer Top Header with Logo and Close 'X' */}
             <div className="flex items-center justify-between pb-3 border-b border-border">
-              <Link href="/" onClick={() => setMobileMenuOpen(false)} className="flex items-center space-x-2.5">
-                <div className="w-9 h-9 rounded-lg bg-primary text-white flex items-center justify-center">
-                  <Shield className="w-4 h-4 text-white" />
-                </div>
-                <div className="flex items-center space-x-1.5">
-                  <span className="font-bold text-base tracking-tight text-slate-900">PRIVATE MARKET</span>
-                  <span className="text-[10px] font-bold uppercase px-1.5 py-0.5 rounded bg-blue-50 text-primary border border-blue-200">UZ</span>
-                </div>
-              </Link>
+              <BrandLogo variant="light" size="sm" showSubtitle={false} onClick={() => setMobileMenuOpen(false)} />
               <button
                 type="button"
                 onClick={() => setMobileMenuOpen(false)}
@@ -544,7 +520,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onSelectStock, onOpenEnquiry }) 
                 { href: '/research', label: 'Research Reports', icon: BookOpen },
                 { href: '/partners', label: 'Partner With Us', icon: Users },
                 { href: '/blogs', label: 'Video Insights & Blogs', icon: MessageSquareShare },
-                { href: '/about-us', label: 'About Private Market', icon: Info },
+                { href: '/about-us', label: 'About Unlisted Pond', icon: Info },
                 { href: '/contact-us', label: 'Contact Us & Bank Details', icon: Phone },
               ].map((item) => {
                 const Icon = item.icon;
@@ -788,7 +764,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onSelectStock, onOpenEnquiry }) 
             <div className="bg-slate-900 p-5 text-white flex items-center justify-between">
               <div>
                 <span className="text-[10px] font-semibold uppercase tracking-wider text-blue-400 block mb-0.5">
-                  Private Market Demat Access
+                  Unlisted Pond Demat Access
                 </span>
                 <h3 className="text-base font-bold text-white">
                   {authMode === 'signin' ? 'Investor Sign In' : 'Register Investor Account'}

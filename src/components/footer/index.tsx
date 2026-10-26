@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Shield, MapPin, Mail, Phone, ExternalLink, ArrowRight } from 'lucide-react';
 import { getPortalWebsiteSettings, PortalSettings } from '@/lib/supabase/queries';
+import BrandLogo from '@/components/ui/brand-logo';
 
 export const Footer: React.FC = () => {
   const [settings, setSettings] = useState<PortalSettings | null>(null);
@@ -17,24 +18,7 @@ export const Footer: React.FC = () => {
       <div className="max-w-[1520px] mx-auto px-4 sm:px-8 lg:px-12">
         {/* Top Footer Banner */}
         <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between pb-10 sm:pb-12 border-b border-slate-800/80 gap-6">
-          <div className="flex items-center space-x-3.5">
-            <div className="w-12 h-12 rounded-lg bg-primary text-white flex items-center justify-center font-semibold text-lg shadow-xs">
-              <Shield className="w-6 h-6 text-white" />
-            </div>
-            <div>
-              <div className="flex items-center space-x-2">
-                <span className="font-bold text-xl sm:text-2xl text-white tracking-tight">
-                  PRIVATE MARKET
-                </span>
-                <span className="text-[10px] font-semibold uppercase px-2 py-0.5 rounded bg-blue-500/20 text-blue-300 border border-blue-400/30 tracking-wider">
-                  UZ
-                </span>
-              </div>
-              <div className="text-xs sm:text-sm text-slate-400 font-medium mt-0.5">
-                India&apos;s Trusted Private Market Information Platform · Since 2018
-              </div>
-            </div>
-          </div>
+          <BrandLogo variant="dark" size="lg" />
 
           <div className="flex flex-wrap items-center gap-3">
             <Link
@@ -119,7 +103,7 @@ export const Footer: React.FC = () => {
         <div id="disclaimer" className="py-6 sm:py-8 text-xs text-slate-400 leading-relaxed space-y-2 border-b border-slate-800/80">
           <p>
             <strong className="text-slate-300 font-semibold">Important Regulatory Disclosure:</strong>{' '}
-            Private Market is <strong>not</strong> a stock exchange or trading platform recognised by the Securities and Exchange Board of India (SEBI) under the Securities Contracts (Regulation) Act, 1956, and does not permit secondary-market trading on the platform. We are not SEBI-registered investment advisers, brokers or portfolio managers.
+            Unlisted Pond is <strong>not</strong> a stock exchange or trading platform recognised by the Securities and Exchange Board of India (SEBI) under the Securities Contracts (Regulation) Act, 1956, and does not permit secondary-market trading on the platform. We are not SEBI-registered investment advisers, brokers or portfolio managers.
           </p>
           <p>
             All content — including company fundamental data, financial statements, valuation indicators, and indicative prices — is compiled for educational and information purposes only and does <strong>not</strong> constitute an offer to buy or sell securities, nor financial, legal, or tax advice. Indicative prices are reference markers and may differ from executed OTC transactions. Investing in unlisted equities carries substantial risk, including illiquidity, capital risk, lack of public disclosure, and absence of guaranteed IPO listing. Conduct thorough independent due diligence and consult SEBI-registered advisers before making any financial commitment.
@@ -129,7 +113,7 @@ export const Footer: React.FC = () => {
         {/* Bottom Bar */}
         <div className="pt-6 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-400 gap-3">
           <div>
-            © 2026 <strong className="text-slate-300">PRIVATE MARKET</strong>. All rights reserved.
+            © 2026 <strong className="text-slate-300">UNLISTED POND</strong>. All rights reserved.
           </div>
           <div className="text-blue-400 font-medium">
             Financial Information Platform · Not a SEBI-recognised Stock Exchange

@@ -472,7 +472,7 @@ export interface PortalSettings {
 
 export async function getPortalWebsiteSettings(): Promise<PortalSettings> {
   const fallback: PortalSettings = {
-    siteTitle: 'Private Market · Unlisted Shares & Pre-IPO Equity',
+    siteTitle: 'Unlisted Pond · Unlisted Shares & Pre-IPO Equity',
     supportEmail: 'info@unlistedzone.com',
     supportPhone: '+91 80100 09625',
     officeAddress: 'Majestic Signia, Sector 62, Noida, Uttar Pradesh 201309',
