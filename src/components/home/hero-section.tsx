@@ -28,6 +28,20 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 
   const [featuredStocks, setFeaturedStocks] = useState<StockItem[]>([
     {
+      id: 'csk',
+      name: 'Chennai Super Kings Cricket Ltd (CSK)',
+      sector: 'Sports / Entertainment',
+      price: 220,
+      change: '+5.2%',
+      changeType: 'up',
+      change6M: '+12.4%',
+      category: 'Popular',
+      lastUpdated: '14 Oct 2026',
+      description: 'IPL franchise powerhouse Chennai Super Kings.',
+      sparkline: [195, 205, 210, 215, 220],
+      logo: '',
+    },
+    {
       id: 'msei',
       name: 'Metropolitan Stock Exchange (MSEI) Unlisted Shares',
       sector: 'Financial Services',
@@ -67,13 +81,39 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
       sparkline: [40, 42, 43, 44, 46],
       logo: '/logos/onix.webp',
     },
+    {
+      id: 'icex',
+      name: 'Indian Commodity Exchange (ICEX)',
+      sector: 'Financial Services / Commodity Exchange',
+      price: 4,
+      change: '+2.1%',
+      changeType: 'up',
+      category: 'Popular',
+      lastUpdated: '14 Oct 2026',
+      description: 'Commodity futures trading exchange platform.',
+      sparkline: [3.2, 3.5, 3.8, 4],
+      logo: '',
+    },
+    {
+      id: 'nse',
+      name: 'National Stock Exchange of India (NSE)',
+      sector: 'Financial Markets',
+      price: 2095,
+      change: '+2.4%',
+      changeType: 'up',
+      category: 'Popular',
+      lastUpdated: '14 Oct 2026',
+      description: 'Leading stock exchange of India.',
+      sparkline: [1980, 2010, 2050, 2095],
+      logo: '',
+    },
   ]);
 
   useEffect(() => {
     getPortalShares()
       .then((shares) => {
         if (shares && shares.length >= 3) {
-          setFeaturedStocks(shares.slice(0, 3));
+          setFeaturedStocks(shares.slice(0, 10));
         }
       })
       .catch(() => {});
@@ -222,51 +262,63 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                 </div>
               </div>
 
-              {/* 3 Live Featured Stocks */}
-              <div className="divide-y divide-slate-100">
-                {featuredStocks.map((stock) => (
-                  <div
-                    key={stock.id}
-                    onClick={() => onSelectStock(stock)}
-                    className="p-4 sm:px-5 flex items-center justify-between gap-3 hover:bg-slate-50 cursor-pointer transition-colors group"
-                  >
-                    <div className="flex items-center gap-3.5 min-w-0">
-                      <div className="w-10 h-10 rounded-lg bg-slate-100 border border-slate-200 flex items-center justify-center font-semibold text-blue-600 text-xs shrink-0 overflow-hidden">
-                        {stock.logo ? (
-                          <img src={stock.logo} alt={stock.name} className="w-full h-full object-contain p-1" />
-                        ) : (
-                          <span>{stock.name.slice(0, 2).toUpperCase()}</span>
-                        )}
-                      </div>
-                      <div className="min-w-0">
-                        <div className="font-semibold text-sm text-slate-900 truncate group-hover:text-blue-600 transition-colors">
-                          {stock.name}
-                        </div>
-                        <div className="text-xs text-slate-500">
-                          {stock.sector}
-                        </div>
-                      </div>
-                    </div>
+              {/* Vertical Auto-scrolling Stocks Carousel */}
+              <div className="relative h-[216px] overflow-hidden group">
+                {/* Top & Bottom gradient mask for smooth fade in/out */}
+                <div className="pointer-events-none absolute inset-x-0 top-0 h-4 bg-gradient-to-b from-white via-white/80 to-transparent z-10" />
+                <div className="pointer-events-none absolute inset-x-0 bottom-0 h-4 bg-gradient-to-t from-white via-white/80 to-transparent z-10" />
 
-                    <div className="text-right shrink-0 flex items-center gap-3">
-                      <div>
-                        <div className="text-base font-bold text-slate-900 tabular-nums">
-                          ₹{stock.price.toLocaleString('en-IN')}
+                <div
+                  className="animate-vertical-marquee divide-y divide-slate-100"
+                  style={{
+                    animationDuration: `${Math.max(16, featuredStocks.length * 3.5)}s`,
+                  }}
+                >
+                  {[...featuredStocks, ...featuredStocks].map((stock, idx) => (
+                    <div
+                      key={`${stock.id}-${idx}`}
+                      onClick={() => onSelectStock(stock)}
+                      className="p-3.5 sm:px-5 flex items-center justify-between gap-3 hover:bg-blue-50/60 cursor-pointer transition-colors group/item"
+                    >
+                      <div className="flex items-center gap-3.5 min-w-0">
+                        <div className="w-10 h-10 rounded-lg bg-slate-100 border border-slate-200 flex items-center justify-center font-semibold text-blue-600 text-xs shrink-0 overflow-hidden">
+                          {stock.logo ? (
+                            <img src={stock.logo} alt={stock.name} className="w-full h-full object-contain p-1" />
+                          ) : (
+                            <span>{stock.name.slice(0, 2).toUpperCase()}</span>
+                          )}
                         </div>
-                        <div className="text-[10px] tracking-wider uppercase text-slate-500 font-medium">
-                          Indicative
+                        <div className="min-w-0">
+                          <div className="font-semibold text-sm text-slate-900 truncate group-hover/item:text-blue-600 transition-colors">
+                            {stock.name}
+                          </div>
+                          <div className="text-xs text-slate-500 truncate">
+                            {stock.sector}
+                          </div>
                         </div>
                       </div>
-                      <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-blue-600 group-hover:translate-x-0.5 transition-all" />
+
+                      <div className="text-right shrink-0 flex items-center gap-2.5 sm:gap-3">
+                        <div>
+                          <div className="text-sm sm:text-base font-bold text-slate-900 tabular-nums">
+                            ₹{stock.price.toLocaleString('en-IN')}
+                          </div>
+                          <div className="text-[10px] tracking-wider uppercase text-slate-500 font-medium">
+                            Indicative
+                          </div>
+                        </div>
+                        <ChevronRight className="w-4 h-4 text-slate-400 group-hover/item:text-blue-600 group-hover/item:translate-x-0.5 transition-all" />
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
 
               {/* Card Footer */}
-              <div className="p-3.5 sm:px-5 bg-slate-50/70 border-t border-slate-100 flex items-center justify-between text-xs">
-                <span className="text-slate-500">
-                  Indicative prices for informational purposes only.
+              <div className="p-3 sm:px-5 bg-slate-50/70 border-t border-slate-100 flex items-center justify-between text-xs">
+                <span className="text-slate-500 text-[11px] flex items-center gap-1.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-slate-400" />
+                  Hover to pause · Indicative prices
                 </span>
                 <Link
                   href="/shares"

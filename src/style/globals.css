@@ -135,6 +135,27 @@
   animation-play-state: paused;
 }
 
+/* Vertical marquee auto-scroll for hero stocks */
+@keyframes verticalMarquee {
+  0% {
+    transform: translateY(0%);
+  }
+  100% {
+    transform: translateY(-50%);
+  }
+}
+
+.animate-vertical-marquee {
+  display: flex;
+  flex-direction: column;
+  animation: verticalMarquee 24s linear infinite;
+  will-change: transform;
+}
+
+.animate-vertical-marquee:hover {
+  animation-play-state: paused;
+}
+
 /* Pulse indicator animation */
 @keyframes pulseDot {
 
