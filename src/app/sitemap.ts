@@ -12,7 +12,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
     { url: `${baseUrl}/shares`, changeFrequency: "daily", priority: 0.9 },
     {
-      url: `${baseUrl}/drhp`,
+      url: `${baseUrl}/drhp-filed`,
       changeFrequency: "weekly",
       priority: 0.8,
     },
