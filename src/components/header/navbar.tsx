@@ -200,7 +200,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onSelectStock, onOpenEnquiry }) 
   };
 
   const isMoreActive =
-    isActive('/partners') || isActive('/blogs') || isActive('/about-us');
+    isActive('/partners') || isActive('/blogs') || isActive('/about-us') || isActive('/our-team');
 
   return (
     <>
@@ -277,6 +277,19 @@ export const Navbar: React.FC<NavbarProps> = ({ onSelectStock, onOpenEnquiry }) 
               )}
             </Link>
 
+            <Link
+              href="/our-team"
+              className={`px-3 py-1.5 rounded-md transition-colors whitespace-nowrap relative ${isActive('/our-team')
+                  ? 'text-primary font-semibold bg-primary/10'
+                  : 'hover:text-slate-900 hover:bg-slate-100/70'
+                }`}
+            >
+              Our Team
+              {isActive('/our-team') && (
+                <span className="absolute bottom-0 left-3 right-3 h-[2px] bg-primary rounded-full" />
+              )}
+            </Link>
+
             {/* More Dropdown for Insights & About Us */}
             <div className="relative" ref={moreDropdownRef}>
               <button
@@ -318,6 +331,18 @@ export const Navbar: React.FC<NavbarProps> = ({ onSelectStock, onOpenEnquiry }) 
                   >
                     <Info className="w-4 h-4 text-primary" />
                     <span>About Unlisted Pond</span>
+                  </Link>
+
+                  <Link
+                    href="/our-team"
+                    onClick={() => setMoreDropdownOpen(false)}
+                    className={`flex items-center space-x-2.5 px-3 py-2 rounded-md text-xs sm:text-[13px] transition-colors ${isActive('/our-team')
+                        ? 'bg-primary/10 text-primary font-medium'
+                        : 'text-slate-700 hover:bg-slate-50 hover:text-slate-900'
+                      }`}
+                  >
+                    <Users className="w-4 h-4 text-primary" />
+                    <span>Our Team</span>
                   </Link>
 
                   <Link
@@ -519,6 +544,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onSelectStock, onOpenEnquiry }) 
                 { href: '/screener', label: 'Sector Screener', icon: SlidersHorizontal },
                 { href: '/research', label: 'Research Reports', icon: BookOpen },
                 { href: '/partners', label: 'Partner With Us', icon: Users },
+                { href: '/our-team', label: 'Our Team', icon: Users },
                 { href: '/blogs', label: 'Video Insights & Blogs', icon: MessageSquareShare },
                 { href: '/about-us', label: 'About Unlisted Pond', icon: Info },
                 { href: '/contact-us', label: 'Contact Us & Bank Details', icon: Phone },
