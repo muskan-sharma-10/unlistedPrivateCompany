@@ -7,7 +7,7 @@
 
 export interface FounderProfile {
   id: string;
-  founderNumber: string; // e.g. "01", "02", "03"
+  founderNumber: string; // e.g. "01", "02", "03", "04", "05"
   name: string;
   designation: string;
   roleBadge: string;
@@ -17,7 +17,7 @@ export interface FounderProfile {
   bio: string;
   expertise: string[];
   email?: string;
-  imageUrl?: string; // e.g. '/images/team/akshay-biswal.jpg' when authentic portrait is provided
+  imageUrl?: string; // Authentic portrait path when provided
   initials: string;
   summaryHighlights: string[];
 }
@@ -36,8 +36,7 @@ export interface TeamServiceOffering {
 }
 
 /**
- * Three Founders of Unlisted Pond
- * Exactly 3 founder profiles with factual Chartered Accountancy designations.
+ * Founders of Unlisted Pond
  */
 export const FOUNDER_PROFILES: FounderProfile[] = [
   {
@@ -89,28 +88,78 @@ export const FOUNDER_PROFILES: FounderProfile[] = [
     ]
   },
   {
-    id: 'sachin-bahl',
+    id: 'harish-mittal',
     founderNumber: '03',
-    name: 'CA Sachin Bahl',
-    designation: 'Chartered Accountant',
-    roleBadge: 'Financial Advisory & Structuring',
-    qualifications: ['Chartered Accountant (CA)'],
+    name: 'Harish Mittal',
+    designation: 'Co-Founder',
+    roleBadge: 'Strategic Leadership & Growth',
+    qualifications: ['Strategic & Business Leadership'],
     isProvisional: true,
     provisionalNote: 'Provisional focus areas — subject to founder confirmation',
-    bio: 'Chartered Accountant providing professional advisory and financial structuring expertise to support corporate transactions and business growth.',
+    bio: 'Co-Founder driving business strategy, market expansion, and strategic partnerships at Unlisted Pond.',
     expertise: [
-      'Financial Advisory',
-      'Business Finance',
-      'Corporate Transactions',
-      'Financial Structuring'
+      'Business Strategy',
+      'Market Expansion',
+      'Strategic Partnerships',
+      'Corporate Growth'
     ],
     email: 'dealing@unlistedpond.com',
     imageUrl: '',
-    initials: 'SB',
+    initials: 'HM',
     summaryHighlights: [
-      'Financial advisory & business finance (Provisional)',
-      'Corporate transaction advisory (Provisional)',
-      'Financial structuring frameworks (Provisional)'
+      'Business strategy & market development (Provisional)',
+      'Strategic partnerships & enterprise relations (Provisional)',
+      'Corporate growth & operational oversight (Provisional)'
+    ]
+  },
+  {
+    id: 'mohit-gupta',
+    founderNumber: '04',
+    name: 'CA Mohit Gupta',
+    designation: 'Chartered Accountant',
+    roleBadge: 'Financial Structuring & Compliance',
+    qualifications: ['Chartered Accountant (CA)'],
+    isProvisional: true,
+    provisionalNote: 'Provisional focus areas — subject to founder confirmation',
+    bio: 'Chartered Accountant advising on financial structuring, statutory compliance, and corporate advisory frameworks.',
+    expertise: [
+      'Financial Structuring',
+      'Corporate Advisory',
+      'Statutory Compliance',
+      'Financial Review'
+    ],
+    email: 'dealing@unlistedpond.com',
+    imageUrl: '',
+    initials: 'MG',
+    summaryHighlights: [
+      'Financial structuring & transaction advisory (Provisional)',
+      'Statutory compliance & financial governance (Provisional)',
+      'Corporate reporting & regulatory advisory (Provisional)'
+    ]
+  },
+  {
+    id: 'vaibhav-bansal',
+    founderNumber: '05',
+    name: 'CA Vaibhav Bansal',
+    designation: 'Chartered Accountant',
+    roleBadge: 'Corporate Advisory & Valuation',
+    qualifications: ['Chartered Accountant (CA)'],
+    isProvisional: true,
+    provisionalNote: 'Provisional focus areas — subject to founder confirmation',
+    bio: 'Chartered Accountant focusing on corporate advisory, business valuation, and financial analysis.',
+    expertise: [
+      'Corporate Advisory',
+      'Business Valuation',
+      'Financial Analysis',
+      'Transaction Planning'
+    ],
+    email: 'dealing@unlistedpond.com',
+    imageUrl: '',
+    initials: 'VB',
+    summaryHighlights: [
+      'Corporate financial advisory & planning (Provisional)',
+      'Business valuation & financial analysis (Provisional)',
+      'Transaction planning & analytical review (Provisional)'
     ]
   }
 ];

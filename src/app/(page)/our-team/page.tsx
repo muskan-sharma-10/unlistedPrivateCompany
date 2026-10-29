@@ -11,14 +11,14 @@ import TeamCTA from '@/components/team/team-cta';
 export const metadata: Metadata = {
   title: 'Our Founders | The People Behind Unlisted Pond',
   description:
-    'Meet the three founders behind Unlisted Pond. Chartered Accountants bringing specialized professional expertise to corporate finance, debt restructuring, borrowing advisory, and statutory consultation.',
+    'Meet the founders behind Unlisted Pond. Experienced professionals bringing specialized expertise to corporate finance, debt restructuring, borrowing advisory, and strategic business growth.',
   alternates: {
     canonical: 'https://www.unlistedpond.com/our-team',
   },
   openGraph: {
     title: 'Our Founders | The People Behind Unlisted Pond',
     description:
-      'Meet the three founders behind Unlisted Pond. Chartered Accountants bringing professional expertise to corporate finance and advisory activities.',
+      'Meet the founders behind Unlisted Pond bringing professional expertise to corporate finance and strategic growth.',
     url: 'https://www.unlistedpond.com/our-team',
     siteName: 'Unlisted Pond',
     type: 'website',
@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Our Founders | The People Behind Unlisted Pond',
     description:
-      'Meet the three founders behind Unlisted Pond. Built on Expertise. Driven by Vision.',
+      'Meet the founders behind Unlisted Pond. Built on Expertise. Driven by Vision.',
   },
 };
 

@@ -16,23 +16,33 @@ export const PartnerGrid: React.FC = () => {
             Founding Leadership
           </span>
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-slate-900 leading-tight">
-            The Three Founders of Unlisted Pond
+            The Founders of Unlisted Pond
           </h2>
           <p className="text-sm sm:text-base text-slate-600 mt-2 leading-relaxed">
-            Our founders bring specialized Chartered Accountancy depth across debt and equity finance, corporate finance advisory, and structured capital transactions.
+            Our founders bring specialized professional depth across debt and equity finance, corporate finance advisory, statutory compliance, and strategic business growth.
           </p>
         </ScrollReveal>
 
-        {/* Balanced Three-Founder Composition: 3 Columns on Desktop, Single Column on Mobile */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
+        {/* Balanced Multi-Founder Composition: 3 on top row + 2 centered on second row (desktop) */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-8 items-stretch">
           {FOUNDER_PROFILES.map((founder, index) => {
-            const staggerDelay = index * 150; // 0ms, 150ms, 300ms
+            const staggerDelay = (index % 3) * 120; // 0ms, 120ms, 240ms
+
+            // 6-column grid balancing:
+            // Top row: 3 cards (index 0, 1, 2) each span 2 cols (total 6 cols)
+            // Second row: 2 cards (index 3, 4) each span 2 cols, starting at col 2 (spans cols 2-3 & 4-5, centered!)
+            let colClasses = 'lg:col-span-2';
+            if (index === 3) {
+              colClasses = 'lg:col-span-2 lg:col-start-2';
+            } else if (index === 4) {
+              colClasses = 'lg:col-span-2 md:col-span-2 md:max-w-md md:mx-auto md:w-full lg:max-w-none';
+            }
 
             return (
               <ScrollReveal
                 key={founder.id}
                 delayMs={staggerDelay}
-                className="h-full"
+                className={`h-full ${colClasses}`}
               >
                 <FounderCard
                   founder={founder}
@@ -49,7 +59,7 @@ export const PartnerGrid: React.FC = () => {
             <div className="flex items-center space-x-2.5">
               <span className="w-2 h-2 rounded-full bg-blue-600 shrink-0" />
               <span className="leading-relaxed">
-                Founder designations and Chartered Accountancy qualifications are maintained and verified in accordance with statutory standards.
+                Founder designations and professional qualifications are maintained in accordance with verified standards.
               </span>
             </div>
             <span className="text-[11px] font-mono text-slate-500 whitespace-nowrap pl-4 sm:pl-0 sm:border-l-0 border-l border-slate-200">
