@@ -1,12 +1,13 @@
 /**
- * Team & Leadership Data for Unlisted Pond
+ * Founders & Leadership Data for Unlisted Pond
  *
- * This file is the single source of truth for all leadership profiles and practice area services.
- * Real partner names, verified qualifications, photographs, and confirmed focus areas are maintained here.
+ * This file is the single source of truth for all founder profiles and practice area services.
+ * Real founder names, verified qualifications, photographs, and confirmed focus areas are maintained here.
  */
 
-export interface PartnerProfile {
+export interface FounderProfile {
   id: string;
+  founderNumber: string; // e.g. "01", "02", "03"
   name: string;
   designation: string;
   roleBadge: string;
@@ -16,10 +17,13 @@ export interface PartnerProfile {
   bio: string;
   expertise: string[];
   email?: string;
-  imageUrl?: string; // e.g. '/images/team/partner1.jpg' when available
+  imageUrl?: string; // e.g. '/images/team/akshay-biswal.jpg' when authentic portrait is provided
   initials: string;
   summaryHighlights: string[];
 }
+
+// Backward compatibility alias
+export type PartnerProfile = FounderProfile;
 
 export interface TeamServiceOffering {
   id: string;
@@ -32,41 +36,43 @@ export interface TeamServiceOffering {
 }
 
 /**
- * Three Partners of Unlisted Pond
- * Exactly 3 partner profiles with factual Chartered Accountancy designations.
+ * Three Founders of Unlisted Pond
+ * Exactly 3 founder profiles with factual Chartered Accountancy designations.
  */
-export const PARTNER_PROFILES: PartnerProfile[] = [
+export const FOUNDER_PROFILES: FounderProfile[] = [
   {
     id: 'akshay-biswal',
+    founderNumber: '01',
     name: 'CA Akshay Biswal',
     designation: 'Chartered Accountant',
     roleBadge: 'Debt & Equity Finance',
     qualifications: ['Chartered Accountant (CA)'],
     isProvisional: false,
-    bio: 'Chartered Accountant specializing in debt financing, equity finance advisory, and structured debt restructuring solutions for corporate entities and growing enterprises.',
+    bio: 'Chartered Accountant bringing professional expertise to debt financing, equity finance advisory, and structured corporate debt restructuring at Unlisted Pond.',
     expertise: [
       'Debt Finance',
       'Equity Finance',
       'Debt Restructuring'
     ],
-    email: 'dealing@unlistedpond.com',
-    imageUrl: '', // Portrait image path when provided
+    email: 'info.biswal01@gmail.com',
+    imageUrl: '', // Authentic portrait path when provided
     initials: 'AB',
     summaryHighlights: [
-      'Debt finance facilitation & borrowing advisory',
-      'Equity finance advisory & capital planning',
-      'Debt restructuring frameworks for corporate requirements'
+      'Debt financing facilitation & borrowing advisory',
+      'Equity finance & strategic capital planning',
+      'Corporate debt restructuring frameworks'
     ]
   },
   {
     id: 'rajat-goyal',
+    founderNumber: '02',
     name: 'CA Rajat Goyal',
     designation: 'Chartered Accountant',
     roleBadge: 'Corporate Finance & Advisory',
     qualifications: ['Chartered Accountant (CA)'],
     isProvisional: true,
-    provisionalNote: 'Provisional focus areas — subject to final partner confirmation',
-    bio: 'Chartered Accountant advising on corporate finance mandates, financial advisory frameworks, business funding coordination, and financial planning and analysis.',
+    provisionalNote: 'Provisional focus areas — subject to founder confirmation',
+    bio: 'Chartered Accountant contributing professional financial and advisory expertise to corporate finance mandates and strategic business initiatives.',
     expertise: [
       'Corporate Finance',
       'Financial Advisory',
@@ -77,20 +83,21 @@ export const PARTNER_PROFILES: PartnerProfile[] = [
     imageUrl: '',
     initials: 'RG',
     summaryHighlights: [
-      'Corporate finance and strategic planning (Provisional)',
-      'Financial advisory and business funding guidance (Provisional)',
-      'Financial planning and analytical review (Provisional)'
+      'Corporate finance guidance (Provisional)',
+      'Financial advisory & business funding (Provisional)',
+      'Financial planning & analysis (Provisional)'
     ]
   },
   {
     id: 'sachin-bahl',
+    founderNumber: '03',
     name: 'CA Sachin Bahl',
     designation: 'Chartered Accountant',
     roleBadge: 'Financial Advisory & Structuring',
     qualifications: ['Chartered Accountant (CA)'],
     isProvisional: true,
-    provisionalNote: 'Provisional focus areas — subject to final partner confirmation',
-    bio: 'Chartered Accountant focusing on financial advisory, business finance structuring, corporate transactions, and financial modeling.',
+    provisionalNote: 'Provisional focus areas — subject to founder confirmation',
+    bio: 'Chartered Accountant providing professional advisory and financial structuring expertise to support corporate transactions and business growth.',
     expertise: [
       'Financial Advisory',
       'Business Finance',
@@ -101,12 +108,15 @@ export const PARTNER_PROFILES: PartnerProfile[] = [
     imageUrl: '',
     initials: 'SB',
     summaryHighlights: [
-      'Financial advisory and business finance structuring (Provisional)',
-      'Corporate transaction coordination and review (Provisional)',
-      'Financial structuring guidance for corporate mandates (Provisional)'
+      'Financial advisory & business finance (Provisional)',
+      'Corporate transaction advisory (Provisional)',
+      'Financial structuring frameworks (Provisional)'
     ]
   }
 ];
+
+// Alias for backward compatibility
+export const PARTNER_PROFILES = FOUNDER_PROFILES;
 
 /**
  * Confirmed Practice Areas & Business Services (Section C)

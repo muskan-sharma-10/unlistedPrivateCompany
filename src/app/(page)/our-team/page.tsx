@@ -9,25 +9,25 @@ import ExpertiseSection from '@/components/team/expertise-section';
 import TeamCTA from '@/components/team/team-cta';
 
 export const metadata: Metadata = {
-  title: 'Our Leadership Team | The People Behind Unlisted Pond',
+  title: 'Our Founders | The People Behind Unlisted Pond',
   description:
-    'Meet the professionals bringing expertise, insight and dedication to every business relationship. Explore partner profiles, verified qualifications, corporate finance, chartered accountancy, and business advisory services.',
+    'Meet the three founders behind Unlisted Pond. Chartered Accountants bringing specialized professional expertise to corporate finance, debt restructuring, borrowing advisory, and statutory consultation.',
   alternates: {
     canonical: 'https://www.unlistedpond.com/our-team',
   },
   openGraph: {
-    title: 'Our Leadership Team | Unlisted Pond',
+    title: 'Our Founders | The People Behind Unlisted Pond',
     description:
-      'Meet the professionals bringing expertise, insight and dedication to every business relationship at Unlisted Pond.',
+      'Meet the three founders behind Unlisted Pond. Chartered Accountants bringing professional expertise to corporate finance and advisory activities.',
     url: 'https://www.unlistedpond.com/our-team',
     siteName: 'Unlisted Pond',
     type: 'website',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Our Leadership Team | Unlisted Pond',
+    title: 'Our Founders | The People Behind Unlisted Pond',
     description:
-      'Meet the leadership team behind Unlisted Pond. Chartered accountancy, business loans, corporate finance, and enterprise advisory.',
+      'Meet the three founders behind Unlisted Pond. Built on Expertise. Driven by Vision.',
   },
 };
 
@@ -37,21 +37,21 @@ export default function OurTeamPage() {
       {/* 1. Top Ticker & Compliance Banner */}
       <TopTicker />
 
-      {/* 2. Primary Navigation Header */}
+      {/* 2. Primary Navigation Header (Displays "Our Founders" linking to /our-team) */}
       <Navbar />
 
       {/* 3. Main Content Landmark */}
       <main id="main-content" className="flex-1 w-full">
-        {/* Section A: Hero */}
+        {/* Section A: Hero with Animated Headline & Tagline */}
         <TeamHero />
 
-        {/* Section B: Three Partner Profiles */}
+        {/* Section B: Three Founder Profiles with Staggered Scroll Reveal */}
         <PartnerGrid />
 
         {/* Section C: Confirmed Business Services & Practice Areas */}
         <ExpertiseSection />
 
-        {/* Section D: Direct Consultation Call to Action */}
+        {/* Section D: Direct Founder Consultation Call to Action */}
         <TeamCTA />
       </main>
 

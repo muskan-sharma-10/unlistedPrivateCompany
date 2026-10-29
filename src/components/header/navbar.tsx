@@ -284,7 +284,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onSelectStock, onOpenEnquiry }) 
                   : 'hover:text-slate-900 hover:bg-slate-100/70'
                 }`}
             >
-              Our Team
+              Our Founders
               {isActive('/our-team') && (
                 <span className="absolute bottom-0 left-3 right-3 h-[2px] bg-primary rounded-full" />
               )}
@@ -342,7 +342,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onSelectStock, onOpenEnquiry }) 
                       }`}
                   >
                     <Users className="w-4 h-4 text-primary" />
-                    <span>Our Team</span>
+                    <span>Our Founders</span>
                   </Link>
 
                   <Link
@@ -544,7 +544,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onSelectStock, onOpenEnquiry }) 
                 { href: '/screener', label: 'Sector Screener', icon: SlidersHorizontal },
                 { href: '/research', label: 'Research Reports', icon: BookOpen },
                 { href: '/partners', label: 'Partner With Us', icon: Users },
-                { href: '/our-team', label: 'Our Team', icon: Users },
+                { href: '/our-team', label: 'Our Founders', icon: Users },
                 { href: '/blogs', label: 'Video Insights & Blogs', icon: MessageSquareShare },
                 { href: '/about-us', label: 'About Unlisted Pond', icon: Info },
                 { href: '/contact-us', label: 'Contact Us & Bank Details', icon: Phone },

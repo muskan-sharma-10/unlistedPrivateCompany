@@ -1,0 +1,73 @@
+<svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Main Background Gradient -->
+    <linearGradient id="upBgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stopColor="#1E40AF" />
+      <stop offset="60%" stopColor="#2563EB" />
+      <stop offset="100%" stopColor="#0284C7" />
+    </linearGradient>
+
+    <!-- Glow & Ripple Accent -->
+    <linearGradient id="upGlowGrad" x1="50%" y1="0%" x2="50%" y2="100%">
+      <stop offset="0%" stopColor="#FFFFFF" stopOpacity="0.95" />
+      <stop offset="100%" stopColor="#93C5FD" stopOpacity="0.45" />
+    </linearGradient>
+
+    <!-- Cyan ripple wave -->
+    <linearGradient id="upWaveGrad" x1="0%" y1="50%" x2="100%" y2="50%">
+      <stop offset="0%" stopColor="#38BDF8" stopOpacity="0.5" />
+      <stop offset="50%" stopColor="#67E8F9" stopOpacity="0.95" />
+      <stop offset="100%" stopColor="#38BDF8" stopOpacity="0.5" />
+    </linearGradient>
+
+    <!-- Drop shadow for container depth -->
+    <filter id="upShadow" x="-10%" y="-10%" width="130%" height="130%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="1.5" stdDeviation="1.5" floodColor="#0F172A" floodOpacity="0.3" />
+    </filter>
+  </defs>
+
+  <!-- Rounded Container -->
+  <rect
+    x="1.5"
+    y="1.5"
+    width="41"
+    height="41"
+    rx="10"
+    fill="url(#upBgGrad)"
+    stroke="rgba(255,255,255,0.25)"
+    strokeWidth="1.2"
+    filter="url(#upShadow)"
+  />
+
+  <!-- Outer Pond Ripple Arc -->
+  <path
+    d="M9 30.5C13 33.5 31 33.5 35 30.5"
+    stroke="url(#upWaveGrad)"
+    strokeWidth="2.2"
+    strokeLinecap="round"
+  />
+
+  <!-- Mid Pond Ripple Arc -->
+  <path
+    d="M12.5 26C15.5 28.5 28.5 28.5 31.5 26"
+    stroke="rgba(255,255,255,0.6)"
+    strokeWidth="1.8"
+    strokeLinecap="round"
+  />
+
+  <!-- Stylized Modern "UP" Ripple & Upward Beacon -->
+  <path
+    d="M22 8.5C21.4 9.5 16 17 16 21C16 24.3137 18.6863 27 22 27C25.3137 27 28 24.3137 28 21C28 17 22.6 9.5 22 8.5Z"
+    fill="url(#upGlowGrad)"
+  />
+
+  <!-- Inner Upward Arrow / Financial Momentum Core -->
+  <path
+    d="M22 13L25.2 18H23.2V22.5H20.8V18H18.8L22 13Z"
+    fill="#1E40AF"
+  />
+
+  <!-- Subtle Pond Droplet Ripple Accent -->
+  <circle cx="22" cy="7.5" r="1.5" fill="#E0F2FE" />
+</svg>
+
