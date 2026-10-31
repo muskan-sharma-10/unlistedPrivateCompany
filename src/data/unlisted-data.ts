@@ -33,6 +33,12 @@ export interface FAQItem {
   answer: string;
 }
 
+export interface PriceHistoryRecord {
+  price: number;
+  date: string; // ISO 8601 string
+  note?: string;
+}
+
 export interface StockItem {
   id: string;
   name: string;
@@ -51,6 +57,7 @@ export interface StockItem {
   peRatio?: string;
   pbRatio?: string;
   sparkline: number[];
+  priceHistory?: PriceHistoryRecord[];
   drhpStatus?: string;
   isin?: string;
   cin?: string;

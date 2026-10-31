@@ -74,6 +74,64 @@ export default function StockDetailPage({ params }: PageProps) {
     loadStock();
   }, [params.slug]);
 
+  // 1. Timeframe filtering based on actual historical records
+  const filteredHistory = React.useMemo(() => {
+    if (!stock) return [];
+    const history =
+      stock.priceHistory && stock.priceHistory.length > 0
+        ? stock.priceHistory
+        : [{ price: stock.price, date: new Date().toISOString() }];
+
+    const now = Date.now();
+    let durationMs = Infinity;
+    if (timeframe === '1M') durationMs = 30 * 24 * 60 * 60 * 1000;
+    else if (timeframe === '6M') durationMs = 182 * 24 * 60 * 60 * 1000;
+    else if (timeframe === '1Y') durationMs = 365 * 24 * 60 * 60 * 1000;
+    else if (timeframe === '3Y') durationMs = 3 * 365 * 24 * 60 * 60 * 1000;
+
+    const filtered = history.filter((h) => now - new Date(h.date).getTime() <= durationMs);
+    // If filtered timeframe has at least 1 record, return them sorted
+    if (filtered.length > 0) {
+      return [...filtered].sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+    }
+    // If the earliest record is newer than the cutoff, show all available history
+    return [...history].sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+  }, [stock, timeframe]);
+
+  // 2. Trailing 52-Week High & Low calculation from actual records
+  const { trailing52High, trailing52Low } = React.useMemo(() => {
+    if (!stock) return { trailing52High: '—', trailing52Low: '—' };
+
+    const history =
+      stock.priceHistory && stock.priceHistory.length > 0
+        ? stock.priceHistory
+        : [{ price: stock.price, date: new Date().toISOString() }];
+
+    const now = Date.now();
+    const trailing52WeeksMs = 52 * 7 * 24 * 60 * 60 * 1000; // 364 days
+
+    const inRange = history.filter(
+      (h) => now - new Date(h.date).getTime() <= trailing52WeeksMs
+    );
+    const active = inRange.length > 0 ? inRange : history;
+    const prices = active
+      .map((h) => h.price)
+      .filter((p) => typeof p === 'number' && !isNaN(p) && p > 0);
+
+    if (prices.length === 0) {
+      const fallback = stock.price ? `₹ ${stock.price.toLocaleString('en-IN')}` : '—';
+      return { trailing52High: fallback, trailing52Low: fallback };
+    }
+
+    const high = Math.max(...prices);
+    const low = Math.min(...prices);
+
+    return {
+      trailing52High: `₹ ${high.toLocaleString('en-IN', { maximumFractionDigits: 2 })}`,
+      trailing52Low: `₹ ${low.toLocaleString('en-IN', { maximumFractionDigits: 2 })}`,
+    };
+  }, [stock]);
+
   if (!stock && !isLoading) {
     return (
       <div className="min-h-screen bg-background text-foreground flex flex-col font-sans antialiased">
@@ -134,43 +192,119 @@ export default function StockDetailPage({ params }: PageProps) {
     }
   };
 
-  // Sparkline generator with realistic curve for detail chart
+  // Sparkline & detail chart generator with real historical points
   const renderPriceChart = () => {
-    const points = stock.sparkline;
-    if (!points || points.length < 2) return null;
-    const min = Math.min(...points) * 0.95;
-    const max = Math.max(...points) * 1.05;
-    const range = max - min || 1;
+    if (!stock) return null;
+    const records = filteredHistory;
     const width = 680;
     const height = 180;
 
-    const coords = points.map((p, idx) => {
-      const x = (idx / (points.length - 1)) * width;
-      const y = height - ((p - min) / range) * (height - 30) - 15;
-      return `${x.toFixed(1)},${y.toFixed(1)}`;
-    });
+    // Case 1: Multiple historical points -> Draw accurate curve and coordinates
+    if (records.length >= 2) {
+      const prices = records.map((r) => r.price);
+      const minPrice = Math.min(...prices);
+      const maxPrice = Math.max(...prices);
+      const priceDelta = maxPrice - minPrice;
+      const padding = priceDelta === 0 ? maxPrice * 0.05 || 1 : priceDelta * 0.1;
+      const plotMin = minPrice - padding;
+      const plotMax = maxPrice + padding;
+      const range = plotMax - plotMin || 1;
 
-    const pathD = `M ${coords.join(' L ')}`;
-    const areaD = `M 0,${height} L ${coords.join(' L ')} L ${width},${height} Z`;
+      const coords = records.map((r, idx) => {
+        const x = (idx / (records.length - 1)) * width;
+        const y = height - ((r.price - plotMin) / range) * (height - 30) - 15;
+        return { x: x.toFixed(1), y: y.toFixed(1), price: r.price, date: r.date };
+      });
 
+      const pathD = `M ${coords.map((c) => `${c.x},${c.y}`).join(' L ')}`;
+      const areaD = `M 0,${height} L ${coords.map((c) => `${c.x},${c.y}`).join(' L ')} L ${width},${height} Z`;
+
+      const startDate = new Date(records[0].date).toLocaleDateString('en-GB', {
+        day: '2-digit',
+        month: 'short',
+        year: 'numeric',
+      });
+      const endDate = new Date(records[records.length - 1].date).toLocaleDateString('en-GB', {
+        day: '2-digit',
+        month: 'short',
+        year: 'numeric',
+      });
+
+      return (
+        <div className="space-y-2">
+          <svg viewBox={`0 0 ${width} ${height}`} className="w-full h-44 sm:h-52" preserveAspectRatio="none">
+            <defs>
+              <linearGradient id="chartGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stopColor="#1D4ED8" stopOpacity="0.18" />
+                <stop offset="100%" stopColor="#1D4ED8" stopOpacity="0.0" />
+              </linearGradient>
+            </defs>
+            <path d={areaD} fill="url(#chartGrad)" />
+            <path
+              d={pathD}
+              fill="none"
+              stroke="#1D4ED8"
+              strokeWidth="2.2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+            {coords.map((c, i) => (
+              <circle
+                key={i}
+                cx={c.x}
+                cy={c.y}
+                r={coords.length <= 15 ? '3.5' : '2'}
+                className="fill-blue-700 stroke-white stroke-2"
+              />
+            ))}
+          </svg>
+          <div className="flex items-center justify-between text-xs text-slate-400 font-mono px-1">
+            <span>{startDate} (₹{records[0].price.toLocaleString('en-IN')})</span>
+            <span>{records.length} saved price points in {timeframe}</span>
+            <span>{endDate} (₹{records[records.length - 1].price.toLocaleString('en-IN')})</span>
+          </div>
+        </div>
+      );
+    }
+
+    // Case 2: Exactly 1 recorded price point -> Honest single benchmark line
+    if (records.length === 1) {
+      const single = records[0];
+      const singleDate = new Date(single.date).toLocaleDateString('en-GB', {
+        day: '2-digit',
+        month: 'short',
+        year: 'numeric',
+      });
+      const midY = height / 2;
+
+      return (
+        <div className="space-y-2">
+          <svg viewBox={`0 0 ${width} ${height}`} className="w-full h-44 sm:h-52">
+            <line
+              x1="0"
+              y1={midY}
+              x2={width}
+              y2={midY}
+              stroke="#1D4ED8"
+              strokeWidth="2"
+              strokeDasharray="4 4"
+            />
+            <circle cx={width / 2} cy={midY} r="5" className="fill-blue-700 stroke-white stroke-2" />
+          </svg>
+          <div className="flex items-center justify-between text-xs text-slate-500 font-medium px-1">
+            <span>Recorded: {singleDate}</span>
+            <span className="font-semibold text-blue-700 font-mono">Indicative Benchmark: ₹{single.price.toLocaleString('en-IN')}</span>
+            <span>Single Price Entry</span>
+          </div>
+        </div>
+      );
+    }
+
+    // Case 3: 0 records
     return (
-      <svg viewBox={`0 0 ${width} ${height}`} className="w-full h-44 sm:h-52" preserveAspectRatio="none">
-        <defs>
-          <linearGradient id="chartGrad" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#1D4ED8" stopOpacity="0.18" />
-            <stop offset="100%" stopColor="#1D4ED8" stopOpacity="0.0" />
-          </linearGradient>
-        </defs>
-        <path d={areaD} fill="url(#chartGrad)" />
-        <path
-          d={pathD}
-          fill="none"
-          stroke="#1D4ED8"
-          strokeWidth="2.2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-      </svg>
+      <div className="h-44 sm:h-52 flex items-center justify-center border border-dashed border-slate-200 rounded-lg bg-slate-50 text-xs text-slate-500">
+        No indicative price records saved for this timeframe.
+      </div>
     );
   };
 
@@ -309,13 +443,13 @@ export default function StockDetailPage({ params }: PageProps) {
                 <div className="p-3.5 rounded-lg bg-slate-50 border border-slate-100">
                   <span className="text-xs text-slate-500 font-medium block mb-0.5">52-Wk High</span>
                   <span className="text-sm sm:text-base font-bold text-emerald-700 tabular-nums">
-                    {stock.high52 || `₹ ${(stock.price * 1.15).toFixed(1)}`}
+                    {trailing52High}
                   </span>
                 </div>
                 <div className="p-3.5 rounded-lg bg-slate-50 border border-slate-100">
                   <span className="text-xs text-slate-500 font-medium block mb-0.5">52-Wk Low</span>
                   <span className="text-sm sm:text-base font-bold text-slate-800 tabular-nums">
-                    {stock.low52 || `₹ ${(stock.price * 0.75).toFixed(1)}`}
+                    {trailing52Low}
                   </span>
                 </div>
                 <div className="p-3.5 rounded-lg bg-slate-50 border border-slate-100">

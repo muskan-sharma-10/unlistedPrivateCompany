@@ -2,6 +2,7 @@ import { getSupabase } from './client';
 import {
   STOCKS_DATA,
   StockItem,
+  PriceHistoryRecord,
   FinancialRow,
   ShareholdingItem,
   FundRaiseItem,
@@ -15,6 +16,57 @@ import {
 // Helper to map DB row to StockItem
 export function mapDbShareToStockItem(row: any): StockItem {
   const details = row.details || {};
+
+  // Extract and validate real historical prices
+  let priceHistory: PriceHistoryRecord[] = [];
+  const rawHistory = details.price_history || details.priceHistory;
+  if (Array.isArray(rawHistory) && rawHistory.length > 0) {
+    priceHistory = rawHistory
+      .filter((item: any) => item && typeof item.price === 'number' && !isNaN(item.price) && item.date)
+      .map((item: any) => ({
+        price: Number(item.price),
+        date: String(item.date),
+        note: item.note ? String(item.note) : undefined,
+      }))
+      .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+  }
+
+  // If no history exists yet, honestly record the single known price point with actual DB timestamp
+  if (priceHistory.length === 0 && row.current_price !== null && row.current_price !== undefined) {
+    priceHistory = [
+      {
+        price: Number(row.current_price),
+        date: row.updated_at || row.created_at || new Date().toISOString(),
+      },
+    ];
+  }
+
+  // Derive sparkline directly from actual saved price records - never fabricate fake percentages
+  const sparkline: number[] =
+    priceHistory.length >= 2
+      ? priceHistory.map((h) => h.price)
+      : Array.isArray(details.sparkline) && details.sparkline.length > 0
+      ? details.sparkline
+      : [Number(row.current_price || 0)];
+
+  // Calculate trailing 52-week High/Low from valid historical records within the trailing 52-week period
+  const now = Date.now();
+  const trailing52WeeksMs = 52 * 7 * 24 * 60 * 60 * 1000; // 364 days
+  const recordsIn52Weeks = priceHistory.filter(
+    (h) => now - new Date(h.date).getTime() <= trailing52WeeksMs
+  );
+  const active52WRecords = recordsIn52Weeks.length > 0 ? recordsIn52Weeks : priceHistory;
+  const prices52W = active52WRecords.map((h) => h.price).filter((p) => typeof p === 'number' && !isNaN(p) && p > 0);
+
+  const calculatedHigh52 =
+    prices52W.length > 0
+      ? `₹ ${Math.max(...prices52W).toLocaleString('en-IN', { maximumFractionDigits: 2 })}`
+      : details.high52;
+
+  const calculatedLow52 =
+    prices52W.length > 0
+      ? `₹ ${Math.min(...prices52W).toLocaleString('en-IN', { maximumFractionDigits: 2 })}`
+      : details.low52;
 
   return {
     id: row.slug || row.symbol?.toLowerCase() || row.id,
@@ -35,13 +87,14 @@ export function mapDbShareToStockItem(row: any): StockItem {
     marketCap: row.market_cap_cr ? `₹ ${Number(row.market_cap_cr).toLocaleString('en-IN')} Cr` : details.marketCap || 'N/A',
     peRatio: row.pe_ratio !== null && row.pe_ratio !== undefined ? String(row.pe_ratio) : details.peRatio || 'N/A',
     pbRatio: details.pbRatio || 'N/A',
-    sparkline: details.sparkline || [row.current_price * 0.9, row.current_price * 0.95, row.current_price],
+    sparkline,
+    priceHistory,
     drhpStatus: details.drhpStatus || undefined,
     isin: details.isin,
     cin: details.cin,
     pan: details.pan,
-    high52: details.high52,
-    low52: details.low52,
+    high52: calculatedHigh52,
+    low52: calculatedLow52,
     bookValue: details.bookValue,
     faceValue: details.faceValue || '₹ 10.00',
     sharesOutstanding: details.sharesOutstanding,
