@@ -186,7 +186,6 @@ export default function StockDetailPage({ params }: PageProps) {
   if (!stock) return null;
 
   const isUp = stock.changeType === 'up';
-  const totalValue = quantity * stock.price;
 
   const handleCopy = (text: string, key: string) => {
     navigator.clipboard.writeText(text);
@@ -827,14 +826,6 @@ export default function StockDetailPage({ params }: PageProps) {
                     onChange={(e) => setQuantity(Math.max(1, parseInt(e.target.value) || 0))}
                     className="w-full px-3 py-2 rounded-lg border border-slate-300 text-xs sm:text-sm font-semibold text-slate-900 outline-none focus:border-blue-600 focus:bg-white bg-slate-50/70 transition-colors"
                   />
-                </div>
-
-                {/* Consideration Value */}
-                <div className="p-3.5 rounded-lg bg-slate-50 border border-slate-100 flex justify-between items-center">
-                  <span className="text-xs text-slate-500 font-medium">Estimated Value</span>
-                  <span className="text-base font-bold text-slate-900 tabular-nums">
-                    ₹{totalValue.toLocaleString('en-IN')}
-                  </span>
                 </div>
 
                 {/* Buyer / Seller Contact info */}
