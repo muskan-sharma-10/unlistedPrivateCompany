@@ -137,6 +137,96 @@ function runTests() {
   assert(remappedAfterDelete.high52 === '₹ 680', `New 52-week High after deletion is ₹ 680 (dynamically recalculated)`);
   assert(remappedAfterDelete.low52 === '₹ 420', '52-week Low remains ₹ 420');
 
+  // Test 6: Optional Description / Short Summary - Populated Content
+  console.log('\n--- Test Scenario 6: Optional Description with Populated Text ---');
+  const agnikulSummary = 'Agnikul Cosmos is an Indian private aerospace manufacturer developing small-lift launch vehicles.';
+  const shareWithDescription = mapDbShareToStockItem({
+    id: 'agnikul-uuid',
+    name: 'Agnikul Cosmos Private Limited',
+    symbol: 'AGNIKUL',
+    slug: 'agnikul',
+    current_price: 1147500,
+    lot_size: 1,
+    status: 'published',
+    details: {
+      description: agnikulSummary,
+    }
+  });
+  assert(shareWithDescription.description === agnikulSummary, 'Populated description correctly mapped from database');
+
+  // Test 7: Optional Description - NULL Description
+  console.log('\n--- Test Scenario 7: Optional Description when NULL in Database ---');
+  const shareWithNullDesc = mapDbShareToStockItem({
+    id: 'null-desc-uuid',
+    name: 'Stealth Startup',
+    symbol: 'STEALTH',
+    slug: 'stealth',
+    current_price: 250,
+    lot_size: 100,
+    status: 'published',
+    details: {
+      description: null
+    }
+  });
+  assert(shareWithNullDesc.description === undefined, 'NULL description maps to undefined (no fake text beneath title)');
+
+  // Test 8: Optional Description - Empty and Whitespace-Only
+  console.log('\n--- Test Scenario 8: Optional Description when Empty or Whitespace ---');
+  const shareWithWhitespaceDesc = mapDbShareToStockItem({
+    id: 'ws-desc-uuid',
+    name: 'Clean Equity',
+    symbol: 'CLEAN',
+    slug: 'clean',
+    current_price: 150,
+    lot_size: 50,
+    status: 'published',
+    details: {
+      description: '   \n  \t   '
+    }
+  });
+  assert(shareWithWhitespaceDesc.description === undefined, 'Whitespace-only description normalized to undefined');
+
+  // Test 9: Optional Description - Multiline Formatting Preserved
+  console.log('\n--- Test Scenario 9: Optional Description Multiline Formatting ---');
+  const multilineSummary = 'Line 1: Primary rocket engineering.\nLine 2: Single-piece 3D printed engines.\nLine 3: Sub-orbital mission capability.';
+  const shareWithMultiline = mapDbShareToStockItem({
+    id: 'multi-uuid',
+    name: 'Agnikul Cosmos',
+    symbol: 'AGNIKUL',
+    slug: 'agnikul',
+    current_price: 1147500,
+    details: {
+      description: multilineSummary
+    }
+  });
+  assert(shareWithMultiline.description === multilineSummary, 'Multiline linebreaks preserved intact for display');
+  assert((shareWithMultiline.description?.split('\n').length ?? 0) === 3, 'All 3 lines retained in description');
+
+  // Test 10: CMS Scenario D - Clearing Description in Details Payload
+  console.log('\n--- Test Scenario 10: Clearing Description in CMS Update ---');
+  const originalDetails = {
+    description: 'Old Description to be removed',
+    price_history: [{ price: 500, date: dateToday }]
+  };
+  // Admin clears the textarea -> cleanDescription is null
+  const adminInput = '   '; // cleared
+  const cleanDesc = adminInput.trim() ? adminInput.trim() : null;
+  const updatedDetails: Record<string, unknown> = { ...originalDetails };
+  if (cleanDesc) {
+    updatedDetails.description = cleanDesc;
+  } else {
+    delete updatedDetails.description;
+  }
+  assert(!('description' in updatedDetails), 'Description property cleanly deleted from details object upon clearance');
+
+  const shareAfterClearing = mapDbShareToStockItem({
+    id: 'cleared-uuid',
+    name: 'Cleared Company',
+    symbol: 'CLEARED',
+    details: updatedDetails
+  });
+  assert(shareAfterClearing.description === undefined, 'Share detail correctly exhibits no description after clearing');
+
   console.log(`\n=== VERIFICATION SUMMARY: ${passed} PASSED, ${failed} FAILED ===\n`);
   return failed === 0;
 }

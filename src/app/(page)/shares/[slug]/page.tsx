@@ -345,6 +345,11 @@ export default function StockDetailPage({ params }: PageProps) {
                   {stock.category}
                 </span>
               </div>
+              {stock.description && stock.description.trim() ? (
+                <p className="text-xs sm:text-sm text-slate-600 font-normal leading-relaxed mb-2 max-w-3xl whitespace-pre-line">
+                  {stock.description.trim()}
+                </p>
+              ) : null}
               <div className="flex flex-wrap items-center gap-2.5 text-xs text-slate-600 font-medium">
                 <span className="bg-slate-100 px-2 py-0.5 rounded-md text-slate-700 border border-slate-200">
                   {stock.sector}
@@ -476,7 +481,10 @@ export default function StockDetailPage({ params }: PageProps) {
                 {stock.aboutRich ? (
                   stock.aboutRich.map((p, idx) => <p key={idx}>{p}</p>)
                 ) : (
-                  <p>{stock.description}</p>
+                  <p>
+                    {stock.description ||
+                      `${stock.name} operates in the ${stock.sector} sector in India's unlisted and private equity market.`}
+                  </p>
                 )}
               </div>
             </div>

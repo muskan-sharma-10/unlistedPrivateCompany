@@ -51,7 +51,7 @@ export interface StockItem {
   change6M?: string;
   logo?: string;
   lastUpdated: string;
-  description: string;
+  description?: string | null;
   minLot?: number;
   marketCap?: string;
   peRatio?: string;

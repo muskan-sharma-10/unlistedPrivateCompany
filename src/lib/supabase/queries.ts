@@ -82,7 +82,12 @@ export function mapDbShareToStockItem(row: any): StockItem {
     lastUpdated: row.updated_at
       ? new Date(row.updated_at).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })
       : 'Recently',
-    description: details.description || `${row.name} operates in the ${row.sector} sector in India's unlisted and private equity market.`,
+    description:
+      typeof row.description === 'string' && row.description.trim()
+        ? row.description.trim()
+        : typeof details.description === 'string' && details.description.trim()
+        ? details.description.trim()
+        : undefined,
     minLot: Number(row.lot_size || 50),
     marketCap: row.market_cap_cr ? `₹ ${Number(row.market_cap_cr).toLocaleString('en-IN')} Cr` : details.marketCap || 'N/A',
     peRatio: row.pe_ratio !== null && row.pe_ratio !== undefined ? String(row.pe_ratio) : details.peRatio || 'N/A',
@@ -100,7 +105,9 @@ export function mapDbShareToStockItem(row: any): StockItem {
     sharesOutstanding: details.sharesOutstanding,
     debtToEquity: details.debtToEquity,
     roe: details.roe,
-    aboutRich: details.aboutRich || [details.description || `${row.name} is a leading player in ${row.sector}.`],
+    aboutRich: details.aboutRich || [
+      row.description || details.description || `${row.name} is a leading player in ${row.sector}.`,
+    ],
     financials: details.financials || [],
     shareholding: details.shareholding || [],
     fundRaises: details.fundRaises || [],
