@@ -17,6 +17,7 @@ import {
   MessageSquareShare,
   FileText,
   ChevronDown,
+  ChevronUp,
   Building2,
   ExternalLink,
   Download,
@@ -53,6 +54,36 @@ export default function StockDetailPage({ params }: PageProps) {
   const [isEnquiryOpen, setIsEnquiryOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submittedEnquiry, setSubmittedEnquiry] = useState(false);
+  const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(false);
+  const [canExpandDescription, setCanExpandDescription] = useState(false);
+  const descriptionRef = React.useRef<HTMLParagraphElement>(null);
+
+  // Monitor description overflow to conditionally render "Read more" toggle
+  React.useEffect(() => {
+    setIsDescriptionExpanded(false);
+    const checkOverflow = () => {
+      const desc = stock?.description?.trim() || '';
+      const isLongText = desc.length > 140 || desc.includes('\n');
+      if (descriptionRef.current && !isDescriptionExpanded) {
+        const el = descriptionRef.current;
+        const hasOverflow = el.scrollHeight > el.clientHeight + 1;
+        setCanExpandDescription(hasOverflow || isLongText);
+      } else {
+        setCanExpandDescription(isLongText);
+      }
+    };
+
+    checkOverflow();
+    const rafId = requestAnimationFrame(checkOverflow);
+    const timer = setTimeout(checkOverflow, 120);
+
+    window.addEventListener('resize', checkOverflow);
+    return () => {
+      cancelAnimationFrame(rafId);
+      clearTimeout(timer);
+      window.removeEventListener('resize', checkOverflow);
+    };
+  }, [stock?.description]);
 
   // Fetch live stock details from Supabase
   React.useEffect(() => {
@@ -346,9 +377,30 @@ export default function StockDetailPage({ params }: PageProps) {
                 </span>
               </div>
               {stock.description && stock.description.trim() ? (
-                <p className="text-xs sm:text-sm text-slate-600 font-normal leading-relaxed mb-2 max-w-3xl whitespace-pre-line">
-                  {stock.description.trim()}
-                </p>
+                <div className="mb-2 max-w-3xl">
+                  <p
+                    ref={descriptionRef}
+                    className={`text-xs sm:text-sm text-slate-600 font-normal leading-relaxed whitespace-pre-line ${
+                      !isDescriptionExpanded ? 'line-clamp-2' : ''
+                    }`}
+                  >
+                    {stock.description.trim()}
+                  </p>
+                  {(canExpandDescription || (stock.description && (stock.description.trim().length > 140 || stock.description.includes('\n')))) && (
+                    <button
+                      type="button"
+                      onClick={() => setIsDescriptionExpanded((prev) => !prev)}
+                      className="mt-1 text-xs font-semibold text-blue-600 hover:text-blue-700 inline-flex items-center gap-1 cursor-pointer transition-colors focus:outline-none"
+                    >
+                      <span>{isDescriptionExpanded ? 'Read less' : 'Read more'}</span>
+                      {isDescriptionExpanded ? (
+                        <ChevronUp className="w-3.5 h-3.5" />
+                      ) : (
+                        <ChevronDown className="w-3.5 h-3.5" />
+                      )}
+                    </button>
+                  )}
+                </div>
               ) : null}
               <div className="flex flex-wrap items-center gap-2.5 text-xs text-slate-600 font-medium">
                 <span className="bg-slate-100 px-2 py-0.5 rounded-md text-slate-700 border border-slate-200">
