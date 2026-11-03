@@ -13,11 +13,37 @@ interface HeroSectionProps {
 
 const ROTATING_WORDS = ['Delisted Shares', 'Unlisted Shares', 'Pre-IPO Shares', 'ESOP Shares'];
 
+const formatCurrentDateTime = (date: Date) => {
+  const day = String(date.getDate()).padStart(2, '0');
+  const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  const month = monthNames[date.getMonth()];
+  const year = date.getFullYear();
+
+  let hours = date.getHours();
+  const minutes = String(date.getMinutes()).padStart(2, '0');
+  const seconds = String(date.getSeconds()).padStart(2, '0');
+  const ampm = hours >= 12 ? 'PM' : 'AM';
+  hours = hours % 12 || 12;
+  const strHours = String(hours).padStart(2, '0');
+
+  return `${day} ${month} ${year}, ${strHours}:${minutes}:${seconds} ${ampm}`;
+};
+
 export const HeroSection: React.FC<HeroSectionProps> = ({
   onSelectStock,
   onOpenEnquiry,
 }) => {
   const [wordIndex, setWordIndex] = useState(0);
+  const [currentDateTime, setCurrentDateTime] = useState<string>('');
+
+  useEffect(() => {
+    const updateTime = () => {
+      setCurrentDateTime(formatCurrentDateTime(new Date()));
+    };
+    updateTime();
+    const timer = setInterval(updateTime, 1000);
+    return () => clearInterval(timer);
+  }, []);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -223,8 +249,11 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                   <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
                   Today&apos;s Indicative Prices
                 </span>
-                <span className="text-[11px] text-slate-500 font-medium tabular-nums">
-                  Ref · 14 Oct 2026
+                <span
+                  suppressHydrationWarning
+                  className="text-[10px] sm:text-[11px] text-slate-500 font-medium tabular-nums"
+                >
+                  Ref · {currentDateTime || (typeof window !== 'undefined' ? formatCurrentDateTime(new Date()) : 'Live')}
                 </span>
               </div>
 
