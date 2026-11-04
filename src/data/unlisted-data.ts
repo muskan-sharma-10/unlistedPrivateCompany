@@ -43,7 +43,7 @@ export interface StockItem {
   id: string;
   name: string;
   ticker?: string;
-  category: 'Popular' | 'Recently Updated' | 'Pre-IPO' | 'DRHP Filed';
+  category: 'Popular' | 'Recently Updated' | 'Pre-IPO' | 'DRHP Filed' | string;
   sector: string;
   price: number;
   change: string;
@@ -51,6 +51,7 @@ export interface StockItem {
   change6M?: string;
   logo?: string;
   lastUpdated: string;
+  updatedAt?: string;
   description?: string | null;
   minLot?: number;
   marketCap?: string;

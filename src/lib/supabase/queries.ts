@@ -82,6 +82,7 @@ export function mapDbShareToStockItem(row: any): StockItem {
     lastUpdated: row.updated_at
       ? new Date(row.updated_at).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })
       : 'Recently',
+    updatedAt: row.updated_at || row.created_at || undefined,
     description:
       typeof row.description === 'string' && row.description.trim()
         ? row.description.trim()

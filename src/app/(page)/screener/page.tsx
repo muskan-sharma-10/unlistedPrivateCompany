@@ -20,6 +20,25 @@ import Footer from '@/components/footer';
 import { STOCKS_DATA, StockItem } from '@/data/unlisted-data';
 import { getPortalShares } from '@/lib/supabase/queries';
 
+const getStockTimestamp = (stock: StockItem): number => {
+  if (stock.updatedAt) {
+    const t = new Date(stock.updatedAt).getTime();
+    if (!isNaN(t)) return t;
+  }
+  if (stock.priceHistory && stock.priceHistory.length > 0) {
+    const latest = stock.priceHistory[stock.priceHistory.length - 1];
+    if (latest && latest.date) {
+      const t = new Date(latest.date).getTime();
+      if (!isNaN(t)) return t;
+    }
+  }
+  if (stock.lastUpdated && stock.lastUpdated !== 'Recently') {
+    const t = new Date(stock.lastUpdated).getTime();
+    if (!isNaN(t)) return t;
+  }
+  return 0;
+};
+
 export default function ScreenerPage() {
   const [stocks, setStocks] = useState<StockItem[]>(STOCKS_DATA);
   const [selectedSector, setSelectedSector] = useState('All');
@@ -48,8 +67,40 @@ export default function ScreenerPage() {
     const matchesSector =
       selectedSector === 'All' || stock.sector.toLowerCase() === selectedSector.toLowerCase();
 
-    const matchesCategory =
-      selectedCategory === 'All' || stock.category === selectedCategory;
+    let matchesCategory = false;
+    if (selectedCategory === 'All') {
+      matchesCategory = true;
+    } else if (selectedCategory === 'Recently Updated') {
+      const ts = getStockTimestamp(stock);
+      const thirtyDaysMs = 30 * 24 * 60 * 60 * 1000;
+      const isWithin30Days = ts > 0 && Date.now() - ts <= thirtyDaysMs;
+      const hasHistoryUpdates = Boolean(stock.priceHistory && stock.priceHistory.length > 1);
+      matchesCategory = stock.category === 'Recently Updated' || isWithin30Days || hasHistoryUpdates;
+      if (!matchesCategory && ts > 0) {
+        const anyWithin30 = stocks.some(
+          (s) =>
+            s.category === 'Recently Updated' ||
+            (getStockTimestamp(s) > 0 && Date.now() - getStockTimestamp(s) <= thirtyDaysMs)
+        );
+        if (!anyWithin30) matchesCategory = true;
+      }
+    } else if (selectedCategory === 'Popular') {
+      matchesCategory =
+        stock.category === 'Popular' ||
+        stock.category?.toLowerCase().includes('popular') ||
+        !stock.category;
+    } else if (selectedCategory === 'Pre-IPO') {
+      matchesCategory =
+        stock.category === 'Pre-IPO' ||
+        stock.category?.toLowerCase().includes('pre-ipo');
+    } else if (selectedCategory === 'DRHP Filed') {
+      matchesCategory =
+        stock.category === 'DRHP Filed' ||
+        stock.category?.toLowerCase().includes('drhp') ||
+        Boolean(stock.drhpStatus);
+    } else {
+      matchesCategory = stock.category === selectedCategory;
+    }
 
     let matchesPrice = true;
     if (priceRange === 'under100') matchesPrice = stock.price < 100;
@@ -58,6 +109,10 @@ export default function ScreenerPage() {
 
     return matchesSearch && matchesSector && matchesCategory && matchesPrice;
   }).sort((a, b) => {
+    if (selectedCategory === 'Recently Updated' && sortBy === 'name') {
+      const timeDiff = getStockTimestamp(b) - getStockTimestamp(a);
+      if (timeDiff !== 0) return timeDiff;
+    }
     if (sortBy === 'priceAsc') return a.price - b.price;
     if (sortBy === 'priceDesc') return b.price - a.price;
     if (sortBy === 'gainers') {

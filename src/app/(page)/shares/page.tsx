@@ -19,6 +19,25 @@ import { useSearchParams } from 'next/navigation';
 import { STOCKS_DATA, StockItem } from '@/data/unlisted-data';
 import { getPortalShares } from '@/lib/supabase/queries';
 
+const getStockTimestamp = (stock: StockItem): number => {
+  if (stock.updatedAt) {
+    const t = new Date(stock.updatedAt).getTime();
+    if (!isNaN(t)) return t;
+  }
+  if (stock.priceHistory && stock.priceHistory.length > 0) {
+    const latest = stock.priceHistory[stock.priceHistory.length - 1];
+    if (latest && latest.date) {
+      const t = new Date(latest.date).getTime();
+      if (!isNaN(t)) return t;
+    }
+  }
+  if (stock.lastUpdated && stock.lastUpdated !== 'Recently') {
+    const t = new Date(stock.lastUpdated).getTime();
+    if (!isNaN(t)) return t;
+  }
+  return 0;
+};
+
 export default function AllSharesPage() {
   return (
     <React.Suspense fallback={<div className="min-h-screen bg-background flex items-center justify-center font-medium text-slate-500">Loading shares directory...</div>}>
@@ -50,6 +69,10 @@ function AllSharesContent() {
     if (sec) {
       setFilterSector(sec);
     }
+    const cat = searchParams.get('category');
+    if (cat) {
+      setFilterCategory(cat);
+    }
   }, [searchParams]);
 
   const sectors = ['All', 'Financial Services', 'Consumer Services', 'Automobile', 'Energy & Power', 'Renewable Energy', 'Manufacturing'];
@@ -66,11 +89,47 @@ function AllSharesContent() {
       stock.sector.toLowerCase().includes(filterSector.toLowerCase()) ||
       filterSector.toLowerCase().includes(stock.sector.toLowerCase());
 
-    const matchesCategory =
-      filterCategory === 'All' || stock.category === filterCategory;
+    let matchesCategory = false;
+    if (filterCategory === 'All') {
+      matchesCategory = true;
+    } else if (filterCategory === 'Recently Updated') {
+      const ts = getStockTimestamp(stock);
+      const thirtyDaysMs = 30 * 24 * 60 * 60 * 1000;
+      const isWithin30Days = ts > 0 && Date.now() - ts <= thirtyDaysMs;
+      const hasHistoryUpdates = Boolean(stock.priceHistory && stock.priceHistory.length > 1);
+      matchesCategory = stock.category === 'Recently Updated' || isWithin30Days || hasHistoryUpdates;
+      if (!matchesCategory && ts > 0) {
+        const anyWithin30 = stocks.some(
+          (s) =>
+            s.category === 'Recently Updated' ||
+            (getStockTimestamp(s) > 0 && Date.now() - getStockTimestamp(s) <= thirtyDaysMs)
+        );
+        if (!anyWithin30) matchesCategory = true;
+      }
+    } else if (filterCategory === 'Popular') {
+      matchesCategory =
+        stock.category === 'Popular' ||
+        stock.category?.toLowerCase().includes('popular') ||
+        !stock.category;
+    } else if (filterCategory === 'Pre-IPO') {
+      matchesCategory =
+        stock.category === 'Pre-IPO' ||
+        stock.category?.toLowerCase().includes('pre-ipo');
+    } else if (filterCategory === 'DRHP Filed') {
+      matchesCategory =
+        stock.category === 'DRHP Filed' ||
+        stock.category?.toLowerCase().includes('drhp') ||
+        Boolean(stock.drhpStatus);
+    } else {
+      matchesCategory = stock.category === filterCategory;
+    }
 
     return matchesSearch && matchesSector && matchesCategory;
   }).sort((a, b) => {
+    if (filterCategory === 'Recently Updated' && sortBy === 'name') {
+      const timeDiff = getStockTimestamp(b) - getStockTimestamp(a);
+      if (timeDiff !== 0) return timeDiff;
+    }
     if (sortBy === 'priceAsc') return a.price - b.price;
     if (sortBy === 'priceDesc') return b.price - a.price;
     if (sortBy === 'gainers') {

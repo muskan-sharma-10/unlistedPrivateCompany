@@ -227,6 +227,70 @@ function runTests() {
   });
   assert(shareAfterClearing.description === undefined, 'Share detail correctly exhibits no description after clearing');
 
+  // Test 11: Recently Updated Filter Logic & Sorting
+  console.log('\n--- Test Scenario 11: Recently Updated Filter & Sorting ---');
+  const recentShare1 = mapDbShareToStockItem({
+    id: 'recent-1',
+    name: 'Agnikul',
+    symbol: 'AGNIKUL',
+    category: 'Popular',
+    current_price: 1200000,
+    updated_at: '2026-11-03T08:00:00.000Z',
+    details: {}
+  });
+
+  const recentShare2 = mapDbShareToStockItem({
+    id: 'recent-2',
+    name: 'Airlife Gases',
+    symbol: 'AIRLIFE',
+    category: 'Popular',
+    current_price: 1710,
+    updated_at: '2026-10-30T08:00:00.000Z',
+    details: {}
+  });
+
+  const getStockTimestamp = (stock: any): number => {
+    if (stock.updatedAt) {
+      const t = new Date(stock.updatedAt).getTime();
+      if (!isNaN(t)) return t;
+    }
+    if (stock.priceHistory && stock.priceHistory.length > 0) {
+      const latest = stock.priceHistory[stock.priceHistory.length - 1];
+      if (latest && latest.date) {
+        const t = new Date(latest.date).getTime();
+        if (!isNaN(t)) return t;
+      }
+    }
+    if (stock.lastUpdated && stock.lastUpdated !== 'Recently') {
+      const t = new Date(stock.lastUpdated).getTime();
+      if (!isNaN(t)) return t;
+    }
+    return 0;
+  };
+
+  const isRecentlyUpdated = (stock: any, allStocks: any[]): boolean => {
+    if (stock.category === 'Recently Updated') return true;
+    const ts = getStockTimestamp(stock);
+    const thirtyDaysMs = 30 * 24 * 60 * 60 * 1000;
+    const isWithin30Days = ts > 0 && (Date.now() - ts <= thirtyDaysMs);
+    const hasHistoryUpdates = Boolean(stock.priceHistory && stock.priceHistory.length > 1);
+    if (isWithin30Days || hasHistoryUpdates) return true;
+    if (ts > 0) {
+      const anyWithin30 = allStocks.some(
+        (s) => s.category === 'Recently Updated' || (getStockTimestamp(s) > 0 && Date.now() - getStockTimestamp(s) <= thirtyDaysMs)
+      );
+      if (!anyWithin30) return true;
+    }
+    return false;
+  };
+
+  const testList = [recentShare2, recentShare1];
+  const matched = testList.filter((s) => isRecentlyUpdated(s, testList));
+  assert(matched.length === 2, 'Both recently updated shares match Recently Updated filter despite category being Popular');
+
+  const sorted = [...matched].sort((a, b) => getStockTimestamp(b) - getStockTimestamp(a));
+  assert(sorted[0].name === 'Agnikul', 'Most recently updated share (03 Nov 2026) appears first before (30 Oct 2026)');
+
   console.log(`\n=== VERIFICATION SUMMARY: ${passed} PASSED, ${failed} FAILED ===\n`);
   return failed === 0;
 }
