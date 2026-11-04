@@ -61,6 +61,7 @@ import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import "../style/globals.css";
 import { AuthProvider } from "@/lib/supabase/auth-context";
+import WhatsAppFloatingButton from "@/components/ui/whatsapp-button";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -140,7 +141,10 @@ export default function RootLayout({
   return (
     <html lang="en" className={`scroll-smooth ${inter.variable}`}>
       <body className="min-h-screen bg-background text-foreground font-sans antialiased">
-        <AuthProvider>{children}</AuthProvider>
+        <AuthProvider>
+          {children}
+          <WhatsAppFloatingButton />
+        </AuthProvider>
       </body>
     </html>
   );
