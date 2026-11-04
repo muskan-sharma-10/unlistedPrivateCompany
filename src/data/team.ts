@@ -46,7 +46,6 @@ export const FOUNDER_PROFILES: FounderProfile[] = [
     designation: 'Chartered Accountant',
     roleBadge: 'Debt & Equity Finance',
     qualifications: ['Chartered Accountant (CA)'],
-    isProvisional: false,
     bio: 'Chartered Accountant bringing professional expertise to debt financing, equity finance advisory, and structured corporate debt restructuring at Unlisted Pond.',
     expertise: [
       'Debt Finance',
@@ -69,8 +68,6 @@ export const FOUNDER_PROFILES: FounderProfile[] = [
     designation: 'Chartered Accountant',
     roleBadge: 'Corporate Finance & Advisory',
     qualifications: ['Chartered Accountant (CA)'],
-    isProvisional: true,
-    provisionalNote: 'Provisional focus areas — subject to founder confirmation',
     bio: 'Chartered Accountant contributing professional financial and advisory expertise to corporate finance mandates and strategic business initiatives.',
     expertise: [
       'Corporate Finance',
@@ -82,45 +79,18 @@ export const FOUNDER_PROFILES: FounderProfile[] = [
     imageUrl: '',
     initials: 'RG',
     summaryHighlights: [
-      'Corporate finance guidance (Provisional)',
-      'Financial advisory & business funding (Provisional)',
-      'Financial planning & analysis (Provisional)'
-    ]
-  },
-  {
-    id: 'harish-mittal',
-    founderNumber: '03',
-    name: 'Harish Mittal',
-    designation: 'Co-Founder',
-    roleBadge: 'Strategic Leadership & Growth',
-    qualifications: ['Strategic & Business Leadership'],
-    isProvisional: true,
-    provisionalNote: 'Provisional focus areas — subject to founder confirmation',
-    bio: 'Co-Founder driving business strategy, market expansion, and strategic partnerships at Unlisted Pond.',
-    expertise: [
-      'Business Strategy',
-      'Market Expansion',
-      'Strategic Partnerships',
-      'Corporate Growth'
-    ],
-    email: 'dealing@unlistedpond.com',
-    imageUrl: '',
-    initials: 'HM',
-    summaryHighlights: [
-      'Business strategy & market development (Provisional)',
-      'Strategic partnerships & enterprise relations (Provisional)',
-      'Corporate growth & operational oversight (Provisional)'
+      'Corporate finance guidance',
+      'Financial advisory & business funding',
+      'Financial planning & analysis'
     ]
   },
   {
     id: 'mohit-gupta',
-    founderNumber: '04',
+    founderNumber: '03',
     name: 'CA Mohit Gupta',
     designation: 'Chartered Accountant',
     roleBadge: 'Financial Structuring & Compliance',
     qualifications: ['Chartered Accountant (CA)'],
-    isProvisional: true,
-    provisionalNote: 'Provisional focus areas — subject to founder confirmation',
     bio: 'Chartered Accountant advising on financial structuring, statutory compliance, and corporate advisory frameworks.',
     expertise: [
       'Financial Structuring',
@@ -132,20 +102,18 @@ export const FOUNDER_PROFILES: FounderProfile[] = [
     imageUrl: '',
     initials: 'MG',
     summaryHighlights: [
-      'Financial structuring & transaction advisory (Provisional)',
-      'Statutory compliance & financial governance (Provisional)',
-      'Corporate reporting & regulatory advisory (Provisional)'
+      'Financial structuring & transaction advisory',
+      'Statutory compliance & financial governance',
+      'Corporate reporting & regulatory advisory'
     ]
   },
   {
     id: 'vaibhav-bansal',
-    founderNumber: '05',
+    founderNumber: '04',
     name: 'CA Vaibhav Bansal',
     designation: 'Chartered Accountant',
     roleBadge: 'Corporate Advisory & Valuation',
     qualifications: ['Chartered Accountant (CA)'],
-    isProvisional: true,
-    provisionalNote: 'Provisional focus areas — subject to founder confirmation',
     bio: 'Chartered Accountant focusing on corporate advisory, business valuation, and financial analysis.',
     expertise: [
       'Corporate Advisory',
@@ -157,9 +125,32 @@ export const FOUNDER_PROFILES: FounderProfile[] = [
     imageUrl: '',
     initials: 'VB',
     summaryHighlights: [
-      'Corporate financial advisory & planning (Provisional)',
-      'Business valuation & financial analysis (Provisional)',
-      'Transaction planning & analytical review (Provisional)'
+      'Corporate financial advisory & planning',
+      'Business valuation & financial analysis',
+      'Transaction planning & analytical review'
+    ]
+  },
+  {
+    id: 'harish-mittal',
+    founderNumber: '05',
+    name: 'Harish Mittal',
+    designation: 'Co-Founder',
+    roleBadge: 'Strategic Leadership & Growth',
+    qualifications: ['Strategic & Business Leadership'],
+    bio: 'Co-Founder driving business strategy, market expansion, and strategic partnerships at Unlisted Pond.',
+    expertise: [
+      'Business Strategy',
+      'Market Expansion',
+      'Strategic Partnerships',
+      'Corporate Growth'
+    ],
+    email: 'dealing@unlistedpond.com',
+    imageUrl: '',
+    initials: 'HM',
+    summaryHighlights: [
+      'Business strategy & market development',
+      'Strategic partnerships & enterprise relations',
+      'Corporate growth & operational oversight'
     ]
   }
 ];

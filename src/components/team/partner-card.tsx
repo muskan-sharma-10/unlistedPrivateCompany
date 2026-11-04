@@ -8,8 +8,7 @@ import {
   ArrowRight,
   ShieldCheck,
   Briefcase,
-  Camera,
-  AlertCircle
+  Camera
 } from 'lucide-react';
 import { FounderProfile } from '@/data/team';
 
@@ -104,17 +103,9 @@ export const FounderCard: React.FC<FounderCardProps> = ({
         <div className="space-y-4">
           {/* Header & Designation */}
           <div className="space-y-1.5">
-            <div className="flex flex-wrap items-center justify-between gap-2">
-              <span className="text-xs font-bold uppercase tracking-wider text-blue-700 block">
-                {founder.designation}
-              </span>
-              {founder.isProvisional && (
-                <span className="inline-flex items-center gap-1 text-[10px] font-semibold px-2 py-0.5 rounded bg-amber-50 text-amber-800 border border-amber-200/80">
-                  <AlertCircle className="w-3 h-3 text-amber-600 shrink-0" />
-                  <span>Provisional Focus</span>
-                </span>
-              )}
-            </div>
+            <span className="text-xs font-bold uppercase tracking-wider text-blue-700 block">
+              {founder.designation}
+            </span>
 
             <h3
               id={`founder-heading-${founder.id}`}
