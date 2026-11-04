@@ -200,7 +200,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onSelectStock, onOpenEnquiry }) 
   };
 
   const isMoreActive =
-    isActive('/partners') || isActive('/blogs') || isActive('/about-us') || isActive('/our-team');
+    isActive('/blogs') || isActive('/about-us') || isActive('/contact-us');
 
   return (
     <>
@@ -331,18 +331,6 @@ export const Navbar: React.FC<NavbarProps> = ({ onSelectStock, onOpenEnquiry }) 
                   >
                     <Info className="w-4 h-4 text-primary" />
                     <span>About Unlisted Pond</span>
-                  </Link>
-
-                  <Link
-                    href="/our-team"
-                    onClick={() => setMoreDropdownOpen(false)}
-                    className={`flex items-center space-x-2.5 px-3 py-2 rounded-md text-xs sm:text-[13px] transition-colors ${isActive('/our-team')
-                        ? 'bg-primary/10 text-primary font-medium'
-                        : 'text-slate-700 hover:bg-slate-50 hover:text-slate-900'
-                      }`}
-                  >
-                    <Users className="w-4 h-4 text-primary" />
-                    <span>Our Founders</span>
                   </Link>
 
                   <Link
