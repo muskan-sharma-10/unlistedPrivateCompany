@@ -50,7 +50,10 @@ export const FOUNDER_PROFILES: FounderProfile[] = [
     expertise: [
       'Debt Finance',
       'Equity Finance',
-      'Debt Restructuring'
+      'Debt Restructuring',
+      'Financial Advisory',
+      'Financial Planning / Corporate Advisory',
+      'Transaction Planning'
     ],
     email: 'info.biswal01@gmail.com',
     imageUrl: '', // Authentic portrait path when provided
