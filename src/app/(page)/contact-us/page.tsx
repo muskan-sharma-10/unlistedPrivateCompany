@@ -122,7 +122,7 @@ export default function ContactUsPage() {
           <div className="max-w-3xl space-y-3.5">
             <div className="inline-flex items-center space-x-2 text-xs font-semibold tracking-wider text-blue-400 uppercase">
               <span className="w-5 h-[2px] bg-blue-500" />
-              <span>Institutional Dealing Desk · Noida Corporate Office</span>
+              <span>Institutional Dealing Desk · New Delhi Corporate Office</span>
             </div>
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-white leading-tight">
               Connect with Private Market
@@ -308,7 +308,7 @@ export default function ContactUsPage() {
                   {settings?.siteTitle || 'IZUZ Consultancy Pvt. Ltd.'}
                 </p>
                 <p className="text-slate-600">
-                  {settings?.officeAddress || '8th Floor, Majestic Signia, Plot No. A-27, Block A, Industrial Area, Sector 62, Noida, Uttar Pradesh 201301'}
+                  {settings?.officeAddress || '1017, Gate No. 1, New Delhi YMCA Jai Singh Road, Connaught Place, New Delhi- 110001'}
                 </p>
               </div>
 

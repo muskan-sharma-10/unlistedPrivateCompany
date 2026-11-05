@@ -191,7 +191,7 @@ export default function AboutUsPage() {
               Visit Our Dealing Headquarters
             </h3>
             <p className="text-slate-300 text-xs sm:text-sm max-w-xl font-normal leading-relaxed">
-              8th Floor, Majestic Signia, Plot No. A-27, Block A, Industrial Area, Sector 62, Noida, Uttar Pradesh 201301.
+              1017, Gate No. 1, New Delhi YMCA Jai Singh Road, Connaught Place, New Delhi- 110001.
             </p>
           </div>
 

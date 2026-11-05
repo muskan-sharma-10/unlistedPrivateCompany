@@ -51,7 +51,7 @@ export const Footer: React.FC = () => {
                   Registered Corporate Office
                 </span>
                 <span>
-                  {settings?.officeAddress || '8th Floor, Majestic Signia, Plot No. A-27, Block A, Industrial Area, Sector 62, Noida, Uttar Pradesh 201301'}
+                  {settings?.officeAddress || '1017, Gate No. 1, New Delhi YMCA Jai Singh Road, Connaught Place, New Delhi- 110001'}
                 </span>
               </div>
             </div>
@@ -91,10 +91,10 @@ export const Footer: React.FC = () => {
               Regulatory
             </h4>
             <ul className="space-y-2 text-slate-400 text-xs sm:text-[13px]">
-              <li><a href="#disclaimer" className="hover:text-white transition-colors">SEBI Compliance</a></li>
-              <li><a href="#disclaimer" className="hover:text-white transition-colors">Risk Disclosures</a></li>
-              <li><a href="#disclaimer" className="hover:text-white transition-colors">Terms of Information</a></li>
-              <li><a href="#disclaimer" className="hover:text-white transition-colors">Privacy Policy</a></li>
+              <li><Link href="/sebi-compliance" className="hover:text-white transition-colors">SEBI Compliance</Link></li>
+              <li><Link href="/risk-disclosures" className="hover:text-white transition-colors">Risk Disclosures</Link></li>
+              <li><Link href="/terms-of-information" className="hover:text-white transition-colors">Terms of Information</Link></li>
+              <li><Link href="/privacy-policy" className="hover:text-white transition-colors">Privacy Policy</Link></li>
             </ul>
           </div>
         </div>

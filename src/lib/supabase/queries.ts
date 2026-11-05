@@ -536,7 +536,7 @@ export async function getPortalWebsiteSettings(): Promise<PortalSettings> {
     siteTitle: 'Unlisted Pond · Unlisted Shares & Pre-IPO Equity',
     supportEmail: 'info@unlistedzone.com',
     supportPhone: '+91 80100 09625',
-    officeAddress: 'Majestic Signia, Sector 62, Noida, Uttar Pradesh 201309',
+    officeAddress: '1017, Gate No. 1, New Delhi YMCA Jai Singh Road, Connaught Place, New Delhi- 110001',
     whatsappNumber: '+918010009625',
     maintenanceMode: false,
   };
