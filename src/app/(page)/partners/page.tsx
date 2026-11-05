@@ -8,6 +8,7 @@ import {
   TrendingUp,
   ShieldCheck,
   CheckCircle2,
+  AlertCircle,
   ArrowRight,
   Handshake,
   DollarSign,
@@ -27,6 +28,7 @@ export default function PartnersPage() {
   const [isEnquiryOpen, setIsEnquiryOpen] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -34,32 +36,67 @@ export default function PartnersPage() {
     partnerType: 'sub-broker',
     city: '',
     message: '',
+    honeypot: '',
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setErrorMessage(null);
+    setIsSuccess(false);
+
+    // Client-side validation
+    const trimmedName = formData.name.trim();
+    const trimmedEmail = formData.email.trim();
+    const trimmedPhone = formData.phone.trim();
+
+    if (!trimmedName || trimmedName.length < 2) {
+      setErrorMessage('Please enter your full name (minimum 2 characters).');
+      return;
+    }
+
+    const phoneDigits = trimmedPhone.replace(/\D/g, '');
+    if (phoneDigits.length < 7 || phoneDigits.length > 15) {
+      setErrorMessage('Please enter a valid phone number (at least 7 digits).');
+      return;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(trimmedEmail)) {
+      setErrorMessage('Please enter a valid official email address.');
+      return;
+    }
+
     setSubmitted(true);
 
     try {
-      await submitPartnerApplication({
-        full_name: formData.name,
-        email: formData.email,
-        phone: formData.phone,
+      const res = await submitPartnerApplication({
+        full_name: trimmedName,
+        email: trimmedEmail,
+        phone: trimmedPhone,
         partner_type: formData.partnerType,
-        city: formData.city,
-        message: formData.message,
+        city: formData.city.trim() || undefined,
+        message: formData.message.trim() || undefined,
       });
-      setIsSuccess(true);
-      setFormData({
-        name: '',
-        email: '',
-        phone: '',
-        partnerType: 'sub-broker',
-        city: '',
-        message: '',
-      });
-    } catch {
-      setIsSuccess(true);
+
+      if (res.success) {
+        setIsSuccess(true);
+        setErrorMessage(null);
+        setFormData({
+          name: '',
+          email: '',
+          phone: '',
+          partnerType: 'sub-broker',
+          city: '',
+          message: '',
+          honeypot: '',
+        });
+      } else {
+        setIsSuccess(false);
+        setErrorMessage(res.error || 'Failed to submit application. Please verify your details or try again.');
+      }
+    } catch (err: any) {
+      setIsSuccess(false);
+      setErrorMessage(err?.message || 'Network error occurred while submitting your application. Please try again.');
     } finally {
       setSubmitted(false);
     }
@@ -233,6 +270,18 @@ export default function PartnersPage() {
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-4">
+              {/* Spam protection honeypot */}
+              <div className="hidden" aria-hidden="true">
+                <input
+                  type="text"
+                  name="user_note"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  value={formData.honeypot}
+                  onChange={(e) => setFormData((prev) => ({ ...prev, honeypot: e.target.value }))}
+                />
+              </div>
+
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label className="text-xs font-semibold text-slate-700 block mb-1">Full Name *</label>
@@ -240,7 +289,10 @@ export default function PartnersPage() {
                     type="text"
                     required
                     value={formData.name}
-                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                    onChange={(e) => {
+                      setFormData((prev) => ({ ...prev, name: e.target.value }));
+                      if (errorMessage) setErrorMessage(null);
+                    }}
                     placeholder="e.g. Rahul Sharma"
                     className="w-full px-3 py-2 rounded-lg border border-slate-200 text-xs sm:text-sm text-slate-900 bg-white focus:border-blue-600 focus:ring-1 focus:ring-blue-600 outline-none transition-colors"
                   />
@@ -251,7 +303,10 @@ export default function PartnersPage() {
                     type="tel"
                     required
                     value={formData.phone}
-                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                    onChange={(e) => {
+                      setFormData((prev) => ({ ...prev, phone: e.target.value }));
+                      if (errorMessage) setErrorMessage(null);
+                    }}
                     placeholder="+91 98765 43210"
                     className="w-full px-3 py-2 rounded-lg border border-slate-200 text-xs sm:text-sm text-slate-900 bg-white focus:border-blue-600 focus:ring-1 focus:ring-blue-600 outline-none transition-colors tabular-nums"
                   />
@@ -265,7 +320,10 @@ export default function PartnersPage() {
                     type="email"
                     required
                     value={formData.email}
-                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                    onChange={(e) => {
+                      setFormData((prev) => ({ ...prev, email: e.target.value }));
+                      if (errorMessage) setErrorMessage(null);
+                    }}
                     placeholder="name@company.com"
                     className="w-full px-3 py-2 rounded-lg border border-slate-200 text-xs sm:text-sm text-slate-900 bg-white focus:border-blue-600 focus:ring-1 focus:ring-blue-600 outline-none transition-colors"
                   />
@@ -274,7 +332,10 @@ export default function PartnersPage() {
                   <label className="text-xs font-semibold text-slate-700 block mb-1">Partner Category *</label>
                   <select
                     value={formData.partnerType}
-                    onChange={(e) => setFormData({ ...formData, partnerType: e.target.value })}
+                    onChange={(e) => {
+                      setFormData((prev) => ({ ...prev, partnerType: e.target.value }));
+                      if (errorMessage) setErrorMessage(null);
+                    }}
                     className="w-full px-3 py-2 rounded-lg border border-slate-200 text-xs sm:text-sm text-slate-900 bg-white focus:border-blue-600 focus:ring-1 focus:ring-blue-600 outline-none transition-colors"
                   >
                     <option value="sub-broker">Sub-Broker / Franchisee</option>
@@ -290,7 +351,10 @@ export default function PartnersPage() {
                 <input
                   type="text"
                   value={formData.city}
-                  onChange={(e) => setFormData({ ...formData, city: e.target.value })}
+                  onChange={(e) => {
+                    setFormData((prev) => ({ ...prev, city: e.target.value }));
+                    if (errorMessage) setErrorMessage(null);
+                  }}
                   placeholder="e.g. Mumbai, Bengaluru, Delhi NCR"
                   className="w-full px-3 py-2 rounded-lg border border-slate-200 text-xs sm:text-sm text-slate-900 bg-white focus:border-blue-600 focus:ring-1 focus:ring-blue-600 outline-none transition-colors"
                 />
@@ -301,14 +365,24 @@ export default function PartnersPage() {
                 <textarea
                   rows={3}
                   value={formData.message}
-                  onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                  onChange={(e) => {
+                    setFormData((prev) => ({ ...prev, message: e.target.value }));
+                    if (errorMessage) setErrorMessage(null);
+                  }}
                   placeholder="Briefly describe your client base, current AUM, or specific unlisted shares inquiry..."
                   className="w-full px-3 py-2 rounded-lg border border-slate-200 text-xs sm:text-sm text-slate-900 bg-white focus:border-blue-600 focus:ring-1 focus:ring-blue-600 outline-none resize-none transition-colors"
                 />
               </div>
 
+              {errorMessage && (
+                <div className="p-3.5 rounded-lg bg-rose-50 border border-rose-200 text-rose-800 text-xs sm:text-sm font-medium flex items-start space-x-2.5">
+                  <AlertCircle className="w-4 h-4 text-rose-600 shrink-0 mt-0.5" />
+                  <span>{errorMessage}</span>
+                </div>
+              )}
+
               {isSuccess && (
-                <div className="p-3 rounded-lg bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-semibold flex items-center space-x-2">
+                <div className="p-3.5 rounded-lg bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs sm:text-sm font-semibold flex items-center space-x-2.5">
                   <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
                   <span>Thank you! Your partnership application has been sent to our desk. We will call you within 2 business hours.</span>
                 </div>

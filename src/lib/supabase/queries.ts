@@ -694,16 +694,37 @@ export interface PartnerPayload {
 
 export async function submitPartnerApplication(payload: PartnerPayload): Promise<{ success: boolean; error?: string }> {
   try {
+    if (typeof window !== 'undefined') {
+      const response = await fetch('/api/partners/apply', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload),
+      });
+
+      const data = await response.json().catch(() => null);
+
+      if (!response.ok || !data?.success) {
+        return {
+          success: false,
+          error: data?.error || 'Unable to submit application at this time. Please try again.',
+        };
+      }
+
+      return { success: true };
+    }
+
+    // Direct Supabase fallback for non-browser environments
     const supabase = getSupabase();
     if (!supabase) {
-      console.log('[Partner Application Simulation]', payload);
-      return { success: true };
+      return { success: false, error: 'Database service is currently unavailable.' };
     }
 
     const { error } = await supabase.from('partner_applications').insert([
       {
         full_name: payload.full_name.trim(),
-        email: payload.email.trim(),
+        email: payload.email.trim().toLowerCase(),
         phone: payload.phone.trim(),
         organization_name: payload.organization_name?.trim() || null,
         partner_type: payload.partner_type || 'sub_broker',
@@ -714,13 +735,16 @@ export async function submitPartnerApplication(payload: PartnerPayload): Promise
     ]);
 
     if (error) {
-      console.warn('[Supabase Partner Insert Warn]', error.message);
-      return { success: true };
+      console.error('[Supabase Partner Insert Error]', error.message);
+      return { success: false, error: error.message };
     }
 
     return { success: true };
   } catch (err: any) {
-    console.warn('[Supabase Partner Exception]', err);
-    return { success: true };
+    console.error('[Supabase Partner Exception]', err);
+    return {
+      success: false,
+      error: err?.message || 'Network error occurred while submitting application.',
+    };
   }
 }
