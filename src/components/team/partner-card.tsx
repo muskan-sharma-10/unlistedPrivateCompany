@@ -70,10 +70,10 @@ export const FounderCard: React.FC<FounderCardProps> = ({
               </div>
             </div>
 
-            {/* Sequence Index Badge (Founder 01, 02, 03) */}
+            {/* Sequence Index Badge (Founder / Partner 01, 02, 03) */}
             <div className="absolute top-4 left-4 z-20">
               <span className="inline-flex items-center space-x-1.5 px-2.5 py-1 rounded-md text-[11px] font-mono font-bold bg-slate-900/85 text-blue-300 border border-slate-700/80 backdrop-blur-md">
-                <span>FOUNDER</span>
+                <span>{founder.categoryLabel || 'FOUNDER'}</span>
                 <span className="text-slate-600">/</span>
                 <span>{founder.founderNumber || `0${index + 1}`}</span>
               </span>
@@ -83,7 +83,7 @@ export const FounderCard: React.FC<FounderCardProps> = ({
             <div className="absolute top-4 right-4 z-20">
               <span className="inline-flex items-center space-x-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold bg-blue-950/80 text-blue-200 border border-blue-400/30 backdrop-blur-md">
                 <ShieldCheck className="w-3.5 h-3.5 text-blue-400 shrink-0" />
-                <span>Executive Founder</span>
+                <span>{founder.statusLabel || (founder.designation === 'Co-Founder' ? 'Co-Founder' : 'Executive Founder')}</span>
               </span>
             </div>
           </div>
@@ -115,7 +115,10 @@ export const FounderCard: React.FC<FounderCardProps> = ({
             </h3>
 
             <p className="text-xs sm:text-sm font-semibold text-slate-700">
-              {founder.designation} · Founder, Unlisted Pond
+              {founder.companyRole ||
+                (founder.designation === 'Co-Founder'
+                  ? 'Co-Founder · Unlisted Pond'
+                  : `${founder.designation} · Founder, Unlisted Pond`)}
             </p>
           </div>
 

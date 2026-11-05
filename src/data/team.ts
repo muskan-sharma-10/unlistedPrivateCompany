@@ -10,6 +10,9 @@ export interface FounderProfile {
   founderNumber: string; // e.g. "01", "02", "03", "04", "05"
   name: string;
   designation: string;
+  companyRole?: string;
+  categoryLabel?: string;
+  statusLabel?: string;
   roleBadge: string;
   qualifications: string[];
   isProvisional?: boolean;
@@ -114,10 +117,13 @@ export const FOUNDER_PROFILES: FounderProfile[] = [
     id: 'vaibhav-bansal',
     founderNumber: '04',
     name: 'CA Vaibhav Bansal',
-    designation: 'Chartered Accountant',
+    designation: 'Partner',
+    companyRole: 'Chartered Accountant · Partner, Unlisted Pond',
+    categoryLabel: 'PARTNER',
+    statusLabel: 'Partner',
     roleBadge: 'Corporate Advisory & Valuation',
     qualifications: ['Chartered Accountant (CA)'],
-    bio: 'Chartered Accountant focusing on corporate advisory, business valuation, and financial analysis.',
+    bio: 'Chartered Accountant and Partner focusing on corporate advisory, business valuation, and financial analysis.',
     expertise: [
       'Corporate Advisory',
       'Business Valuation',
@@ -138,6 +144,9 @@ export const FOUNDER_PROFILES: FounderProfile[] = [
     founderNumber: '05',
     name: 'Harish Mittal',
     designation: 'Co-Founder',
+    companyRole: 'Co-Founder · Unlisted Pond',
+    categoryLabel: 'CO-FOUNDER',
+    statusLabel: 'Co-Founder',
     roleBadge: 'Strategic Leadership & Growth',
     qualifications: ['Strategic & Business Leadership'],
     bio: 'Co-Founder driving business strategy, market expansion, and strategic partnerships at Unlisted Pond.',
