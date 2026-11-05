@@ -1,7 +1,7 @@
 import React from 'react';
 
 const WHATSAPP_URL =
-  'https://wa.me/917303509666?text=Hi%20UnlistedPond%2C%20I%27d%20like%20to%20enquire%20about%20unlisted%20shares.';
+  'https://wa.me/919220451030?text=Hi%20UnlistedPond%2C%20I%27d%20like%20to%20enquire%20about%20unlisted%20shares.';
 
 export const WhatsAppFloatingButton: React.FC = () => {
   return (
