@@ -5,16 +5,6 @@ import Link from 'next/link';
 import { CheckCircle, Globe, ArrowRight, SlidersHorizontal, Headphones } from 'lucide-react';
 
 export const AppBanner: React.FC = () => {
-  const triggerEnquiry = (stockName?: string) => {
-    if (typeof window !== 'undefined') {
-      window.dispatchEvent(
-        new CustomEvent('open-enquiry-modal', {
-          detail: { stockName: stockName || '' }
-        })
-      );
-    }
-  };
-
   return (
     <section className="bg-white py-12 sm:py-16 border-b border-slate-200">
       <div className="max-w-[1520px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-14">
@@ -66,14 +56,13 @@ export const AppBanner: React.FC = () => {
                   <ArrowRight className="w-4 h-4" />
                 </Link>
 
-                <button
-                  type="button"
-                  onClick={() => triggerEnquiry()}
+                <Link
+                  href="/contact-us"
                   className="px-5 py-3 rounded-lg bg-slate-800/90 hover:bg-slate-800 text-slate-200 hover:text-white border border-slate-700 font-semibold text-sm flex items-center space-x-2 transition-all shadow-xs active:scale-[0.99]"
                 >
                   <Headphones className="w-4 h-4 text-blue-400" />
                   <span>Connect With Dealing Desk</span>
-                </button>
+                </Link>
               </div>
             </div>
 
@@ -137,14 +126,13 @@ export const AppBanner: React.FC = () => {
                     </div>
                   </div>
 
-                  <button
-                    type="button"
-                    onClick={() => triggerEnquiry()}
+                  <Link
+                    href="/contact-us"
                     className="w-full py-2.5 bg-blue-600 hover:bg-blue-500 text-white font-semibold rounded-lg text-center mt-2 transition-all shadow-xs text-xs flex items-center justify-center space-x-1.5 active:scale-[0.99]"
                   >
                     <span>Enquire to Buy / Sell</span>
                     <ArrowRight className="w-3.5 h-3.5" />
-                  </button>
+                  </Link>
                 </div>
               </div>
             </div>
