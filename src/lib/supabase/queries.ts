@@ -46,8 +46,8 @@ export function mapDbShareToStockItem(row: any): StockItem {
     priceHistory.length >= 2
       ? priceHistory.map((h) => h.price)
       : Array.isArray(details.sparkline) && details.sparkline.length > 0
-      ? details.sparkline
-      : [Number(row.current_price || 0)];
+        ? details.sparkline
+        : [Number(row.current_price || 0)];
 
   // Calculate trailing 52-week High/Low from valid historical records within the trailing 52-week period
   const now = Date.now();
@@ -87,8 +87,8 @@ export function mapDbShareToStockItem(row: any): StockItem {
       typeof row.description === 'string' && row.description.trim()
         ? row.description.trim()
         : typeof details.description === 'string' && details.description.trim()
-        ? details.description.trim()
-        : undefined,
+          ? details.description.trim()
+          : undefined,
     minLot: Number(row.lot_size || 50),
     marketCap: row.market_cap_cr ? `₹ ${Number(row.market_cap_cr).toLocaleString('en-IN')} Cr` : details.marketCap || 'N/A',
     peRatio: row.pe_ratio !== null && row.pe_ratio !== undefined ? String(row.pe_ratio) : details.peRatio || 'N/A',
@@ -535,7 +535,7 @@ export async function getPortalWebsiteSettings(): Promise<PortalSettings> {
   const fallback: PortalSettings = {
     siteTitle: 'Unlisted Pond · Unlisted Shares & Pre-IPO Equity',
     supportEmail: 'info@unlistedzone.com',
-    supportPhone: '+91 80100 09625',
+    supportPhone: '+919220451030',
     officeAddress: '1017, Gate No. 1, New Delhi YMCA Jai Singh Road, Connaught Place, New Delhi- 110001',
     whatsappNumber: '+918010009625',
     maintenanceMode: false,
