@@ -22,7 +22,7 @@ const iconMap = {
 export const ExpertiseSection: React.FC = () => {
   return (
     <section id="services" className="py-14 sm:py-20 lg:py-24 bg-white border-b border-slate-200">
-      <div className="max-w-[1520px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-14 space-y-12 sm:space-y-16">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12 sm:space-y-16">
         {/* Section Header with Scroll Reveal */}
         <ScrollReveal className="max-w-3xl">
           <span className="inline-block text-xs font-semibold tracking-wider uppercase text-blue-700 bg-blue-50 border border-blue-100 px-2.5 py-0.5 rounded mb-2">

@@ -22,7 +22,7 @@ export const TeamCTA: React.FC = () => {
         aria-hidden="true"
       />
 
-      <div className="max-w-[1520px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-14 relative z-10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <ScrollReveal>
           <div className="bg-slate-900/80 rounded-2xl border border-slate-800 p-8 sm:p-12 lg:p-14 backdrop-blur-xs flex flex-col lg:flex-row items-start lg:items-center justify-between gap-10">
             {/* Left Column: Heading and Context */}

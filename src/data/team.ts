@@ -1,15 +1,18 @@
 /**
  * Founders & Leadership Data for Unlisted Pond
  *
- * This file is the single source of truth for all founder profiles and practice area services.
+ * This file is the single source of truth for all leadership profiles and practice area services.
  * Real founder names, verified qualifications, photographs, and confirmed focus areas are maintained here.
  */
+
+export type LeadershipGroup = 'founder' | 'partner' | 'co-founder';
 
 export interface FounderProfile {
   id: string;
   founderNumber: string; // e.g. "01", "02", "03", "04", "05"
   name: string;
-  designation: string;
+  designation: string; // e.g. "Founder" | "Partner" | "Co-Founder"
+  group: LeadershipGroup;
   companyRole?: string;
   categoryLabel?: string;
   statusLabel?: string;
@@ -39,14 +42,24 @@ export interface TeamServiceOffering {
 }
 
 /**
- * Founders of Unlisted Pond
+ * Leadership Team of Unlisted Pond
+ *
+ * 1. CA Akshay Biswal - Founder
+ * 2. CA Rajat Goyal - Founder
+ * 3. CA Mohit Gupta - Partner
+ * 4. CA Vaibhav Bansal - Partner
+ * 5. Harish Mittal - Co-Founder (placed at the bottom)
  */
 export const FOUNDER_PROFILES: FounderProfile[] = [
   {
     id: 'akshay-biswal',
     founderNumber: '01',
     name: 'CA Akshay Biswal',
-    designation: 'Chartered Accountant',
+    designation: 'Founder',
+    group: 'founder',
+    companyRole: 'Chartered Accountant · Founder, Unlisted Pond',
+    categoryLabel: 'FOUNDER',
+    statusLabel: 'Founder',
     roleBadge: 'Debt & Equity Finance',
     qualifications: ['Chartered Accountant (CA)'],
     bio: 'Chartered Accountant bringing professional expertise to debt financing, equity finance advisory, and structured corporate debt restructuring at Unlisted Pond.',
@@ -71,7 +84,11 @@ export const FOUNDER_PROFILES: FounderProfile[] = [
     id: 'rajat-goyal',
     founderNumber: '02',
     name: 'CA Rajat Goyal',
-    designation: 'Chartered Accountant',
+    designation: 'Founder',
+    group: 'founder',
+    companyRole: 'Chartered Accountant · Founder, Unlisted Pond',
+    categoryLabel: 'FOUNDER',
+    statusLabel: 'Founder',
     roleBadge: 'Corporate Finance & Advisory',
     qualifications: ['Chartered Accountant (CA)'],
     bio: 'Chartered Accountant contributing professional financial and advisory expertise to corporate finance mandates and strategic business initiatives.',
@@ -94,10 +111,14 @@ export const FOUNDER_PROFILES: FounderProfile[] = [
     id: 'mohit-gupta',
     founderNumber: '03',
     name: 'CA Mohit Gupta',
-    designation: 'Chartered Accountant',
+    designation: 'Partner',
+    group: 'partner',
+    companyRole: 'Chartered Accountant · Partner, Unlisted Pond',
+    categoryLabel: 'PARTNER',
+    statusLabel: 'Partner',
     roleBadge: 'Financial Structuring & Compliance',
     qualifications: ['Chartered Accountant (CA)'],
-    bio: 'Chartered Accountant advising on financial structuring, statutory compliance, and corporate advisory frameworks.',
+    bio: 'Chartered Accountant and Partner advising on financial structuring, statutory compliance, and corporate advisory frameworks.',
     expertise: [
       'Financial Structuring',
       'Corporate Advisory',
@@ -118,6 +139,7 @@ export const FOUNDER_PROFILES: FounderProfile[] = [
     founderNumber: '04',
     name: 'CA Vaibhav Bansal',
     designation: 'Partner',
+    group: 'partner',
     companyRole: 'Chartered Accountant · Partner, Unlisted Pond',
     categoryLabel: 'PARTNER',
     statusLabel: 'Partner',
@@ -144,6 +166,7 @@ export const FOUNDER_PROFILES: FounderProfile[] = [
     founderNumber: '05',
     name: 'Harish Mittal',
     designation: 'Co-Founder',
+    group: 'co-founder',
     companyRole: 'Co-Founder · Unlisted Pond',
     categoryLabel: 'CO-FOUNDER',
     statusLabel: 'Co-Founder',

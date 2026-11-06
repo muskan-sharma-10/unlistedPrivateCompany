@@ -25,7 +25,7 @@ export const TeamHero: React.FC = () => {
         />
       </div>
 
-      <div className="relative max-w-[1520px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-14">
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl space-y-6">
           {/* Eyebrow Label: Animated Entrance */}
           <div className="inline-flex items-center gap-2.5 px-3 py-1 rounded-md bg-blue-500/10 border border-blue-500/20 text-xs font-semibold tracking-wider text-blue-400 uppercase animate-in fade-in slide-in-from-bottom-2 duration-500 fill-mode-both motion-reduce:animate-none">
@@ -75,7 +75,7 @@ export const TeamHero: React.FC = () => {
           <div className="flex flex-wrap items-center gap-y-2 gap-x-6">
             <div className="flex items-center space-x-2">
               <span className="font-bold text-white text-sm">5</span>
-              <span className="text-slate-300 font-medium">Founding Partners</span>
+              <span className="text-slate-300 font-medium">Leadership Members</span>
             </div>
             <span className="text-slate-700 hidden sm:inline">•</span>
             <div className="flex items-center space-x-2">
