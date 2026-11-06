@@ -147,7 +147,7 @@ Recipient: ${recipientEmail}
   const pass = process.env.SMTP_PASS || process.env.SMTP_PASSWORD;
   const port = process.env.SMTP_PORT ? parseInt(process.env.SMTP_PORT, 10) : 587;
   const secure = process.env.SMTP_SECURE === 'true' || port === 465;
-  const from = process.env.SMTP_FROM || `"Private Market Desk" <${user || 'dealing@privatemarket.co.in'}>`;
+  const from = process.env.SMTP_FROM || `"Unlisted Pond Dealing Desk" <${user || 'dealing@unlistedpond.com'}>`;
 
   if (host && user && pass) {
     try {

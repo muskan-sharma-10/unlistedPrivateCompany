@@ -534,10 +534,10 @@ export interface PortalSettings {
 export async function getPortalWebsiteSettings(): Promise<PortalSettings> {
   const fallback: PortalSettings = {
     siteTitle: 'Unlisted Pond · Unlisted Shares & Pre-IPO Equity',
-    supportEmail: 'info@unlistedzone.com',
+    supportEmail: 'info@unlistedpond.com',
     supportPhone: '+919220451030',
     officeAddress: '1017, Gate No. 1, New Delhi YMCA Jai Singh Road, Connaught Place, New Delhi- 110001',
-    whatsappNumber: '+918010009625',
+    whatsappNumber: '+919220451030',
     maintenanceMode: false,
   };
 

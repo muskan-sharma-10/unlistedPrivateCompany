@@ -89,7 +89,7 @@ export const AppBanner: React.FC = () => {
                   </div>
                   <div className="flex items-center space-x-1.5 px-3 py-1 rounded bg-slate-900 border border-slate-800 text-[11px] text-slate-400 font-mono">
                     <Globe className="w-3 h-3 text-blue-400" />
-                    <span>privatemarket.in/screener</span>
+                    <span>unlistedpond.com/screener</span>
                   </div>
                   <span className="text-[10px] text-emerald-400 flex items-center gap-1 font-semibold">
                     <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />

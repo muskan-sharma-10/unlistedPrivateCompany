@@ -319,14 +319,14 @@ export default function ContactUsPage() {
                 </div>
                 <div className="flex items-center space-x-2.5 text-slate-700">
                   <Mail className="w-4 h-4 text-blue-700 shrink-0" />
-                  <a href={`mailto:${settings?.supportEmail || 'sales@unlistedzone.com'}`} className="hover:text-blue-700 transition-colors">
-                    {settings?.supportEmail || 'sales@unlistedzone.com'}
+                  <a href={`mailto:${settings?.supportEmail || 'info@unlistedpond.com'}`} className="hover:text-blue-700 transition-colors">
+                    {settings?.supportEmail || 'info@unlistedpond.com'}
                   </a>
                 </div>
                 <div className="flex items-center space-x-2.5 text-slate-700">
                   <Phone className="w-4 h-4 text-blue-700 shrink-0" />
-                  <a href={`tel:${settings?.supportPhone || '+918010009696'}`} className="hover:text-blue-700 transition-colors tabular-nums">
-                    {settings?.supportPhone || '+91 80100 09696'}
+                  <a href={`tel:${settings?.supportPhone || '+919220451030'}`} className="hover:text-blue-700 transition-colors tabular-nums">
+                    {settings?.supportPhone || '+91 92204 51030'}
                   </a>
                 </div>
               </div>

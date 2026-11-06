@@ -78,14 +78,14 @@ export const TeamCTA: React.FC = () => {
                 </div>
                 <div className="flex items-center space-x-2">
                   <Mail className="w-3.5 h-3.5 text-blue-400 shrink-0" />
-                  <a href="mailto:sales@unlistedzone.com" className="hover:text-white transition-colors">
-                    sales@unlistedzone.com
+                  <a href="mailto:dealing@unlistedpond.com" className="hover:text-white transition-colors">
+                    dealing@unlistedpond.com
                   </a>
                 </div>
                 <div className="flex items-center space-x-2">
                   <Phone className="w-3.5 h-3.5 text-blue-400 shrink-0" />
-                  <a href="tel:+918010009696" className="hover:text-white transition-colors tabular-nums">
-                    +91 80100 09696
+                  <a href="tel:+919220451030" className="hover:text-white transition-colors tabular-nums">
+                    +91 92204 51030
                   </a>
                 </div>
               </div>
