@@ -56,66 +56,79 @@ export const FounderCard: React.FC<FounderCardProps> = ({
       className={`group bg-white rounded-2xl border border-slate-200 ${style.hoverBorder} shadow-xs hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col overflow-hidden h-full motion-reduce:transform-none motion-reduce:shadow-none`}
       aria-labelledby={`founder-heading-${founder.id}`}
     >
-      {/* 1. Sleek Studio Header (Balanced height, eliminates vertical congestion) */}
-      <div className="relative w-full h-48 sm:h-52 bg-[#0B132B] overflow-hidden shrink-0 border-b border-slate-200">
+      {/* 1. Sleek Studio Header (Generous height so complete portrait is showcased) */}
+      <div className="relative w-full h-80 sm:h-96 md:h-[400px] bg-[#0B132B] overflow-hidden shrink-0 border-b border-slate-200">
         {hasImage ? (
-          <div className="relative w-full h-full">
+          <div className="relative w-full h-full flex items-center justify-center bg-[#070D1E]">
+            {/* Ambient Blurred Backdrop so there are no empty borders */}
             <Image
               src={founder.imageUrl!}
-              alt={`Executive portrait of ${founder.name}, ${founder.designation}`}
+              alt=""
               fill
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 600px"
-              className="object-cover object-top transition-transform duration-700 ease-out group-hover:scale-105 motion-reduce:transform-none"
+              className="object-cover blur-2xl opacity-35 scale-110 pointer-events-none"
+              aria-hidden="true"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent pointer-events-none" />
+            {/* Complete, uncropped executive portrait */}
+            <div className="relative w-full h-full flex items-center justify-center p-2 sm:p-3 z-10">
+              <Image
+                src={founder.imageUrl!}
+                alt={`Executive portrait of ${founder.name}, ${founder.designation}`}
+                fill
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 600px"
+                className="object-contain object-center drop-shadow-2xl transition-transform duration-500 ease-out group-hover:scale-[1.02]"
+                priority
+              />
+            </div>
+            {/* Subtle bottom vignette to blend nicely into the card body */}
+            <div className="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-transparent to-transparent pointer-events-none z-10" />
           </div>
         ) : (
           /* Neutral Studio Placeholder with Monogram Insignia */
           <div className="relative w-full h-full flex flex-col items-center justify-center p-6 overflow-hidden select-none">
             {/* Subtle Brand Geometric Ripple Lines */}
             <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-15">
-              <div className="w-44 h-44 rounded-full border border-blue-400" />
-              <div className="absolute w-64 h-64 rounded-full border border-blue-400/60" />
+              <div className="w-48 h-48 sm:w-56 sm:h-56 rounded-full border border-blue-400" />
+              <div className="absolute w-72 h-72 sm:w-80 sm:h-80 rounded-full border border-blue-400/60" />
             </div>
 
             {/* Ambient Lighting Accent */}
-            <div className="absolute top-1/4 w-32 h-32 bg-blue-600/20 rounded-full blur-2xl pointer-events-none" />
+            <div className="absolute top-1/4 w-36 h-36 bg-blue-600/20 rounded-full blur-2xl pointer-events-none" />
 
             {/* Monogram Seal */}
-            <div className="relative z-10 flex flex-col items-center text-center space-y-2">
-              <div className="w-16 h-16 sm:w-18 sm:h-18 rounded-2xl bg-slate-800/90 border border-slate-700 flex items-center justify-center text-white shadow-md group-hover:border-blue-400/60 group-hover:scale-105 transition-all duration-300 motion-reduce:transform-none">
-                <span className="font-mono font-bold text-xl sm:text-2xl text-blue-300 tracking-wider">
+            <div className="relative z-10 flex flex-col items-center text-center space-y-3">
+              <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl bg-slate-800/90 border border-slate-700 flex items-center justify-center text-white shadow-md group-hover:border-blue-400/60 group-hover:scale-105 transition-all duration-300 motion-reduce:transform-none">
+                <span className="font-mono font-bold text-2xl sm:text-3xl text-blue-300 tracking-wider">
                   {founder.initials}
                 </span>
               </div>
 
               {/* Photo-Pending Status Badge */}
-              <div className="inline-flex items-center space-x-1.5 px-2.5 py-0.5 rounded-md bg-slate-800/80 border border-slate-700/80 text-slate-300 text-[10px]">
-                <Camera className={`w-3 h-3 ${style.iconColor} shrink-0`} />
+              <div className="inline-flex items-center space-x-1.5 px-3 py-1 rounded-md bg-slate-800/80 border border-slate-700/80 text-slate-300 text-[11px]">
+                <Camera className={`w-3.5 h-3.5 ${style.iconColor} shrink-0`} />
                 <span className="font-medium tracking-wide">
                   Official Photograph Pending
                 </span>
               </div>
             </div>
-
-            {/* Sequence Index Badge (Top Left) */}
-            <div className="absolute top-3.5 left-4 z-20">
-              <span className={`inline-flex items-center space-x-1.5 px-2.5 py-1 rounded-md text-[11px] font-mono font-bold ${style.badgeBg} border backdrop-blur-md`}>
-                <span>{founder.categoryLabel || founder.designation.toUpperCase()}</span>
-                <span className="opacity-50">/</span>
-                <span>{founder.founderNumber || `0${index + 1}`}</span>
-              </span>
-            </div>
-
-            {/* Status Pill (Top Right) */}
-            <div className="absolute top-3.5 right-4 z-20">
-              <span className={`inline-flex items-center space-x-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold ${style.statusBg} border backdrop-blur-md`}>
-                <ShieldCheck className={`w-3.5 h-3.5 ${style.iconColor} shrink-0`} />
-                <span>{founder.statusLabel || founder.designation}</span>
-              </span>
-            </div>
           </div>
         )}
+
+        {/* Sequence Index Badge (Top Left - ALWAYS VISIBLE ON ALL CARDS) */}
+        <div className="absolute top-3.5 left-4 z-20">
+          <span className={`inline-flex items-center space-x-1.5 px-2.5 py-1 rounded-md text-[11px] font-mono font-bold ${style.badgeBg} border backdrop-blur-md`}>
+            <span>{founder.categoryLabel || founder.designation.toUpperCase()}</span>
+            <span className="opacity-50">/</span>
+            <span>{founder.founderNumber || `0${index + 1}`}</span>
+          </span>
+        </div>
+
+        {/* Status Pill (Top Right - ALWAYS VISIBLE ON ALL CARDS) */}
+        <div className="absolute top-3.5 right-4 z-20">
+          <span className={`inline-flex items-center space-x-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold ${style.statusBg} border backdrop-blur-md`}>
+            <ShieldCheck className={`w-3.5 h-3.5 ${style.iconColor} shrink-0`} />
+            <span>{founder.statusLabel || founder.designation}</span>
+          </span>
+        </div>
 
         {/* Practice Role Badge Strip (Floating at bottom of header) */}
         <div className="absolute bottom-3 left-4 right-4 z-20 flex items-center justify-between pointer-events-none">

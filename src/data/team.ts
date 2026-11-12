@@ -72,7 +72,7 @@ export const FOUNDER_PROFILES: FounderProfile[] = [
       'Transaction Planning'
     ],
     email: 'info.biswal01@gmail.com',
-    imageUrl: '', // Authentic portrait path when provided
+    imageUrl: '/images/team/ca-akshay-biswal.jpg',
     initials: 'AB',
     summaryHighlights: [
       'Debt financing facilitation & borrowing advisory',
@@ -180,7 +180,7 @@ export const FOUNDER_PROFILES: FounderProfile[] = [
       'Corporate Growth'
     ],
     email: 'dealing@unlistedpond.com',
-    imageUrl: '',
+    imageUrl: '/images/team/harish-mittal.jpg',
     initials: 'HM',
     summaryHighlights: [
       'Business strategy & market development',
