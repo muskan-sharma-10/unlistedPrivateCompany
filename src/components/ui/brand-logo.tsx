@@ -105,17 +105,23 @@ export const BrandLogo: React.FC<BrandLogoProps> = ({
     lg: 48,
   };
 
+  const iconClasses = {
+    sm: 'w-7 h-7 sm:w-[34px] sm:h-[34px]',
+    md: 'w-8 h-8 sm:w-10 sm:h-10',
+    lg: 'w-10 h-10 sm:w-12 sm:h-12',
+  };
+
   const titleSizes = {
-    sm: 'text-base',
-    md: 'text-lg sm:text-xl',
-    lg: 'text-xl sm:text-2xl',
+    sm: 'text-sm sm:text-base',
+    md: 'text-[15px] sm:text-xl',
+    lg: 'text-lg sm:text-2xl',
   };
 
   const content = (
-    <div className={`flex items-center space-x-3 shrink-0 group ${className}`} onClick={onClick}>
-      <LogoIcon size={iconSizes[size]} />
+    <div className={`flex items-center space-x-2 sm:space-x-3 shrink-0 group ${className}`} onClick={onClick}>
+      <LogoIcon size={iconSizes[size]} className={iconClasses[size]} />
       <div>
-        <div className="flex items-center space-x-1.5 sm:space-x-2">
+        <div className="flex items-center space-x-1 sm:space-x-2">
           <span
             className={`font-black tracking-tight ${titleSizes[size]} ${
               isDark ? 'text-white' : 'text-slate-900'
@@ -132,7 +138,7 @@ export const BrandLogo: React.FC<BrandLogoProps> = ({
           </span>
           {showBadge && (
             <span
-              className={`text-[10px] font-bold uppercase px-1.5 py-0.5 rounded tracking-wider ${
+              className={`text-[9px] sm:text-[10px] font-bold uppercase px-1 sm:px-1.5 py-0.5 rounded tracking-wider ${
                 isDark
                   ? 'bg-blue-500/20 text-blue-300 border border-blue-400/30'
                   : 'bg-blue-50 text-primary border border-blue-200/70'
@@ -146,8 +152,8 @@ export const BrandLogo: React.FC<BrandLogoProps> = ({
           <p
             className={`font-medium tracking-tight mt-0.5 leading-none ${
               isDark
-                ? 'text-slate-400 text-xs sm:text-sm'
-                : 'text-[9.5px] text-slate-500 whitespace-nowrap'
+                ? 'text-slate-400 text-[10px] sm:text-xs'
+                : 'text-[7.5px] xs:text-[8.5px] sm:text-[9.5px] text-slate-500 whitespace-nowrap'
             }`}
           >
             {subtitleText ||

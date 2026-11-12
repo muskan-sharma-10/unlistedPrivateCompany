@@ -43,7 +43,7 @@ export default function HomePageClient() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-background text-foreground font-sans antialiased">
+    <div className="min-h-screen flex flex-col bg-background text-foreground font-sans antialiased overflow-x-hidden w-full max-w-full">
       {/* 1. Top Ticker & Market Status */}
       <TopTicker />
 

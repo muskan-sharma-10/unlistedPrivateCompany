@@ -144,7 +144,7 @@ export const SharesTable: React.FC<SharesTableProps> = ({
     return (
       <div
         key={stock.id}
-        className="rounded-xl border border-slate-200 bg-white p-5 hover:border-blue-500/80 hover:shadow-md transition-all flex flex-col justify-between"
+        className="rounded-xl border border-slate-200 bg-white p-4 sm:p-5 hover:border-blue-500/80 hover:shadow-md transition-all flex flex-col justify-between"
       >
         <div>
           <div className="flex items-start gap-3.5 mb-4">
@@ -255,21 +255,21 @@ export const SharesTable: React.FC<SharesTableProps> = ({
       <section className="py-12 sm:py-16 border-b border-slate-200">
         <div className="max-w-[1520px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-14">
           {/* Header */}
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-6 sm:mb-8">
             <div>
               <span className="inline-block text-xs font-semibold tracking-wider uppercase text-blue-700 bg-blue-50 border border-blue-100 px-2.5 py-0.5 rounded mb-2">
                 Top Picks
               </span>
-              <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 leading-tight">
+              <h2 className="text-xl sm:text-3xl font-bold text-slate-900 leading-tight">
                 Popular Unlisted Shares
               </h2>
-              <p className="text-sm text-slate-500 mt-1 max-w-xl">
+              <p className="text-xs sm:text-sm text-slate-500 mt-1 max-w-xl">
                 The most actively researched securities by private market investors. Indicative rates for research only.
               </p>
             </div>
             <Link
               href="/shares"
-              className="text-xs sm:text-sm font-semibold text-blue-600 hover:text-blue-700 inline-flex items-center gap-1.5 border border-slate-200 hover:border-blue-500 px-4 py-2 rounded-lg self-start sm:self-auto transition-all"
+              className="text-xs sm:text-sm font-semibold text-blue-600 hover:text-blue-700 inline-flex items-center gap-1.5 border border-slate-200 hover:border-blue-500 px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-lg self-start sm:self-auto transition-all"
             >
               View All Shares →
             </Link>
@@ -290,21 +290,21 @@ export const SharesTable: React.FC<SharesTableProps> = ({
       <section className="py-12 sm:py-16 border-b border-slate-200">
         <div className="max-w-[1520px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-14">
           {/* Header */}
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-6 sm:mb-8">
             <div>
               <span className="inline-block text-xs font-semibold tracking-wider uppercase text-blue-700 bg-blue-50 border border-blue-100 px-2.5 py-0.5 rounded mb-2">
                 Fresh Additions
               </span>
-              <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 leading-tight">
+              <h2 className="text-xl sm:text-3xl font-bold text-slate-900 leading-tight">
                 New Arrivals
               </h2>
-              <p className="text-sm text-slate-500 mt-1 max-w-xl">
+              <p className="text-xs sm:text-sm text-slate-500 mt-1 max-w-xl">
                 Recently added private companies and upcoming IPO prospects. Research fundamentals before participating.
               </p>
             </div>
             <Link
               href="/shares"
-              className="text-xs sm:text-sm font-semibold text-blue-600 hover:text-blue-700 inline-flex items-center gap-1.5 border border-slate-200 hover:border-blue-500 px-4 py-2 rounded-lg self-start sm:self-auto transition-all"
+              className="text-xs sm:text-sm font-semibold text-blue-600 hover:text-blue-700 inline-flex items-center gap-1.5 border border-slate-200 hover:border-blue-500 px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-lg self-start sm:self-auto transition-all"
             >
               View All →
             </Link>

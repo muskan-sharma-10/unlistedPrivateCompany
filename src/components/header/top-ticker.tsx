@@ -16,10 +16,10 @@ export const TopTicker: React.FC = () => {
   }, []);
 
   return (
-    <div className="bg-[#0B132B] text-slate-300 text-[12px] sm:text-[12.5px] border-b border-[#1E293B] py-2 overflow-hidden select-none">
-      <div className="max-w-[1520px] mx-auto px-4 sm:px-8 lg:px-12 flex items-center justify-between gap-4">
+    <div className="bg-[#0B132B] text-slate-300 text-[12px] sm:text-[12.5px] border-b border-[#1E293B] py-2 overflow-hidden select-none w-full max-w-full">
+      <div className="max-w-[1520px] mx-auto px-3 sm:px-8 lg:px-12 flex items-center justify-between gap-4 w-full">
         {/* Compliance Marquee with institutional notice */}
-        <div className="flex-1 overflow-hidden">
+        <div className="flex-1 min-w-0 overflow-hidden">
           <div className="animate-compliance-marquee flex items-center gap-6 whitespace-nowrap">
             {announcement && (
               <>

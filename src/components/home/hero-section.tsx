@@ -34,9 +34,11 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
   onOpenEnquiry,
 }) => {
   const [wordIndex, setWordIndex] = useState(0);
+  const [mounted, setMounted] = useState(false);
   const [currentDateTime, setCurrentDateTime] = useState<string>('');
 
   useEffect(() => {
+    setMounted(true);
     const updateTime = () => {
       setCurrentDateTime(formatCurrentDateTime(new Date()));
     };
@@ -162,17 +164,17 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
       </div>
 
       <div className="relative max-w-[1520px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-14">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-center">
           {/* Left Column: Heading with rotating words & institutional copy */}
-          <div className="lg:col-span-7 space-y-6">
+          <div className="lg:col-span-7 space-y-5 sm:space-y-6">
             {/* Eyebrow rule */}
-            <div className="inline-flex items-center gap-2.5 px-3 py-1 rounded-md bg-blue-500/10 border border-blue-500/20 text-xs font-semibold tracking-wider text-blue-400 uppercase">
-              <span className="w-1.5 h-1.5 rounded-full bg-blue-400" />
-              <span>India&apos;s Unlisted Shares Intelligence · Since 2018</span>
+            <div className="inline-flex items-center gap-2 px-2.5 sm:px-3 py-1 rounded-md bg-blue-500/10 border border-blue-500/20 text-[11px] sm:text-xs font-semibold tracking-wider text-blue-400 uppercase max-w-full">
+              <span className="w-1.5 h-1.5 rounded-full bg-blue-400 shrink-0" />
+              <span className="truncate">India&apos;s Unlisted Shares Intelligence · Since 2018</span>
             </div>
 
             {/* Display Headline with Rotating Words */}
-            <h1 className="text-3xl sm:text-5xl lg:text-[54px] font-bold tracking-tight text-white leading-[1.15]">
+            <h1 className="text-[26px] xs:text-3xl sm:text-5xl lg:text-[54px] font-bold tracking-tight text-white leading-[1.18] sm:leading-[1.15]">
               India&apos;s trusted platform for{' '}
               <br className="hidden sm:inline" />
               <span className="text-blue-400 inline-block transition-opacity duration-300">
@@ -181,15 +183,15 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             </h1>
 
             {/* Lede copy */}
-            <p className="text-base sm:text-lg text-slate-300 max-w-[34em] font-normal leading-relaxed">
+            <p className="text-sm sm:text-base lg:text-lg text-slate-300 max-w-[34em] font-normal leading-relaxed">
               Explore one of India&apos;s most comprehensive research directories of unlisted, pre-IPO, and ESOP shares with verified corporate filings and daily indicative market prices.
             </p>
 
             {/* CTAs */}
-            <div className="flex flex-wrap items-center gap-3.5 pt-2">
+            <div className="flex flex-col sm:flex-row sm:items-center gap-3 pt-2">
               <Link
                 href="/shares"
-                className="inline-flex items-center space-x-2 px-6 py-3 rounded-lg text-sm font-semibold text-white bg-blue-600 hover:bg-blue-700 active:bg-blue-800 shadow-sm transition-all group"
+                className="inline-flex items-center justify-center space-x-2 px-6 py-3 rounded-lg text-sm font-semibold text-white bg-blue-600 hover:bg-blue-700 active:bg-blue-800 shadow-sm transition-all group w-full sm:w-auto"
               >
                 <span>Explore Unlisted Shares</span>
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -197,9 +199,9 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               <button
                 type="button"
                 onClick={onOpenEnquiry}
-                className="inline-flex items-center space-x-2 px-5 py-3 rounded-lg text-sm font-semibold text-slate-200 hover:text-white bg-slate-800/80 hover:bg-slate-800 border border-slate-700 transition-all cursor-pointer"
+                className="inline-flex items-center justify-center space-x-2 px-5 py-3 rounded-lg text-sm font-semibold text-slate-200 hover:text-white bg-slate-800/80 hover:bg-slate-800 border border-slate-700 transition-all cursor-pointer w-full sm:w-auto"
               >
-                <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4 text-emerald-400" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4 text-emerald-400 shrink-0" aria-hidden="true">
                   <path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.945C.16 5.335 5.5 0 12.066 0a11.82 11.82 0 018.413 3.488 11.82 11.82 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 001.51 5.26l-.999 3.648 3.477-.607zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z" />
                 </svg>
                 <span>Liquidate / Sell ESOPs</span>
@@ -207,30 +209,30 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             </div>
 
             {/* Authentic Institutional Stats */}
-            <div className="flex flex-wrap items-center gap-7 pt-6 border-t border-slate-800">
+            <div className="grid grid-cols-3 gap-2 sm:flex sm:flex-wrap sm:items-center sm:gap-7 pt-5 sm:pt-6 border-t border-slate-800">
               <div>
-                <div className="text-2xl sm:text-3xl font-bold text-white tabular-nums">
+                <div className="text-xl sm:text-3xl font-bold text-white tabular-nums">
                   1,00,000<span className="text-blue-400 font-normal">+</span>
                 </div>
-                <div className="text-xs text-slate-400 font-medium mt-0.5">
+                <div className="text-[10px] sm:text-xs text-slate-400 font-medium mt-0.5 leading-tight">
                   Investors Served
                 </div>
               </div>
-              <div className="h-8 w-px bg-slate-800" />
+              <div className="hidden sm:block h-8 w-px bg-slate-800" />
               <div>
-                <div className="text-2xl sm:text-3xl font-bold text-white tabular-nums">
+                <div className="text-xl sm:text-3xl font-bold text-white tabular-nums">
                   267<span className="text-blue-400 font-normal">+</span>
                 </div>
-                <div className="text-xs text-slate-400 font-medium mt-0.5">
+                <div className="text-[10px] sm:text-xs text-slate-400 font-medium mt-0.5 leading-tight">
                   Securities Tracked
                 </div>
               </div>
-              <div className="h-8 w-px bg-slate-800" />
+              <div className="hidden sm:block h-8 w-px bg-slate-800" />
               <div>
-                <div className="text-2xl sm:text-3xl font-bold text-white tabular-nums">
+                <div className="text-xl sm:text-3xl font-bold text-white tabular-nums">
                   250<span className="text-blue-400 font-normal">+</span>
                 </div>
-                <div className="text-xs text-slate-400 font-medium mt-0.5">
+                <div className="text-[10px] sm:text-xs text-slate-400 font-medium mt-0.5 leading-tight">
                   Institutional Partners
                 </div>
               </div>
@@ -238,27 +240,30 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           </div>
 
           {/* Right Column: Indicative Prices Memo Card */}
-          <div className="lg:col-span-5">
-            <div className="bg-white text-slate-900 rounded-xl shadow-xl border border-slate-200 overflow-hidden relative">
+          <div className="lg:col-span-5 w-full min-w-0">
+            <div className="bg-white text-slate-900 rounded-xl shadow-xl border border-slate-200 overflow-hidden relative w-full">
               {/* Financial Blue Highlight Bar */}
               <div className="h-1 w-full bg-blue-600" />
 
               {/* Card Header */}
-              <div className="px-5 py-3.5 flex items-center justify-between border-b border-slate-100 bg-slate-50/70">
-                <span className="text-xs tracking-wider uppercase text-slate-700 font-bold flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+              <div className="px-4 sm:px-5 py-3 sm:py-3.5 flex items-center justify-between border-b border-slate-100 bg-slate-50/70 gap-2">
+                <span className="text-xs tracking-wider uppercase text-slate-700 font-bold flex items-center gap-1.5 sm:gap-2 shrink-0">
+                  <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shrink-0" />
                   Today&apos;s Indicative Prices
                 </span>
-                <span
-                  suppressHydrationWarning
-                  className="text-[10px] sm:text-[11px] text-slate-500 font-medium tabular-nums"
-                >
-                  Ref · {currentDateTime || (typeof window !== 'undefined' ? formatCurrentDateTime(new Date()) : 'Live')}
+                <span className="text-[10px] sm:text-[11px] text-slate-500 font-medium tabular-nums truncate text-right">
+                  <span className="hidden sm:inline" suppressHydrationWarning>
+                    {mounted && currentDateTime ? `Ref · ${currentDateTime}` : 'Ref · Live Market'}
+                  </span>
+                  <span className="sm:hidden text-emerald-600 font-semibold flex items-center gap-1">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                    Live
+                  </span>
                 </span>
               </div>
 
               {/* Sparkline Banner Strip */}
-              <div className="p-4 bg-slate-50/50 border-b border-slate-100">
+              <div className="p-3.5 sm:p-4 bg-slate-50/50 border-b border-slate-100">
                 <div className="w-full h-11 relative">
                   <svg viewBox="0 0 320 46" preserveAspectRatio="none" className="w-full h-full" aria-hidden="true">
                     <defs>
@@ -307,36 +312,36 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                     <Link
                       key={`${stock.id}-${idx}`}
                       href={`/shares/${stock.id}`}
-                      className="p-3.5 sm:px-5 flex items-center justify-between gap-3 hover:bg-blue-50/60 cursor-pointer transition-colors group/item block"
+                      className="p-3 sm:px-5 flex items-center justify-between gap-2.5 sm:gap-3 hover:bg-blue-50/60 cursor-pointer transition-colors group/item block"
                     >
-                      <div className="flex items-center gap-3.5 min-w-0">
-                        <div className="w-10 h-10 rounded-lg bg-slate-100 border border-slate-200 flex items-center justify-center font-semibold text-blue-600 text-xs shrink-0 overflow-hidden">
+                      <div className="flex items-center gap-2.5 sm:gap-3.5 min-w-0 flex-1">
+                        <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg bg-slate-100 border border-slate-200 flex items-center justify-center font-semibold text-blue-600 text-xs shrink-0 overflow-hidden">
                           {stock.logo ? (
                             <img src={stock.logo} alt={stock.name} className="w-full h-full object-contain p-1" />
                           ) : (
                             <span>{stock.name.slice(0, 2).toUpperCase()}</span>
                           )}
                         </div>
-                        <div className="min-w-0">
-                          <div className="font-semibold text-sm text-slate-900 truncate group-hover/item:text-blue-600 transition-colors">
+                        <div className="min-w-0 flex-1">
+                          <div className="font-semibold text-xs sm:text-sm text-slate-900 truncate group-hover/item:text-blue-600 transition-colors">
                             {stock.name}
                           </div>
-                          <div className="text-xs text-slate-500 truncate">
+                          <div className="text-[11px] sm:text-xs text-slate-500 truncate">
                             {stock.sector}
                           </div>
                         </div>
                       </div>
 
-                      <div className="text-right shrink-0 flex items-center gap-2.5 sm:gap-3">
+                      <div className="text-right shrink-0 flex items-center gap-1.5 sm:gap-3">
                         <div>
-                          <div className="text-sm sm:text-base font-bold text-slate-900 tabular-nums">
+                          <div className="text-xs sm:text-base font-bold text-slate-900 tabular-nums">
                             ₹{stock.price.toLocaleString('en-IN')}
                           </div>
-                          <div className="text-[10px] tracking-wider uppercase text-slate-500 font-medium">
+                          <div className="text-[9px] sm:text-[10px] tracking-wider uppercase text-slate-500 font-medium">
                             Indicative
                           </div>
                         </div>
-                        <ChevronRight className="w-4 h-4 text-slate-400 group-hover/item:text-blue-600 group-hover/item:translate-x-0.5 transition-all" />
+                        <ChevronRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-slate-400 group-hover/item:text-blue-600 group-hover/item:translate-x-0.5 transition-all" />
                       </div>
                     </Link>
                   ))}
