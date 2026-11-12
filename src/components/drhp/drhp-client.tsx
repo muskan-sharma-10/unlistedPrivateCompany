@@ -48,34 +48,120 @@ export default function DrhpClient() {
       <Navbar onOpenEnquiry={() => setIsEnquiryOpen(true)} />
 
       {/* Hero Banner with Institutional Deep Navy Theme */}
-      <section className="bg-[#0B132B] text-white py-12 sm:py-16 border-b border-slate-800 relative overflow-hidden">
-        <div className="max-w-[1520px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-14 relative z-10">
-          <div className="max-w-3xl space-y-3">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-blue-500/10 border border-blue-500/20 text-xs font-semibold tracking-wider text-blue-400 uppercase">
-              <span className="w-1.5 h-1.5 rounded-full bg-blue-400" />
-              <span>SEBI Draft Filings · Pre-Listing Market Intelligence</span>
-            </div>
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-white leading-tight">
-              DRHP Filed Companies in India
-            </h1>
-            <p className="text-sm sm:text-base text-slate-300 font-normal leading-relaxed">
-              Track companies that have officially filed their Draft Red Herring Prospectus (DRHP) with SEBI for upcoming initial public offerings. Analyze indicative unlisted prices, book runners, and issue sizes before public subscription opens.
-            </p>
-          </div>
+      <section className="relative bg-[#0B132B] text-white overflow-hidden pt-12 pb-16 lg:pt-16 lg:pb-20 border-b border-slate-800">
+        {/* Subtle Financial Grid Background & Ambient Lighting */}
+        <div className="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
+          <div
+            className="absolute inset-0 opacity-[0.04]"
+            style={{
+              backgroundImage:
+                'linear-gradient(to right, #ffffff 1px, transparent 1px), linear-gradient(to bottom, #ffffff 1px, transparent 1px)',
+              backgroundSize: '48px 48px',
+            }}
+          />
+          <div className="absolute -top-40 right-1/4 w-[600px] h-[600px] bg-blue-600/15 rounded-full blur-[130px]" />
+          <div className="absolute -bottom-40 left-10 w-[500px] h-[500px] bg-emerald-600/10 rounded-full blur-[140px]" />
+        </div>
 
-          {/* 3 Metric Badges */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-8 pt-6 border-t border-slate-800 max-w-3xl">
-            <div className="p-4 rounded-xl bg-slate-900/60 border border-slate-800">
-              <div className="text-xl sm:text-2xl font-bold text-white tabular-nums">₹ 85,000+ Cr</div>
-              <div className="text-xs text-slate-400 font-medium mt-0.5">Proposed Issue Pipeline</div>
+        <div className="relative max-w-[1520px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-14">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+            {/* Left Column: Heading, description, and trust stats */}
+            <div className="lg:col-span-7 space-y-5">
+              <div className="inline-flex items-center gap-2.5 px-3 py-1 rounded-md bg-blue-500/10 border border-blue-500/20 text-xs font-semibold tracking-wider text-blue-400 uppercase">
+                <span className="w-1.5 h-1.5 rounded-full bg-blue-400 animate-pulse" />
+                <span>SEBI Draft Filings · Pre-Listing Market Intelligence</span>
+              </div>
+
+              <h1 className="text-3xl sm:text-5xl lg:text-[52px] font-bold tracking-tight text-white leading-[1.12]">
+                DRHP Filed Companies{' '}
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-sky-300 to-blue-200">
+                  in India
+                </span>
+              </h1>
+
+              <p className="text-base sm:text-lg text-slate-300 max-w-[36em] font-normal leading-relaxed">
+                Track companies that have officially filed their Draft Red Herring Prospectus (DRHP) with SEBI for upcoming initial public offerings. Analyze indicative unlisted prices, book runners, and issue sizes before public subscription opens.
+              </p>
+
+              {/* Metric Counters Row */}
+              <div className="flex flex-wrap items-center gap-6 pt-5 border-t border-slate-800">
+                <div>
+                  <div className="text-2xl sm:text-3xl font-bold text-white tabular-nums">
+                    ₹ 85,000<span className="text-blue-400 font-normal">+ Cr</span>
+                  </div>
+                  <div className="text-xs text-slate-400 font-medium mt-0.5">
+                    Proposed Issue Pipeline
+                  </div>
+                </div>
+                <div className="h-8 w-px bg-slate-800" />
+                <div>
+                  <div className="text-2xl sm:text-3xl font-bold text-emerald-400 tabular-nums">
+                    24<span className="text-emerald-400 font-normal">+</span>
+                  </div>
+                  <div className="text-xs text-slate-400 font-medium mt-0.5">
+                    Active DRHP Filings
+                  </div>
+                </div>
+                <div className="h-8 w-px bg-slate-800" />
+                <div>
+                  <div className="text-2xl sm:text-3xl font-bold text-white tabular-nums">
+                    4–6<span className="text-blue-400 font-normal"> Mo</span>
+                  </div>
+                  <div className="text-xs text-slate-400 font-medium mt-0.5">
+                    Avg. Window to IPO
+                  </div>
+                </div>
+              </div>
             </div>
-            <div className="p-4 rounded-xl bg-slate-900/60 border border-slate-800">
-              <div className="text-xl sm:text-2xl font-bold text-emerald-400 tabular-nums">24+ Companies</div>
-              <div className="text-xs text-slate-400 font-medium mt-0.5">Active DRHP Filings Tracked</div>
-            </div>
-            <div className="p-4 rounded-xl bg-slate-900/60 border border-slate-800">
-              <div className="text-xl sm:text-2xl font-bold text-blue-400 tabular-nums">4–6 Months</div>
-              <div className="text-xs text-slate-400 font-medium mt-0.5">Avg. Window to Listing Date</div>
+
+            {/* Right Column: DRHP Intelligence Matrix Card */}
+            <div className="lg:col-span-5">
+              <div className="relative rounded-2xl bg-gradient-to-b from-slate-900/95 to-slate-950/90 border border-slate-800 p-6 shadow-2xl backdrop-blur-xl space-y-4">
+                <div className="flex items-center justify-between pb-3 border-b border-slate-800">
+                  <div className="flex items-center space-x-2">
+                    <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                    <span className="text-xs font-bold uppercase tracking-wider text-slate-200">
+                      DRHP Pipeline Intelligence
+                    </span>
+                  </div>
+                  <span className="text-[11px] font-semibold text-blue-400 bg-blue-500/10 px-2 py-0.5 rounded border border-blue-500/20">
+                    SEBI Verified
+                  </span>
+                </div>
+
+                <div className="grid grid-cols-2 gap-3">
+                  <div className="p-3.5 rounded-xl bg-slate-800/50 border border-slate-800/80">
+                    <span className="text-[11px] font-medium text-slate-400 block">Issue Types</span>
+                    <span className="text-sm font-bold text-white mt-0.5 block">Fresh Issue &amp; OFS</span>
+                  </div>
+                  <div className="p-3.5 rounded-xl bg-slate-800/50 border border-slate-800/80">
+                    <span className="text-[11px] font-medium text-slate-400 block">Filing Authority</span>
+                    <span className="text-sm font-bold text-emerald-400 mt-0.5 block">SEBI India</span>
+                  </div>
+                  <div className="p-3.5 rounded-xl bg-slate-800/50 border border-slate-800/80">
+                    <span className="text-[11px] font-medium text-slate-400 block">Pre-IPO Trading</span>
+                    <span className="text-sm font-bold text-white mt-0.5 block">Indicative OTC</span>
+                  </div>
+                  <div className="p-3.5 rounded-xl bg-slate-800/50 border border-slate-800/80">
+                    <span className="text-[11px] font-medium text-slate-400 block">Book Running Lead</span>
+                    <span className="text-sm font-bold text-blue-400 mt-0.5 block">Tier-1 Merchant Banks</span>
+                  </div>
+                </div>
+
+                <div className="pt-1 flex items-center justify-between text-xs text-slate-400">
+                  <div className="flex items-center space-x-1.5">
+                    <span className="text-emerald-400">✓</span>
+                    <span>Direct SEBI Draft Prospectus Links</span>
+                  </div>
+                  <Link
+                    href="/shares"
+                    className="text-blue-400 hover:text-blue-300 font-medium inline-flex items-center gap-1 group"
+                  >
+                    <span>All Shares</span>
+                    <span className="group-hover:translate-x-0.5 transition-transform">→</span>
+                  </Link>
+                </div>
+              </div>
             </div>
           </div>
         </div>
