@@ -200,93 +200,95 @@ export const Navbar: React.FC<NavbarProps> = ({ onSelectStock, onOpenEnquiry }) 
   };
 
   const isMoreActive =
-    isActive('/blogs') || isActive('/about-us') || isActive('/contact-us');
+    isActive('/blogs') || isActive('/about-us') || isActive('/contact-us') || isActive('/partners');
 
   return (
     <>
       <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-border shadow-xs">
-        <div className="max-w-[1520px] mx-auto px-4 sm:px-8 lg:px-12 py-2.5 sm:py-3 flex items-center justify-between gap-4">
+        <div className="max-w-[1520px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-10 py-2.5 sm:py-3 flex items-center justify-between gap-3 lg:gap-4">
 
           {/* Brand Logo & Name */}
-          <BrandLogo variant="light" size="md" />
+          <div className="shrink-0 mr-4 lg:mr-6 xl:mr-10">
+            <BrandLogo variant="light" size="md" showSubtitle={true} />
+          </div>
 
           {/* Desktop Navigation Links */}
-          <nav className="hidden lg:flex items-center space-x-1 xl:space-x-1.5 text-[13px] xl:text-[14px] font-medium text-slate-600">
+          <nav className="hidden lg:flex items-center space-x-0.5 xl:space-x-1 text-[13px] xl:text-[13.5px] 2xl:text-[14px] font-medium text-slate-600">
             <Link
               href="/shares"
-              className={`px-3 py-1.5 rounded-md transition-colors whitespace-nowrap relative ${isActive('/shares')
+              className={`px-2 xl:px-2.5 2xl:px-3 py-1.5 rounded-md transition-colors whitespace-nowrap relative ${isActive('/shares')
                   ? 'text-primary font-semibold bg-primary/10'
                   : 'hover:text-slate-900 hover:bg-slate-100/70'
                 }`}
             >
               All Shares
               {isActive('/shares') && (
-                <span className="absolute bottom-0 left-3 right-3 h-[2px] bg-primary rounded-full" />
+                <span className="absolute bottom-0 left-2 right-2 xl:left-3 xl:right-3 h-[2px] bg-primary rounded-full" />
               )}
             </Link>
 
             <Link
               href="/drhp-filed"
-              className={`px-3 py-1.5 rounded-md transition-colors whitespace-nowrap relative ${isActive('/drhp-filed')
+              className={`px-2 xl:px-2.5 2xl:px-3 py-1.5 rounded-md transition-colors whitespace-nowrap relative ${isActive('/drhp-filed')
                   ? 'text-primary font-semibold bg-primary/10'
                   : 'hover:text-slate-900 hover:bg-slate-100/70'
                 }`}
             >
               DRHP Filed
               {isActive('/drhp-filed') && (
-                <span className="absolute bottom-0 left-3 right-3 h-[2px] bg-primary rounded-full" />
+                <span className="absolute bottom-0 left-2 right-2 xl:left-3 xl:right-3 h-[2px] bg-primary rounded-full" />
               )}
             </Link>
 
             <Link
               href="/screener"
-              className={`px-3 py-1.5 rounded-md transition-colors whitespace-nowrap relative ${isActive('/screener')
+              className={`px-2 xl:px-2.5 2xl:px-3 py-1.5 rounded-md transition-colors whitespace-nowrap relative ${isActive('/screener')
                   ? 'text-primary font-semibold bg-primary/10'
                   : 'hover:text-slate-900 hover:bg-slate-100/70'
                 }`}
             >
               Screener
               {isActive('/screener') && (
-                <span className="absolute bottom-0 left-3 right-3 h-[2px] bg-primary rounded-full" />
+                <span className="absolute bottom-0 left-2 right-2 xl:left-3 xl:right-3 h-[2px] bg-primary rounded-full" />
               )}
             </Link>
 
             <Link
               href="/research"
-              className={`px-3 py-1.5 rounded-md transition-colors whitespace-nowrap relative ${isActive('/research')
+              className={`px-2 xl:px-2.5 2xl:px-3 py-1.5 rounded-md transition-colors whitespace-nowrap relative ${isActive('/research')
                   ? 'text-primary font-semibold bg-primary/10'
                   : 'hover:text-slate-900 hover:bg-slate-100/70'
                 }`}
             >
               Research
               {isActive('/research') && (
-                <span className="absolute bottom-0 left-3 right-3 h-[2px] bg-primary rounded-full" />
+                <span className="absolute bottom-0 left-2 right-2 xl:left-3 xl:right-3 h-[2px] bg-primary rounded-full" />
               )}
             </Link>
 
             <Link
               href="/partners"
-              className={`px-3 py-1.5 rounded-md transition-colors whitespace-nowrap relative ${isActive('/partners')
+              className={`hidden xl:inline-flex px-2 xl:px-2.5 2xl:px-3 py-1.5 rounded-md transition-colors whitespace-nowrap relative ${isActive('/partners')
                   ? 'text-primary font-semibold bg-primary/10'
                   : 'hover:text-slate-900 hover:bg-slate-100/70'
                 }`}
             >
               Partner With Us
               {isActive('/partners') && (
-                <span className="absolute bottom-0 left-3 right-3 h-[2px] bg-primary rounded-full" />
+                <span className="absolute bottom-0 left-2 right-2 xl:left-3 xl:right-3 h-[2px] bg-primary rounded-full" />
               )}
             </Link>
 
             <Link
               href="/our-team"
-              className={`px-3 py-1.5 rounded-md transition-colors whitespace-nowrap relative ${isActive('/our-team')
+              className={`px-2 xl:px-2.5 2xl:px-3 py-1.5 rounded-md transition-colors whitespace-nowrap relative ${isActive('/our-team')
                   ? 'text-primary font-semibold bg-primary/10'
                   : 'hover:text-slate-900 hover:bg-slate-100/70'
                 }`}
             >
               Our Founders
               {isActive('/our-team') && (
-                <span className="absolute bottom-0 left-3 right-3 h-[2px] bg-primary rounded-full" />
+                <span className="absolute bottom-0 left-2 right-2 xl:left-3 xl:right-3 h-[2px] bg-primary rounded-full" />
               )}
             </Link>
 
@@ -295,7 +297,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onSelectStock, onOpenEnquiry }) 
               <button
                 type="button"
                 onClick={() => setMoreDropdownOpen(!moreDropdownOpen)}
-                className={`flex items-center space-x-1 px-3 py-1.5 rounded-md transition-colors whitespace-nowrap ${isMoreActive
+                className={`flex items-center space-x-1 px-2 xl:px-2.5 2xl:px-3 py-1.5 rounded-md transition-colors whitespace-nowrap ${isMoreActive
                     ? 'text-primary font-semibold bg-primary/10'
                     : 'hover:text-slate-900 hover:bg-slate-100/70'
                   }`}
@@ -319,6 +321,18 @@ export const Navbar: React.FC<NavbarProps> = ({ onSelectStock, onOpenEnquiry }) 
                   >
                     <BookOpen className="w-4 h-4 text-primary" />
                     <span>Video Insights &amp; Blogs</span>
+                  </Link>
+
+                  <Link
+                    href="/partners"
+                    onClick={() => setMoreDropdownOpen(false)}
+                    className={`xl:hidden flex items-center space-x-2.5 px-3 py-2 rounded-md text-xs sm:text-[13px] transition-colors ${isActive('/partners')
+                        ? 'bg-primary/10 text-primary font-medium'
+                        : 'text-slate-700 hover:bg-slate-50 hover:text-slate-900'
+                      }`}
+                  >
+                    <Users className="w-4 h-4 text-primary" />
+                    <span>Partner With Us</span>
                   </Link>
 
                   <Link
@@ -350,14 +364,14 @@ export const Navbar: React.FC<NavbarProps> = ({ onSelectStock, onOpenEnquiry }) 
 
             <Link
               href="/contact-us"
-              className={`px-3 py-1.5 rounded-md transition-colors whitespace-nowrap relative ${isActive('/contact-us')
+              className={`hidden xl:inline-flex px-2 xl:px-2.5 2xl:px-3 py-1.5 rounded-md transition-colors whitespace-nowrap relative ${isActive('/contact-us')
                   ? 'text-primary font-semibold bg-primary/10'
                   : 'hover:text-slate-900 hover:bg-slate-100/70'
                 }`}
             >
               Contact Us
               {isActive('/contact-us') && (
-                <span className="absolute bottom-0 left-3 right-3 h-[2px] bg-primary rounded-full" />
+                <span className="absolute bottom-0 left-2 right-2 xl:left-3 xl:right-3 h-[2px] bg-primary rounded-full" />
               )}
             </Link>
           </nav>

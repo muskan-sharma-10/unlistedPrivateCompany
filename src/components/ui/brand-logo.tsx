@@ -28,76 +28,59 @@ export const LogoIcon: React.FC<{ size?: number; className?: string }> = ({
       aria-hidden="true"
     >
       <defs>
-        {/* Main Background Gradient */}
+        {/* Background Gradient: Deep Midnight Royal to High-Trust Cobalt */}
         <linearGradient id="upBgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stopColor="#1E40AF" />
-          <stop offset="60%" stopColor="#2563EB" />
-          <stop offset="100%" stopColor="#0284C7" />
+          <stop offset="0%" stopColor="#081426" />
+          <stop offset="50%" stopColor="#1D4ED8" />
+          <stop offset="100%" stopColor="#2563EB" />
         </linearGradient>
 
-        {/* Glow & Ripple Accent */}
-        <linearGradient id="upGlowGrad" x1="50%" y1="0%" x2="50%" y2="100%">
-          <stop offset="0%" stopColor="#FFFFFF" stopOpacity="0.9" />
-          <stop offset="100%" stopColor="#93C5FD" stopOpacity="0.4" />
+        {/* Cyan Gradient for Pre-IPO Growth & Momentum */}
+        <linearGradient id="upCyanGrad" x1="0%" y1="100%" x2="0%" y2="0%">
+          <stop offset="0%" stopColor="#0284C7" />
+          <stop offset="50%" stopColor="#38BDF8" />
+          <stop offset="100%" stopColor="#BAE6FD" />
         </linearGradient>
 
-        {/* Cyan ripple wave */}
-        <linearGradient id="upWaveGrad" x1="0%" y1="50%" x2="100%" y2="50%">
-          <stop offset="0%" stopColor="#38BDF8" stopOpacity="0.4" />
-          <stop offset="50%" stopColor="#67E8F9" stopOpacity="0.9" />
-          <stop offset="100%" stopColor="#38BDF8" stopOpacity="0.4" />
-        </linearGradient>
-
-        {/* Drop shadow */}
-        <filter id="upShadow" x="-10%" y="-10%" width="130%" height="130%" filterUnits="userSpaceOnUse">
-          <feDropShadow dx="0" dy="2" stdDeviation="2" floodColor="#0F172A" floodOpacity="0.25" />
+        {/* Container Shadow */}
+        <filter id="upShadow" x="-10%" y="-10%" width="125%" height="125%" filterUnits="userSpaceOnUse">
+          <feDropShadow dx="0" dy="1.5" stdDeviation="1.5" floodColor="#020817" floodOpacity="0.3" />
         </filter>
       </defs>
 
-      {/* Rounded Container */}
+      {/* Container Squircle */}
       <rect
         x="1.5"
         y="1.5"
         width="41"
         height="41"
-        rx="10"
+        rx="10.5"
         fill="url(#upBgGrad)"
-        stroke="rgba(255,255,255,0.18)"
+        stroke="rgba(255, 255, 255, 0.22)"
         strokeWidth="1.2"
         filter="url(#upShadow)"
       />
 
-      {/* Outer Pond Ripple Arc */}
+      {/* Subtle Pond Ripple Arc at Bottom (Depth & Liquidity) */}
       <path
-        d="M9 30.5C13 33.5 31 33.5 35 30.5"
-        stroke="url(#upWaveGrad)"
-        strokeWidth="2"
+        d="M10.5 33.5C14.5 36 29.5 36 33.5 33.5"
+        stroke="#38BDF8"
+        strokeOpacity="0.45"
+        strokeWidth="1.6"
         strokeLinecap="round"
       />
 
-      {/* Mid Pond Ripple Arc */}
+      {/* Left 'U' Column & Smooth Basin (The Foundation Pond) */}
       <path
-        d="M12.5 26C15.5 28.5 28.5 28.5 31.5 26"
-        stroke="rgba(255,255,255,0.5)"
-        strokeWidth="1.8"
-        strokeLinecap="round"
+        d="M11 15V24C11 28.5 14.5 31 19.5 31C20.4 31 21.2 30.8 22 30.5V26.5C21.3 26.8 20.6 27 19.5 27C16.8 27 15 25.2 15 23.5V15H11Z"
+        fill="#FFFFFF"
       />
 
-      {/* Stylized Modern "UP" Ripple & Upward Beacon */}
-      {/* Dynamic Liquid Growth Shape */}
+      {/* Center-Right Upward Arrow & 'P' Loop (UP & Capital Ascent) */}
       <path
-        d="M22 8.5C21.4 9.5 16 17 16 21C16 24.3137 18.6863 27 22 27C25.3137 27 28 24.3137 28 21C28 17 22.6 9.5 22 8.5Z"
-        fill="url(#upGlowGrad)"
+        d="M22 14.5L25.5 14.5L22 9.5L18.5 14.5L22 14.5V30H26V25H27C29.8 25 32 23 32 20C32 17 29.8 15 27 15H22V14.5ZM26 18.5H27C27.8 18.5 28.5 19.1 28.5 20C28.5 20.9 27.8 21.5 27 21.5H26V18.5Z"
+        fill="url(#upCyanGrad)"
       />
-
-      {/* Inner Upward Arrow / Financial Momentum Core */}
-      <path
-        d="M22 13L25.2 18H23.2V22.5H20.8V18H18.8L22 13Z"
-        fill="#1E40AF"
-      />
-
-      {/* Subtle Pond Droplet Ripple Accent */}
-      <circle cx="22" cy="7.5" r="1.5" fill="#E0F2FE" />
     </svg>
   );
 };
@@ -114,6 +97,7 @@ export const BrandLogo: React.FC<BrandLogoProps> = ({
   onClick,
 }) => {
   const isDark = variant === 'dark';
+  const shouldShowSubtitle = showSubtitle;
 
   const iconSizes = {
     sm: 34,
@@ -158,12 +142,12 @@ export const BrandLogo: React.FC<BrandLogoProps> = ({
             </span>
           )}
         </div>
-        {showSubtitle && (
+        {shouldShowSubtitle && (
           <p
-            className={`text-[11px] font-medium tracking-wide ${
+            className={`font-medium tracking-tight mt-0.5 leading-none ${
               isDark
-                ? 'text-slate-400 mt-0.5 text-xs sm:text-sm'
-                : 'text-muted-foreground hidden sm:block'
+                ? 'text-slate-400 text-xs sm:text-sm'
+                : 'text-[9.5px] text-slate-500 whitespace-nowrap'
             }`}
           >
             {subtitleText ||
