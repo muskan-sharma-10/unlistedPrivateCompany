@@ -90,7 +90,7 @@ export const STOCKS_DATA: StockItem[] = [
     changeType: 'up',
     change6M: '+43.2%',
     lastUpdated: '10 Oct 2026',
-    description: 'Full-service nationwide stock exchange offering trading in Capital Market, Futures & Options, and Currency Derivatives.',
+    description: 'Metropolitan Stock Exchange of India (MSEI) is a full-service SEBI-recognized nationwide stock exchange. Track live indicative MSEI unlisted share prices, lot size, financials, shareholding, and off-market Demat settlement on Unlisted Pond.',
     minLot: 10000,
     marketCap: '₹ 7,645 Cr',
     peRatio: 'N/A',
@@ -108,9 +108,10 @@ export const STOCKS_DATA: StockItem[] = [
     debtToEquity: '0.00',
     roe: '-1.89%',
     aboutRich: [
-      'Metropolitan Stock Exchange of India Limited (MSEI) is a full-service national-level stock exchange recognized by SEBI. It operates across multiple asset classes including Equity, Equity Derivatives, Currency Derivatives, and Debt segments.',
-      'In 2025, MSEI completed major private placement rounds raising over ₹1,238 Crore from marquee institutional brokers and technology funds including Peak XV Partners, Share India Securities, Billionbrains Garage Ventures (Groww), and Rainmatter Investments (Zerodha founders fund).',
-      'The exchange holds vital strategic value in Indian financial market infrastructure as the third national stock exchange alongside NSE and BSE.'
+      'Metropolitan Stock Exchange of India Limited (MSEI) is a full-service national-level stock exchange recognized by the Securities and Exchange Board of India (SEBI). It operates electronic trading infrastructure across diverse asset segments including Capital Market (Equities), Futures & Options (F&O), Currency Derivatives, and Debt segments.',
+      'In 2025, MSEI completed landmark private placement capital rounds raising over ₹1,238 Crore from marquee institutional brokers, technology platforms, and venture funds, including Peak XV Partners, Share India Securities, Billionbrains Garage Ventures (Groww), and Rainmatter Investments (Zerodha founders fund).',
+      'The exchange holds vital strategic value in Indian financial market infrastructure as the third recognized national stock exchange alongside NSE and BSE. Off-market transactions in MSEI unlisted shares are settled seamlessly through NSDL and CDSL Demat accounts.',
+      'Investors tracking MSEI unlisted stock price can monitor historical price discovery, trading volume trends, lot size requirements, and corporate governance updates on Unlisted Pond.'
     ],
     financials: [
       { particulars: 'Revenue (₹ Cr)', fy23: '9.0', fy24: '7.0', fy25: '4.3', fy26: '3.4', yoyChange: '-21%', isPositive: false },
@@ -136,20 +137,28 @@ export const STOCKS_DATA: StockItem[] = [
     ],
     faqs: [
       {
-        question: 'How to buy MSEI Unlisted Shares on Private Market?',
-        answer: 'You confirm booking with our relationship desk at the indicative price. Submit your Client Master Report (CMR) and PAN card. Fund transfer is made directly to our registered corporate account via NEFT/RTGS. Shares are credited into your Demat account within 24 hours of settlement.'
+        question: 'What is the current MSEI unlisted share price and how is it determined?',
+        answer: 'The indicative MSEI unlisted share price is determined through over-the-counter (OTC) demand and supply across verified institutional brokers, HNIs, and private market participants. As an unlisted entity, MSEI share price reflects its capital reorganization, strategic fundraising from marquee investors (Peak XV, Groww, Zerodha\'s Rainmatter), and financial infrastructure valuation. On Unlisted Pond, you can track live indicative MSEI prices and verified historical trends.'
       },
       {
-        question: 'Is buying and selling MSEI unlisted shares legal in India?',
-        answer: 'Yes, buying and selling unlisted shares in India is 100% legal and recognized under SEBI regulations and Depository Acts. All transfers happen via demat off-market transactions (DIS/Easiest).'
+        question: 'How to buy and sell MSEI Unlisted Shares on Unlisted Pond?',
+        answer: 'You can buy or sell Metropolitan Stock Exchange (MSEI) unlisted shares through Unlisted Pond in 5 simple steps: (1) Review the live indicative MSEI unlisted price and minimum lot size. (2) Connect with our dealing desk to confirm rates and lock in your order. (3) Submit your Client Master Report (CMR) and PAN card for Demat verification. (4) Transfer funds securely via official banking channels (RTGS/NEFT). (5) Receive MSEI shares directly credited to your CDSL or NSDL Demat account within 24 hours of settlement.'
       },
       {
-        question: 'What is the SEBI lock-in period for pre-IPO shares?',
-        answer: 'As per SEBI guidelines revised in August 2021, the lock-in period for pre-IPO shares is 6 months from the date of the IPO listing (reduced from 1 year earlier).'
+        question: 'What is the lot size and minimum investment for MSEI unlisted shares?',
+        answer: 'The standard trading lot size for Metropolitan Stock Exchange (MSEI) unlisted shares is typically 10,000 shares. Based on the prevailing indicative unit rate, the minimum ticket size ranges between ₹60,000 to ₹70,000. Institutional investors and retail buyers can also discuss customized parcel sizes with our institutional dealing desk.'
       },
       {
-        question: 'How are capital gains taxed on unlisted shares?',
-        answer: 'Under the revised Budget 2024 regulations, long-term capital gains (holding period > 2 years) on unlisted shares are taxed at a flat rate of 12.5%. Short-term capital gains (holding period < 2 years) are taxed as per your applicable income tax slab rate.'
+        question: 'What is the ISIN and legal status of Metropolitan Stock Exchange unlisted shares?',
+        answer: 'Metropolitan Stock Exchange of India Limited has the verified ISIN INE312K01010 and CIN U65999MH2008PLC185856. Buying and selling MSEI unlisted shares in India is 100% legal under SEBI regulations and Depository Acts. All transfers occur through legal off-market Demat transactions (DIS / CDSL Easiest / NSDL Speed-e).'
+      },
+      {
+        question: 'What is the SEBI lock-in period for MSEI shares upon an IPO listing?',
+        answer: 'Under SEBI (Issue of Capital and Disclosure Requirements) guidelines revised in August 2021, pre-IPO equity shares held by non-promoters are subject to a mandatory 6-month lock-in period from the date of IPO listing on recognized stock exchanges (reduced from 1 year earlier).'
+      },
+      {
+        question: 'How are capital gains taxed on MSEI unlisted shares?',
+        answer: 'Under the revised Budget 2024 taxation framework: (1) Long-Term Capital Gains (LTCG) on unlisted shares held for over 24 months are taxed at a flat rate of 12.5% without indexation. (2) Short-Term Capital Gains (STCG) on shares held for 24 months or less are taxed as per your applicable income tax slab rate.'
       }
     ]
   },

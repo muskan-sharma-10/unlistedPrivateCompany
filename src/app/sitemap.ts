@@ -10,6 +10,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 1,
     },
     { url: `${baseUrl}/shares`, changeFrequency: "daily", priority: 0.9 },
+    { url: `${baseUrl}/shares/msei`, changeFrequency: "daily", priority: 0.85 },
     {
       url: `${baseUrl}/drhp-filed`,
       changeFrequency: "weekly",
