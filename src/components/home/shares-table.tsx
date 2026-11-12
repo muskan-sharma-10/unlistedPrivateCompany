@@ -177,9 +177,11 @@ export const SharesTable: React.FC<SharesTableProps> = ({
                       )}
                     </div>
                     <div className="min-w-0">
-                      <h3 className="font-semibold text-sm text-slate-900 leading-snug line-clamp-2">
-                        {stock.name}
-                      </h3>
+                      <Link href={`/shares/${stock.id}`} className="hover:text-blue-600 transition-colors">
+                        <h3 className="font-semibold text-sm text-slate-900 leading-snug line-clamp-2">
+                          {stock.name}
+                        </h3>
+                      </Link>
                       <div className="text-xs text-slate-500 mt-0.5">
                         {stock.sector}
                       </div>
@@ -209,13 +211,12 @@ export const SharesTable: React.FC<SharesTableProps> = ({
                   >
                     Enquire
                   </button>
-                  <button
-                    type="button"
-                    onClick={() => onSelectStock(stock)}
-                    className="px-3.5 py-2 rounded-lg text-slate-700 font-semibold text-xs border border-slate-200 hover:border-slate-300 hover:bg-slate-50 transition-colors cursor-pointer"
+                  <Link
+                    href={`/shares/${stock.id}`}
+                    className="px-3.5 py-2 rounded-lg text-slate-700 font-semibold text-xs border border-slate-200 hover:border-slate-300 hover:bg-slate-50 transition-colors inline-flex items-center justify-center cursor-pointer"
                   >
                     Details
-                  </button>
+                  </Link>
                 </div>
               </div>
             ))}
@@ -260,9 +261,11 @@ export const SharesTable: React.FC<SharesTableProps> = ({
                       {stock.badge}
                     </div>
                     <div className="min-w-0">
-                      <h3 className="font-semibold text-sm text-slate-900 leading-snug line-clamp-2">
-                        {stock.name}
-                      </h3>
+                      <Link href={`/shares/${stock.id}`} className="hover:text-blue-600 transition-colors">
+                        <h3 className="font-semibold text-sm text-slate-900 leading-snug line-clamp-2">
+                          {stock.name}
+                        </h3>
+                      </Link>
                       <div className="text-xs text-slate-500 mt-0.5">
                         {stock.sector}
                       </div>
@@ -298,13 +301,12 @@ export const SharesTable: React.FC<SharesTableProps> = ({
                   >
                     Enquire
                   </button>
-                  <button
-                    type="button"
-                    onClick={() => onSelectStock(stock)}
-                    className="px-3.5 py-2 rounded-lg text-slate-700 font-semibold text-xs border border-slate-200 hover:border-slate-300 hover:bg-slate-50 transition-colors cursor-pointer"
+                  <Link
+                    href={`/shares/${stock.id}`}
+                    className="px-3.5 py-2 rounded-lg text-slate-700 font-semibold text-xs border border-slate-200 hover:border-slate-300 hover:bg-slate-50 transition-colors inline-flex items-center justify-center cursor-pointer"
                   >
                     Details
-                  </button>
+                  </Link>
                 </div>
               </div>
             ))}

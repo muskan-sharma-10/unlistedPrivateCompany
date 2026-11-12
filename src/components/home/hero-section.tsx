@@ -304,10 +304,10 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                   }}
                 >
                   {[...featuredStocks, ...featuredStocks].map((stock, idx) => (
-                    <div
+                    <Link
                       key={`${stock.id}-${idx}`}
-                      onClick={() => onSelectStock(stock)}
-                      className="p-3.5 sm:px-5 flex items-center justify-between gap-3 hover:bg-blue-50/60 cursor-pointer transition-colors group/item"
+                      href={`/shares/${stock.id}`}
+                      className="p-3.5 sm:px-5 flex items-center justify-between gap-3 hover:bg-blue-50/60 cursor-pointer transition-colors group/item block"
                     >
                       <div className="flex items-center gap-3.5 min-w-0">
                         <div className="w-10 h-10 rounded-lg bg-slate-100 border border-slate-200 flex items-center justify-center font-semibold text-blue-600 text-xs shrink-0 overflow-hidden">
@@ -338,7 +338,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                         </div>
                         <ChevronRight className="w-4 h-4 text-slate-400 group-hover/item:text-blue-600 group-hover/item:translate-x-0.5 transition-all" />
                       </div>
-                    </div>
+                    </Link>
                   ))}
                 </div>
               </div>

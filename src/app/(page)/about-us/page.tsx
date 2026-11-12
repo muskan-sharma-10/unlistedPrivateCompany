@@ -1,5 +1,4 @@
-'use client';
-
+import type { Metadata } from 'next';
 import React from 'react';
 import Link from 'next/link';
 import {
@@ -13,11 +12,39 @@ import {
   ArrowRight,
   TrendingUp,
   FileCheck,
-  Building2
+  Building2,
 } from 'lucide-react';
 import TopTicker from '@/components/header/top-ticker';
 import Navbar from '@/components/header/navbar';
 import Footer from '@/components/footer';
+
+export const metadata: Metadata = {
+  title: 'About Unlisted Pond | India’s Trusted Unlisted Shares Platform',
+  description:
+    'Learn about Unlisted Pond, our mission, founders, regulatory compliance, and institutional research desk connecting buyers and sellers of unlisted and pre-IPO equities in India.',
+  alternates: {
+    canonical: 'https://www.unlistedpond.com/about-us',
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
+  openGraph: {
+    type: 'website',
+    locale: 'en_IN',
+    url: 'https://www.unlistedpond.com/about-us',
+    siteName: 'Unlisted Pond',
+    title: 'About Unlisted Pond | India’s Trusted Unlisted Shares Platform',
+    description:
+      'Learn about Unlisted Pond, our mission, founders, regulatory compliance, and institutional research desk connecting buyers and sellers of unlisted and pre-IPO equities in India.',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'About Unlisted Pond | India’s Trusted Unlisted Shares Platform',
+    description:
+      'Learn about Unlisted Pond, our mission, founders, and institutional research desk for unlisted equities in India.',
+  },
+};
 
 export default function AboutUsPage() {
   const milestones = [
