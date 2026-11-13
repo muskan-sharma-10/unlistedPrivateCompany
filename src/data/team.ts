@@ -212,7 +212,7 @@ export const FOUNDER_PROFILES: FounderProfile[] = [
       'Strategic Partnerships',
       'Corporate Growth'
     ],
-    email: 'dealing@unlistedpond.com',
+    email: 'harishmittal1995@gmail.com',
     imageUrl: '/images/team/harish-mittal.jpg',
     initials: 'HM',
     summaryHighlights: [
