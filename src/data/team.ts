@@ -186,7 +186,7 @@ export const FOUNDER_PROFILES: FounderProfile[] = [
       'Transaction Planning'
     ],
     email: 'dealing@unlistedpond.com',
-    imageUrl: '',
+    imageUrl: '/images/team/ca-vaibhav-bansal.jpg',
     initials: 'VB',
     summaryHighlights: [
       'Corporate financial advisory & planning',
