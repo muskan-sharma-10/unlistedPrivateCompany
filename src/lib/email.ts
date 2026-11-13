@@ -7,6 +7,7 @@ export interface DealingInquiryEmailData {
   email?: string;
   stockName: string;
   quantity?: string;
+  targetPrice?: string | number;
   message?: string;
   sourcePage?: string;
   submittedAt?: string;
@@ -95,8 +96,13 @@ export async function sendDealingInquiryEmail(
               </tr>
               ${data.quantity ? `
               <tr>
-                <td class="label">Quantity / Budget</td>
+                <td class="label">Quantity / Shares</td>
                 <td class="value">${data.quantity}</td>
+              </tr>` : ''}
+              ${data.targetPrice ? `
+              <tr>
+                <td class="label">Target / Indicative Rate</td>
+                <td class="value"><strong>₹${typeof data.targetPrice === 'number' ? data.targetPrice.toLocaleString('en-IN') : data.targetPrice}</strong></td>
               </tr>` : ''}
               <tr>
                 <td class="label">Submission Source</td>
@@ -132,6 +138,7 @@ Mobile:       ${data.phone}
 Email:        ${data.email || 'N/A'}
 Stock/Company: ${data.stockName}
 Quantity/Est: ${data.quantity || 'N/A'}
+Target Rate:  ${data.targetPrice ? `₹${data.targetPrice}` : 'N/A'}
 Source:       ${data.sourcePage || '/contact-us'}
 Timestamp:    ${timestamp} IST
 ----------------------------------------

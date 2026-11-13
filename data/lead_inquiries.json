@@ -1,0 +1,56 @@
+[
+  {
+    "id": "lead_1794564738707_lqibs",
+    "name": "muskan",
+    "phone": "1123456680",
+    "email": "sharmamuskan8271@gmail.com",
+    "stock_name": "testing",
+    "message": null,
+    "enquiry_type": "esop_liquidity",
+    "source_page": "/shares/agnikul",
+    "status": "new",
+    "created_at": "2026-11-13T10:12:18.707Z"
+  },
+  {
+    "id": "lead_1794564690111_di1ie",
+    "name": "muskan",
+    "phone": "1234567890",
+    "email": null,
+    "stock_name": "Agnikul",
+    "quantity": 50,
+    "target_price": 1211250,
+    "message": null,
+    "enquiry_type": "sell_order",
+    "source_page": "/shares/agnikul",
+    "status": "new",
+    "created_at": "2026-11-13T10:11:30.111Z"
+  },
+  {
+    "id": "lead_1794564460822_5dgxn",
+    "name": "Verified Investor",
+    "phone": "9876543210",
+    "email": null,
+    "stock_name": "Agnikul",
+    "quantity": 50,
+    "target_price": 1211250,
+    "message": null,
+    "enquiry_type": "buy_order",
+    "source_page": "/shares/agnikul",
+    "status": "new",
+    "created_at": "2026-11-13T10:07:40.822Z"
+  },
+  {
+    "id": "lead_1794564316835_5ykhx",
+    "name": "muskan",
+    "phone": "1234567890",
+    "email": null,
+    "stock_name": "Agnikul",
+    "quantity": 50,
+    "target_price": 1211250,
+    "message": null,
+    "enquiry_type": "buy_order",
+    "source_page": "/shares/agnikul",
+    "status": "new",
+    "created_at": "2026-11-13T10:05:16.835Z"
+  }
+]

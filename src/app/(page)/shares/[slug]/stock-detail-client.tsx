@@ -206,7 +206,7 @@ export default function StockDetailClient({ params }: StockDetailClientProps) {
     setIsSubmitting(true);
 
     try {
-      await submitLeadEnquiry({
+      const res = await submitLeadEnquiry({
         name: buyerName.trim() || 'Portal Investor',
         phone: buyerPhone.trim(),
         stock_symbol: stock.ticker || stock.id,
@@ -217,16 +217,20 @@ export default function StockDetailClient({ params }: StockDetailClientProps) {
         source_page: `/shares/${params.slug}`,
       });
       setSubmittedEnquiry(true);
+      if (res.success) {
+        setBuyerPhone('');
+        setBuyerName('');
+      }
       setTimeout(() => {
         setSubmittedEnquiry(false);
         setIsSubmitting(false);
-      }, 3500);
+      }, 4000);
     } catch {
       setSubmittedEnquiry(true);
       setTimeout(() => {
         setSubmittedEnquiry(false);
         setIsSubmitting(false);
-      }, 3500);
+      }, 4000);
     }
   };
 

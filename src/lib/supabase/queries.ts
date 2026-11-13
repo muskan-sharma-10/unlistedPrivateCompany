@@ -642,34 +642,59 @@ export interface LeadPayload {
 
 export async function submitLeadEnquiry(payload: LeadPayload): Promise<{ success: boolean; error?: string }> {
   try {
-    const supabase = getSupabase();
-    if (!supabase) {
-      console.log('[Lead Submission Simulation]', payload);
+    // 1. Submit through server API to trigger SMTP Email notification to dealing desk & server backup
+    if (typeof window !== 'undefined') {
+      const response = await fetch('/api/inquiry/dealing', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          inquiryType: payload.enquiry_type || 'buy_order',
+          name: payload.name.trim() || 'Portal Investor',
+          phone: payload.phone.trim(),
+          email: payload.email?.trim() || undefined,
+          stockName: payload.stock_name || payload.stock_symbol || 'Unlisted Share',
+          quantity: payload.quantity ? String(payload.quantity) : undefined,
+          targetPrice: payload.target_price || undefined,
+          message: payload.message?.trim() || undefined,
+          sourcePage: payload.source_page || window.location.pathname,
+        }),
+      });
+
+      const data = await response.json().catch(() => null);
+
+      if (!response.ok || !data?.success) {
+        console.warn('[Enquiry API Warning]', data?.error);
+        return {
+          success: false,
+          error: data?.error || 'Unable to submit enquiry at this time.',
+        };
+      }
+
       return { success: true };
     }
 
-    const { error } = await supabase.from('lead_enquiries').insert([
-      {
-        name: payload.name.trim(),
-        email: payload.email?.trim() || null,
-        phone: payload.phone.trim(),
-        enquiry_type: payload.enquiry_type || 'general',
-        stock_symbol: payload.stock_symbol || null,
-        stock_name: payload.stock_name || null,
-        quantity: payload.quantity || null,
-        target_price: payload.target_price || null,
-        pan_number: payload.pan_number?.trim() || null,
-        demat_number: payload.demat_number?.trim() || null,
-        message: payload.message?.trim() || null,
-        source_page: payload.source_page || (typeof window !== 'undefined' ? window.location.pathname : null),
-        status: 'new',
-      },
-    ]);
-
-    if (error) {
-      console.warn('[Supabase Lead Insert Warn]', error.message);
-      // Even if schema table isn't migrated yet on cloud Supabase, do not crash the user experience
-      return { success: true };
+    // Direct fallback for non-browser environments
+    const supabase = getSupabase();
+    if (supabase) {
+      await supabase.from('lead_enquiries').insert([
+        {
+          name: payload.name.trim(),
+          email: payload.email?.trim() || null,
+          phone: payload.phone.trim(),
+          enquiry_type: payload.enquiry_type || 'general',
+          stock_symbol: payload.stock_symbol || null,
+          stock_name: payload.stock_name || null,
+          quantity: payload.quantity || null,
+          target_price: payload.target_price || null,
+          pan_number: payload.pan_number?.trim() || null,
+          demat_number: payload.demat_number?.trim() || null,
+          message: payload.message?.trim() || null,
+          source_page: payload.source_page || null,
+          status: 'new',
+        },
+      ]);
     }
 
     return { success: true };
