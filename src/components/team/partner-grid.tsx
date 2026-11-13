@@ -83,7 +83,7 @@ export const PartnerGrid: React.FC = () => {
                   </p>
                 </div>
                 <span className="text-xs font-mono font-semibold text-blue-700 bg-blue-50 border border-blue-200/60 px-2.5 py-1 rounded-md">
-                  02 Founders
+                  {String(founders.length).padStart(2, '0')} Founders
                 </span>
               </div>
 
@@ -105,15 +105,15 @@ export const PartnerGrid: React.FC = () => {
                     <h3 className="text-lg sm:text-xl font-bold text-slate-900">Partners</h3>
                   </div>
                   <p className="text-xs sm:text-sm text-slate-500">
-                    Advising on financial structuring, corporate valuation, statutory compliance, and financial review.
+                    Advising on financial structuring, corporate valuation, private equity &amp; growth capital, statutory compliance, and financial review.
                   </p>
                 </div>
                 <span className="text-xs font-mono font-semibold text-indigo-700 bg-indigo-50 border border-indigo-200/60 px-2.5 py-1 rounded-md">
-                  02 Partners
+                  {String(partners.length).padStart(2, '0')} Partners
                 </span>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
                 {partners.map((partner, index) => (
                   <ScrollReveal key={partner.id} delayMs={index * 120} className="h-full">
                     <FounderCard founder={partner} index={index + founders.length} />
@@ -135,7 +135,7 @@ export const PartnerGrid: React.FC = () => {
                   </p>
                 </div>
                 <span className="text-xs font-mono font-semibold text-emerald-700 bg-emerald-50 border border-emerald-200/60 px-2.5 py-1 rounded-md">
-                  01 Co-Founder
+                  {String(coFounders.length).padStart(2, '0')} Co-Founder
                 </span>
               </div>
 
@@ -166,7 +166,7 @@ export const PartnerGrid: React.FC = () => {
 
         {/* Content View: When 'partner' is selected */}
         {activeTab === 'partner' && (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
             {partners.map((partner, index) => (
               <ScrollReveal key={partner.id} delayMs={index * 100} className="h-full">
                 <FounderCard founder={partner} index={index} />

@@ -46,9 +46,10 @@ export interface TeamServiceOffering {
  *
  * 1. CA Akshay Biswal - Founder
  * 2. CA Rajat Goyal - Founder
- * 3. CA Mohit Gupta - Partner
- * 4. CA Vaibhav Bansal - Partner
- * 5. Harish Mittal - Co-Founder (placed at the bottom)
+ * 3. CA Sanket Agarwal - Partner
+ * 4. CA Mohit Gupta - Partner
+ * 5. CA Vaibhav Bansal - Partner
+ * 6. Harish Mittal - Co-Founder (placed at the bottom)
  */
 export const FOUNDER_PROFILES: FounderProfile[] = [
   {
@@ -108,8 +109,40 @@ export const FOUNDER_PROFILES: FounderProfile[] = [
     ]
   },
   {
-    id: 'mohit-gupta',
+    id: 'sanket-agarwal',
     founderNumber: '03',
+    name: 'CA Sanket Agarwal',
+    designation: 'Partner',
+    group: 'partner',
+    companyRole: 'Fellow Chartered Accountant · Partner, Unlisted Pond',
+    categoryLabel: 'PARTNER',
+    statusLabel: 'Partner',
+    roleBadge: 'Growth Capital & Private Equity',
+    qualifications: [
+      'Fellow Chartered Accountant (FCA)',
+      'London Business School (LBS)'
+    ],
+    bio: 'Fellow Chartered Accountant (FCA) with executive management education from London Business School (LBS), bringing over 12 years of specialized leadership in private equity, capital markets, valuation, and growth-stage enterprise investments.',
+    expertise: [
+      'Private Equity',
+      'Growth Capital',
+      'Capital & Equity Markets',
+      'Business Valuation',
+      'Startup & Growth Investments',
+      'Corporate Financial Strategy'
+    ],
+    email: 'dealing@unlistedpond.com',
+    imageUrl: '/images/team/ca-sanket-agarwal.jpg',
+    initials: 'SA',
+    summaryHighlights: [
+      'Private equity & growth-stage capital investment strategy',
+      'Capital markets advisory & structured equity transactions',
+      'Business valuation & growth enterprise consulting'
+    ]
+  },
+  {
+    id: 'mohit-gupta',
+    founderNumber: '04',
     name: 'CA Mohit Gupta',
     designation: 'Partner',
     group: 'partner',
@@ -136,7 +169,7 @@ export const FOUNDER_PROFILES: FounderProfile[] = [
   },
   {
     id: 'vaibhav-bansal',
-    founderNumber: '04',
+    founderNumber: '05',
     name: 'CA Vaibhav Bansal',
     designation: 'Partner',
     group: 'partner',
@@ -163,7 +196,7 @@ export const FOUNDER_PROFILES: FounderProfile[] = [
   },
   {
     id: 'harish-mittal',
-    founderNumber: '05',
+    founderNumber: '06',
     name: 'Harish Mittal',
     designation: 'Co-Founder',
     group: 'co-founder',

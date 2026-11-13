@@ -1,5 +1,6 @@
 import React from 'react';
 import { ArrowDown } from 'lucide-react';
+import { FOUNDER_PROFILES } from '@/data/team';
 
 export const TeamHero: React.FC = () => {
   return (
@@ -74,7 +75,7 @@ export const TeamHero: React.FC = () => {
         <div className="mt-12 sm:mt-16 pt-6 border-t border-slate-800/80 flex flex-col sm:flex-row sm:items-center justify-between gap-4 text-xs text-slate-400 animate-in fade-in duration-700 delay-700 fill-mode-both motion-reduce:animate-none">
           <div className="flex flex-wrap items-center gap-y-2 gap-x-6">
             <div className="flex items-center space-x-2">
-              <span className="font-bold text-white text-sm">5</span>
+              <span className="font-bold text-white text-sm">{FOUNDER_PROFILES.length}</span>
               <span className="text-slate-300 font-medium">Leadership Members</span>
             </div>
             <span className="text-slate-700 hidden sm:inline">•</span>
