@@ -108,38 +108,38 @@ export const FOUNDER_PROFILES: FounderProfile[] = [
       'Financial planning & analysis'
     ]
   },
-  {
-    id: 'sanket-agarwal',
-    founderNumber: '03',
-    name: 'CA Sanket Agarwal',
-    designation: 'Partner',
-    group: 'partner',
-    companyRole: 'Fellow Chartered Accountant · Partner, Unlisted Pond',
-    categoryLabel: 'PARTNER',
-    statusLabel: 'Partner',
-    roleBadge: 'Growth Capital & Private Equity',
-    qualifications: [
-      'Fellow Chartered Accountant (FCA)',
-      'London Business School (LBS)'
-    ],
-    bio: 'Fellow Chartered Accountant (FCA) with executive management education from London Business School (LBS), bringing over 12 years of specialized leadership in private equity, capital markets, valuation, and growth-stage enterprise investments.',
-    expertise: [
-      'Private Equity',
-      'Growth Capital',
-      'Capital & Equity Markets',
-      'Business Valuation',
-      'Startup & Growth Investments',
-      'Corporate Financial Strategy'
-    ],
-    email: 'dealing@unlistedpond.com',
-    imageUrl: '/images/team/ca-sanket-agarwal.jpg',
-    initials: 'SA',
-    summaryHighlights: [
-      'Private equity & growth-stage capital investment strategy',
-      'Capital markets advisory & structured equity transactions',
-      'Business valuation & growth enterprise consulting'
-    ]
-  },
+  // {
+  //   id: 'sanket-agarwal',
+  //   founderNumber: '03',
+  //   name: 'CA Sanket Agarwal',
+  //   designation: 'Partner',
+  //   group: 'partner',
+  //   companyRole: 'Fellow Chartered Accountant · Partner, Unlisted Pond',
+  //   categoryLabel: 'PARTNER',
+  //   statusLabel: 'Partner',
+  //   roleBadge: 'Growth Capital & Private Equity',
+  //   qualifications: [
+  //     'Fellow Chartered Accountant (FCA)',
+  //     'London Business School (LBS)'
+  //   ],
+  //   bio: 'Fellow Chartered Accountant (FCA) with executive management education from London Business School (LBS), bringing over 12 years of specialized leadership in private equity, capital markets, valuation, and growth-stage enterprise investments.',
+  //   expertise: [
+  //     'Private Equity',
+  //     'Growth Capital',
+  //     'Capital & Equity Markets',
+  //     'Business Valuation',
+  //     'Startup & Growth Investments',
+  //     'Corporate Financial Strategy'
+  //   ],
+  //   email: 'dealing@unlistedpond.com',
+  //   imageUrl: '/images/team/ca-sanket-agarwal.jpg',
+  //   initials: 'SA',
+  //   summaryHighlights: [
+  //     'Private equity & growth-stage capital investment strategy',
+  //     'Capital markets advisory & structured equity transactions',
+  //     'Business valuation & growth enterprise consulting'
+  //   ]
+  // },
   {
     id: 'mohit-gupta',
     founderNumber: '04',

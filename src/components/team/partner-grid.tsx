@@ -16,7 +16,7 @@ export const PartnerGrid: React.FC = () => {
 
   const tabs: { id: TabType; label: string; count: number }[] = [
     { id: 'all', label: 'All Leadership', count: FOUNDER_PROFILES.length },
-    { id: 'founder', label: 'Founders', count: founders.length },
+    // { id: 'founder', label: 'Founders', count: founders.length },
     { id: 'partner', label: 'Partners', count: partners.length },
     { id: 'co-founder', label: 'Co-Founder', count: coFounders.length },
   ];
@@ -71,7 +71,7 @@ export const PartnerGrid: React.FC = () => {
         {activeTab === 'all' && (
           <div className="space-y-16">
             {/* 1. Founders Section */}
-            <div className="space-y-6">
+            {/* <div className="space-y-6">
               <div className="flex items-center justify-between border-b border-slate-200 pb-3">
                 <div className="space-y-0.5">
                   <div className="flex items-center space-x-2">
@@ -94,7 +94,7 @@ export const PartnerGrid: React.FC = () => {
                   </ScrollReveal>
                 ))}
               </div>
-            </div>
+            </div> */}
 
             {/* 2. Partners Section */}
             <div className="space-y-6">
