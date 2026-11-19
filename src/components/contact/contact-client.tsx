@@ -339,7 +339,7 @@ export default function ContactClient() {
                 <span>Official Bank Account Notice</span>
               </div>
               <p className="text-xs text-amber-800/90 leading-relaxed font-normal">
-                All client fund transfers for unlisted shares must only be made to our verified company bank accounts in the name of <strong>IZUZ Consultancy Pvt. Ltd.</strong> We never accept cash or transfers into personal or employee accounts.
+                All client fund transfers for unlisted shares must only be made to our verified company bank accounts. We never accept cash or transfers into personal or employee accounts.
               </p>
             </div>
           </div>
