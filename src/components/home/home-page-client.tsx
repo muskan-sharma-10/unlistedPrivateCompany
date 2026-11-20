@@ -7,6 +7,7 @@ import HeroSection from '@/components/home/hero-section';
 import QuickAccess from '@/components/home/quick-access';
 import SharesTable from '@/components/home/shares-table';
 import ValueProps from '@/components/home/value-props';
+import AboutSummarySection from '@/components/home/about-summary-section';
 import DRHPSection from '@/components/home/drhp-section';
 import SectorsGrid from '@/components/home/sectors-grid';
 import HowItWorks from '@/components/home/how-it-works';
@@ -70,6 +71,9 @@ export default function HomePageClient() {
 
       {/* 6. Why Unlisted Pond / Value Pillars */}
       <ValueProps />
+
+      {/* 6B. About Unlisted Pond Overview */}
+      <AboutSummarySection />
 
       {/* 7. DRHP Filed Companies for Upcoming IPOs */}
       <DRHPSection onSelectStock={handleStockClick} />
