@@ -2,7 +2,9 @@ import type { Metadata } from 'next';
 import ResearchClient from '@/components/research/research-client';
 
 export const metadata: Metadata = {
-  title: 'Company Research & Valuation Reports | Unlisted Pond',
+  title: {
+    absolute: 'Company Research & Valuation Reports | Unlisted Pond',
+  },
   description:
     'Institutional-grade research notes, DRHP draft prospectus breakdowns, and pre-IPO valuation models on India’s leading unlisted companies.',
   keywords: [

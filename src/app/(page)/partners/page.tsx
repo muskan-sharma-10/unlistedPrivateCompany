@@ -2,7 +2,9 @@ import type { Metadata } from 'next';
 import PartnersClient from '@/components/partners/partners-client';
 
 export const metadata: Metadata = {
-  title: 'Partner with Unlisted Pond | Sub-Broker & Wealth Partner Program',
+  title: {
+    absolute: 'Partner with Unlisted Pond | Sub-Broker & Wealth Partner Program',
+  },
   description:
     'Join over 250+ active sub-brokers, IFAs, wealth managers, and fintech partners across India. Offer verified unlisted and pre-IPO shares with institutional dealing desk backing.',
   keywords: [

@@ -2,7 +2,9 @@ import type { Metadata } from 'next';
 import DrhpClient from '@/components/drhp/drhp-client';
 
 export const metadata: Metadata = {
-  title: 'DRHP Filed Companies in India | Upcoming IPOs & Pre-IPO Shares – Unlisted Pond',
+  title: {
+    absolute: 'DRHP Filed Companies in India | Upcoming IPOs & Pre-IPO Shares – Unlisted Pond',
+  },
   description:
     'Track companies that have filed Draft Red Herring Prospectus (DRHP) with SEBI. Analyze issue sizes, indicative unlisted prices, and upcoming Indian IPO timelines.',
   keywords: [

@@ -19,7 +19,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
     if (article) {
       return {
-        title: `${article.title} | Unlisted Pond Blog`,
+        title: {
+          absolute: `${article.title} | Unlisted Pond Blog`,
+        },
         description: article.summary,
         keywords: [
           article.category,

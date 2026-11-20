@@ -18,11 +18,47 @@ import Navbar from '@/components/header/navbar';
 import Footer from '@/components/footer';
 
 export const metadata: Metadata = {
-  title: 'Risk Disclosures & Investor Caution Notice | Unlisted Pond',
+  title: {
+    absolute: 'Risk Disclosures & Investor Caution Notice | Unlisted Pond',
+  },
   description:
     'Mandatory risk disclosures governing unlisted, pre-IPO, and ESOP share investments in India. Understand illiquidity risks, SEBI lock-in periods, valuation volatility, and capital loss risks.',
   alternates: {
     canonical: 'https://www.unlistedpond.com/risk-disclosures',
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
+  openGraph: {
+    type: 'website',
+    locale: 'en_IN',
+    url: 'https://www.unlistedpond.com/risk-disclosures',
+    siteName: 'Unlisted Pond',
+    title: 'Risk Disclosures & Investor Caution Notice | Unlisted Pond',
+    description:
+      'Mandatory risk disclosures governing unlisted, pre-IPO, and ESOP share investments in India. Understand illiquidity risks, SEBI lock-in periods, and valuation volatility.',
+    images: [
+      {
+        url: 'https://www.unlistedpond.com/icon-192.png',
+        width: 192,
+        height: 192,
+        alt: 'Risk Disclosures – Unlisted Pond',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Risk Disclosures & Investor Caution Notice | Unlisted Pond',
+    description:
+      'Mandatory risk disclosures governing unlisted and pre-IPO share investments in India.',
   },
 };
 

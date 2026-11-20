@@ -2,5 +2,6 @@ User-agent: *
 Allow: /
 Disallow: /api/
 Disallow: /login
+Disallow: /portfolio
 
 Sitemap: https://www.unlistedpond.com/sitemap.xml

@@ -15,7 +15,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   if (isMsei) {
     return {
-      title: 'MSEI Share Price | Metropolitan Stock Exchange Unlisted Stock Price & Details',
+      title: {
+        absolute: 'MSEI Share Price | Metropolitan Stock Exchange Unlisted Stock Price & Details – Unlisted Pond',
+      },
       description:
         'Check live indicative MSEI unlisted share price, lot size, financials, shareholding & valuation. Track Metropolitan Stock Exchange unlisted shares on Unlisted Pond.',
       keywords: [
@@ -82,8 +84,10 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     const sectorStr = stock?.sector ? ` in ${stock.sector}` : '';
 
     return {
-      title: `${name} ${tickerStr}Share Price | Unlisted Pre-IPO Shares – Unlisted Pond`,
-      description: `Track indicative ${name} unlisted share price (${priceStr}), lot size, financial metrics, and sector details${sectorStr} on Unlisted Pond. Secure off-market Demat transfer.`,
+      title: {
+        absolute: `${name} ${tickerStr}Share Price & Pre-IPO Details | Unlisted Pond`,
+      },
+      description: `Explore ${name} unlisted share price (${priceStr}), financial metrics, valuation, sector insights${sectorStr}, and company profile on Unlisted Pond.`,
       keywords: [
         `${name} share price`,
         `${name} unlisted share price`,
@@ -113,8 +117,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
         locale: 'en_IN',
         url: `https://www.unlistedpond.com/shares/${params.slug}`,
         siteName: 'Unlisted Pond',
-        title: `${name} ${tickerStr}Share Price | Unlisted Pre-IPO Shares – Unlisted Pond`,
-        description: `Track indicative ${name} unlisted share price (${priceStr}), lot size, financial metrics, and sector details${sectorStr} on Unlisted Pond.`,
+        title: `${name} ${tickerStr}Share Price & Pre-IPO Details | Unlisted Pond`,
+        description: `Explore ${name} unlisted share price (${priceStr}), financial metrics, valuation, sector insights${sectorStr}, and company profile on Unlisted Pond.`,
         images: [
           {
             url: 'https://www.unlistedpond.com/icon-192.png',
@@ -126,8 +130,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       },
       twitter: {
         card: 'summary_large_image',
-        title: `${name} ${tickerStr}Share Price | Unlisted Pre-IPO Shares – Unlisted Pond`,
-        description: `Track indicative ${name} unlisted share price (${priceStr}), lot size, financial metrics, and sector details on Unlisted Pond.`,
+        title: `${name} ${tickerStr}Share Price & Pre-IPO Details | Unlisted Pond`,
+        description: `Explore ${name} unlisted share price (${priceStr}), financial metrics, valuation, sector insights, and company profile on Unlisted Pond.`,
       },
     };
   } catch {
@@ -203,30 +207,6 @@ export default async function StockDetailPage({ params }: PageProps) {
           addressLocality: 'Mumbai',
           addressRegion: 'Maharashtra',
           addressCountry: 'IN',
-        },
-      },
-      {
-        '@context': 'https://schema.org',
-        '@type': 'FinancialProduct',
-        '@id': 'https://www.unlistedpond.com/shares/msei#product',
-        name: 'Metropolitan Stock Exchange (MSEI) Unlisted Shares',
-        alternateName: 'MSEI Unlisted Shares',
-        description:
-          'Indicative unlisted equity shares of Metropolitan Stock Exchange of India Limited (MSEI). Available for verified off-market Demat transfer via CDSL and NSDL.',
-        category: 'Unlisted Equity Shares',
-        provider: {
-          '@type': 'Organization',
-          name: 'Unlisted Pond',
-          url: 'https://www.unlistedpond.com',
-        },
-        offers: {
-          '@type': 'AggregateOffer',
-          priceCurrency: 'INR',
-          lowPrice: '5.45',
-          highPrice: '7.75',
-          price: '6.95',
-          priceValidUntil: '2027-12-31',
-          availability: 'https://schema.org/InStock',
         },
       },
       {
@@ -357,28 +337,6 @@ export default async function StockDetailPage({ params }: PageProps) {
       name,
       ...(stock?.ticker ? { tickerSymbol: stock.ticker } : {}),
       ...(stock?.cin ? { identifier: stock.cin } : {}),
-    },
-    {
-      '@context': 'https://schema.org',
-      '@type': 'FinancialProduct',
-      name: `${name} Unlisted Shares`,
-      description: `Indicative unlisted equity shares of ${name}. Available for verified off-market Demat transfer via CDSL and NSDL.`,
-      category: 'Unlisted Equity Shares',
-      provider: {
-        '@type': 'Organization',
-        name: 'Unlisted Pond',
-        url: 'https://www.unlistedpond.com',
-      },
-      ...(price > 0
-        ? {
-            offers: {
-              '@type': 'Offer',
-              priceCurrency: 'INR',
-              price: String(price),
-              availability: 'https://schema.org/InStock',
-            },
-          }
-        : {}),
     },
     {
       '@context': 'https://schema.org',

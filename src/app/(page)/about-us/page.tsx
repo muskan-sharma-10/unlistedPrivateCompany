@@ -15,7 +15,9 @@ import FutureDirection from '@/components/about/future-direction';
 import AboutCTA from '@/components/about/about-cta';
 
 export const metadata: Metadata = {
-  title: 'About Us | Unlisted Pond — India’s Private Market Intelligence Platform',
+  title: {
+    absolute: 'About Us | Unlisted Pond — India’s Private Market Intelligence Platform',
+  },
   description:
     'Discover Unlisted Pond: India’s dedicated research, discovery, and information platform for unlisted shares, pre-IPO enterprises, DRHP tracking, and ESOP equity.',
   alternates: {

@@ -2,7 +2,9 @@ import type { Metadata } from 'next';
 import BlogsClient from '@/components/blogs/blogs-client';
 
 export const metadata: Metadata = {
-  title: 'Unlisted Share Market Guides & Insights | Unlisted Pond',
+  title: {
+    absolute: 'Unlisted Share Market Guides & Insights | Unlisted Pond',
+  },
   description:
     'Comprehensive guides, SEBI regulatory updates, capital gains tax explainers, and valuation frameworks for unlisted shares and pre-IPO investing in India.',
   keywords: [

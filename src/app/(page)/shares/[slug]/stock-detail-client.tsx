@@ -376,7 +376,11 @@ export default function StockDetailClient({ params }: StockDetailClientProps) {
               {stock.logo ? (
                 <img
                   src={stock.logo}
-                  alt={isMsei ? 'Metropolitan Stock Exchange MSEI unlisted share logo' : `${stock.name} logo`}
+                  alt={isMsei ? 'Metropolitan Stock Exchange MSEI unlisted share logo - Unlisted Pond' : `${stock.name} logo - Unlisted Shares India`}
+                  loading="lazy"
+                  decoding="async"
+                  width={64}
+                  height={64}
                   className="w-full h-full object-contain"
                 />
               ) : (
@@ -386,7 +390,7 @@ export default function StockDetailClient({ params }: StockDetailClientProps) {
             <div>
               <div className="flex flex-wrap items-center gap-2 mb-1">
                 <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-slate-900 tracking-tight">
-                  {isMsei ? 'Metropolitan Stock Exchange (MSEI) Unlisted Share Price' : stock.name}
+                  {isMsei ? 'Metropolitan Stock Exchange (MSEI) Unlisted Share Price' : `${stock.name} Unlisted Share Price`}
                 </h1>
                 <span className="text-xs font-semibold px-2 py-0.5 rounded-md bg-blue-50 text-blue-700 border border-blue-100">
                   {stock.category}

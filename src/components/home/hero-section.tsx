@@ -175,12 +175,16 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 
             {/* Display Headline with Rotating Words */}
             <h1 className="text-[26px] xs:text-3xl sm:text-5xl lg:text-[54px] font-bold tracking-tight text-white leading-[1.18] sm:leading-[1.15]">
-              India&apos;s trusted platform for{' '}
-              <br className="hidden sm:inline" />
-              <span className="text-blue-400 inline-block transition-opacity duration-300">
+              Discover Unlisted Shares &amp; Pre-IPO Investment Opportunities in India
+            </h1>
+
+            {/* Rotating intelligence banner */}
+            <div className="flex items-center gap-2 text-sm sm:text-base text-blue-400 font-medium">
+              <span className="text-slate-400">Institutional intelligence for</span>
+              <span className="font-semibold text-blue-400 transition-opacity duration-300">
                 {ROTATING_WORDS[wordIndex]}
               </span>
-            </h1>
+            </div>
 
             {/* Lede copy */}
             <p className="text-sm sm:text-base lg:text-lg text-slate-300 max-w-[34em] font-normal leading-relaxed">
@@ -317,7 +321,15 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                       <div className="flex items-center gap-2.5 sm:gap-3.5 min-w-0 flex-1">
                         <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg bg-slate-100 border border-slate-200 flex items-center justify-center font-semibold text-blue-600 text-xs shrink-0 overflow-hidden">
                           {stock.logo ? (
-                            <img src={stock.logo} alt={stock.name} className="w-full h-full object-contain p-1" />
+                            <img
+                              src={stock.logo}
+                              alt={`${stock.name} logo - Unlisted Shares India`}
+                              loading="lazy"
+                              decoding="async"
+                              width={40}
+                              height={40}
+                              className="w-full h-full object-contain p-1"
+                            />
                           ) : (
                             <span>{stock.name.slice(0, 2).toUpperCase()}</span>
                           )}

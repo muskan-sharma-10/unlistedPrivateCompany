@@ -2,7 +2,9 @@ import type { Metadata } from 'next';
 import ContactClient from '@/components/contact/contact-client';
 
 export const metadata: Metadata = {
-  title: 'Contact Institutional Dealing Desk | Unlisted Pond',
+  title: {
+    absolute: 'Contact Institutional Dealing Desk | Unlisted Pond',
+  },
   description:
     'Contact the Unlisted Pond institutional dealing desk to inquire about unlisted share prices, confirm lot availability, sell ESOPs, or visit our Connaught Place, New Delhi office.',
   keywords: [

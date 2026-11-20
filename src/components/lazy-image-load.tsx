@@ -26,6 +26,6 @@ export default function LazyImage(props: ImageProps) {
   }, []);
 
   return (
-    <Image ref={imgRef} {...props} fill sizes="(max-width: 1900px) 100vw" className={`image ${props.className || ""}`} alt="" />
+    <Image ref={imgRef} {...props} fill sizes="(max-width: 1900px) 100vw" className={`image ${props.className || ""}`} alt={props.alt || "Unlisted Pond"} />
   );
 }

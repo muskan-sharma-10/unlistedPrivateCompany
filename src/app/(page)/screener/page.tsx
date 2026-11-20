@@ -2,7 +2,9 @@ import type { Metadata } from 'next';
 import ScreenerClient from '@/components/screener/screener-client';
 
 export const metadata: Metadata = {
-  title: 'Unlisted Company Screener | Filter Private Companies & Shares – Unlisted Pond',
+  title: {
+    absolute: 'Unlisted Company Screener | Filter Private Companies & Shares – Unlisted Pond',
+  },
   description:
     'Use our interactive unlisted company screener to filter pre-IPO stocks and unlisted shares by sector, price range, and valuation in India.',
   keywords: [

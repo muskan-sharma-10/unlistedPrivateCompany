@@ -2,7 +2,9 @@ import type { Metadata } from 'next';
 import SharesListingClient from '@/components/shares/shares-listing-client';
 
 export const metadata: Metadata = {
-  title: 'Buy Unlisted Shares in India | Latest Unlisted Share Prices – Unlisted Pond',
+  title: {
+    absolute: 'Buy Unlisted Shares in India | Latest Unlisted Share Prices – Unlisted Pond',
+  },
   description:
     'Explore and enquire to buy unlisted shares and pre-IPO stocks in India. Check latest indicative unlisted share prices, lot sizes, valuations, and company financials on Unlisted Pond.',
   keywords: [

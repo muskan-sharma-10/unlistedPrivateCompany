@@ -16,11 +16,47 @@ import Navbar from '@/components/header/navbar';
 import Footer from '@/components/footer';
 
 export const metadata: Metadata = {
-  title: 'Terms of Information & Platform Usage | Unlisted Pond',
+  title: {
+    absolute: 'Terms of Information & Platform Usage | Unlisted Pond',
+  },
   description:
     'Terms and conditions governing the access, research, inquiry routing, and informational usage of the Unlisted Pond private market portal.',
   alternates: {
     canonical: 'https://www.unlistedpond.com/terms-of-information',
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
+  openGraph: {
+    type: 'website',
+    locale: 'en_IN',
+    url: 'https://www.unlistedpond.com/terms-of-information',
+    siteName: 'Unlisted Pond',
+    title: 'Terms of Information & Platform Usage | Unlisted Pond',
+    description:
+      'Terms and conditions governing the access, research, inquiry routing, and informational usage of the Unlisted Pond private market portal.',
+    images: [
+      {
+        url: 'https://www.unlistedpond.com/icon-192.png',
+        width: 192,
+        height: 192,
+        alt: 'Terms of Information – Unlisted Pond',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Terms of Information & Platform Usage | Unlisted Pond',
+    description:
+      'Terms and conditions governing access and informational usage of the Unlisted Pond portal.',
   },
 };
 

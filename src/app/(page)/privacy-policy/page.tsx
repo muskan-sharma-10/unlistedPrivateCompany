@@ -18,11 +18,47 @@ import Navbar from '@/components/header/navbar';
 import Footer from '@/components/footer';
 
 export const metadata: Metadata = {
-  title: 'Privacy Policy & Data Security Commitment | Unlisted Pond',
+  title: {
+    absolute: 'Privacy Policy & Data Security Commitment | Unlisted Pond',
+  },
   description:
     'Our commitment to privacy, investor data security, encryption standards, and responsible information handling at Unlisted Pond under Indian IT laws.',
   alternates: {
     canonical: 'https://www.unlistedpond.com/privacy-policy',
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
+  openGraph: {
+    type: 'website',
+    locale: 'en_IN',
+    url: 'https://www.unlistedpond.com/privacy-policy',
+    siteName: 'Unlisted Pond',
+    title: 'Privacy Policy & Data Security Commitment | Unlisted Pond',
+    description:
+      'Our commitment to privacy, investor data security, encryption standards, and responsible information handling at Unlisted Pond under Indian IT laws.',
+    images: [
+      {
+        url: 'https://www.unlistedpond.com/icon-192.png',
+        width: 192,
+        height: 192,
+        alt: 'Privacy Policy – Unlisted Pond',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Privacy Policy & Data Security Commitment | Unlisted Pond',
+    description:
+      'Our commitment to privacy, investor data security, encryption standards, and responsible information handling at Unlisted Pond.',
   },
 };
 

@@ -2,7 +2,9 @@ import type { Metadata } from 'next';
 import SectorsClient from '@/components/sectors/sectors-client';
 
 export const metadata: Metadata = {
-  title: 'Unlisted Companies by Sector | Private Shares Directory – Unlisted Pond',
+  title: {
+    absolute: 'Unlisted Companies by Sector | Private Shares Directory – Unlisted Pond',
+  },
   description:
     'Explore unlisted companies in India categorized by sector. Discover private equities and pre-IPO opportunities across financial services, technology, renewable energy, and more.',
   keywords: [

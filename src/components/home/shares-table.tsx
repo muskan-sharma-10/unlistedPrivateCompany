@@ -158,7 +158,11 @@ export const SharesTable: React.FC<SharesTableProps> = ({
               {stock.logo ? (
                 <img
                   src={stock.logo}
-                  alt={stock.name}
+                  alt={`${stock.name} logo - Unlisted Shares India`}
+                  loading="lazy"
+                  decoding="async"
+                  width={44}
+                  height={44}
                   className="w-full h-full object-contain"
                 />
               ) : (

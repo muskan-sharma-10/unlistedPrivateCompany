@@ -125,7 +125,7 @@ export default function ContactClient() {
               <span>Institutional Dealing Desk · New Delhi Corporate Office</span>
             </div>
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-white leading-tight">
-              Connect with Private Market
+              Contact Our Institutional Dealing Desk
             </h1>
             <p className="text-sm sm:text-base text-slate-300 font-normal leading-relaxed">
               Reach out to our relationship managers to verify indicative price quotes, check lot allocations, sell vested ESOP holdings, or explore corporate partnerships.

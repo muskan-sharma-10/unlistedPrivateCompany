@@ -382,7 +382,15 @@ export default function ScreenerClient() {
                     <div className="flex items-start justify-between">
                       <div className="w-10 h-10 rounded-lg bg-slate-100 border border-slate-200 text-blue-700 flex items-center justify-center font-bold text-xs shrink-0 group-hover:border-blue-400 transition-colors">
                         {stock.logo ? (
-                          <img src={stock.logo} alt={stock.name} className="w-full h-full object-contain p-1 rounded-lg" />
+                          <img
+                            src={stock.logo}
+                            alt={`${stock.name} logo - Unlisted Shares India`}
+                            loading="lazy"
+                            decoding="async"
+                            width={40}
+                            height={40}
+                            className="w-full h-full object-contain p-1 rounded-lg"
+                          />
                         ) : (
                           <span>{stock.name.slice(0, 2).toUpperCase()}</span>
                         )}

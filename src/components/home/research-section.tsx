@@ -161,7 +161,9 @@ export const ResearchSection: React.FC = () => {
                 <div className="h-44 bg-slate-100 overflow-hidden relative">
                   <img
                     src={item.image}
-                    alt={item.title}
+                    alt={`${item.title} - Unlisted Shares Research Report`}
+                    loading="lazy"
+                    decoding="async"
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                   />
                 </div>

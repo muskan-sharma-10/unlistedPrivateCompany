@@ -20,11 +20,47 @@ import Navbar from '@/components/header/navbar';
 import Footer from '@/components/footer';
 
 export const metadata: Metadata = {
-  title: 'SEBI Compliance & Regulatory Framework | Unlisted Pond',
+  title: {
+    absolute: 'SEBI Compliance & Regulatory Framework | Unlisted Pond',
+  },
   description:
     'Comprehensive statutory disclosure regarding SEBI regulatory status, platform role as an information intermediary, OTC settlement standards, and compliance policies at Unlisted Pond.',
   alternates: {
     canonical: 'https://www.unlistedpond.com/sebi-compliance',
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
+  openGraph: {
+    type: 'website',
+    locale: 'en_IN',
+    url: 'https://www.unlistedpond.com/sebi-compliance',
+    siteName: 'Unlisted Pond',
+    title: 'SEBI Compliance & Regulatory Framework | Unlisted Pond',
+    description:
+      'Comprehensive statutory disclosure regarding SEBI regulatory status, platform role as an information intermediary, OTC settlement standards, and compliance policies at Unlisted Pond.',
+    images: [
+      {
+        url: 'https://www.unlistedpond.com/icon-192.png',
+        width: 192,
+        height: 192,
+        alt: 'SEBI Compliance Framework – Unlisted Pond',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'SEBI Compliance & Regulatory Framework | Unlisted Pond',
+    description:
+      'Comprehensive statutory disclosure regarding SEBI regulatory status and platform compliance policies at Unlisted Pond.',
   },
 };
 

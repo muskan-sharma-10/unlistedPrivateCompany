@@ -3,21 +3,24 @@ import HomePageClient from '@/components/home/home-page-client';
 import { HOME_FAQS } from '@/data/home-faqs';
 
 export const metadata: Metadata = {
-  title: 'Unlisted Shares in India | Buy & Explore Pre-IPO Shares – Unlisted Pond',
+  title: {
+    absolute: 'Unlisted Shares in India | Buy & Sell Pre-IPO Shares – Unlisted Pond',
+  },
   description:
-    'Explore unlisted shares in India with Unlisted Pond. Discover private companies, pre-IPO shares, indicative share prices and company information.',
+    'Explore unlisted shares and pre-IPO investment opportunities in India with Unlisted Pond. Discover company profiles, indicative share prices and market insights.',
   keywords: [
-    'Unlisted Shares India',
     'Unlisted Shares',
-    'Unlisted Market',
-    'Private Share Trading',
+    'Unlisted Shares in India',
     'Buy Unlisted Shares',
-    'Buy Shares of Private Company',
-    'Buy Shares of Unlisted Company',
+    'Sell Unlisted Shares',
     'Unlisted Share Price',
-    'Pre IPO Shares India',
-    'Unlisted Company Shares',
-    'Private Company Shares',
+    'Pre IPO Shares',
+    'Private Share Trading',
+    'Buy Shares of Private Companies',
+    'Unlisted Share Market',
+    'ESOP Shares',
+    'DRHP Filed Companies',
+    'Unlisted Pond',
   ],
   alternates: {
     canonical: 'https://www.unlistedpond.com/',
@@ -38,23 +41,23 @@ export const metadata: Metadata = {
     locale: 'en_IN',
     url: 'https://www.unlistedpond.com/',
     siteName: 'Unlisted Pond',
-    title: 'Unlisted Shares in India | Buy & Explore Pre-IPO Shares – Unlisted Pond',
+    title: 'Unlisted Shares in India | Buy & Sell Pre-IPO Shares – Unlisted Pond',
     description:
-      'Explore unlisted shares in India with Unlisted Pond. Discover private companies, pre-IPO shares, indicative share prices and company information.',
+      'Explore unlisted shares and pre-IPO investment opportunities in India with Unlisted Pond. Discover company profiles, indicative share prices and market insights.',
     images: [
       {
         url: 'https://www.unlistedpond.com/icon-192.png',
         width: 192,
         height: 192,
-        alt: 'Unlisted Pond – Unlisted & Pre-IPO Shares in India',
+        alt: 'Unlisted Pond – Unlisted Shares & Pre-IPO Shares in India',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Unlisted Shares in India | Buy & Explore Pre-IPO Shares – Unlisted Pond',
+    title: 'Unlisted Shares in India | Buy & Sell Pre-IPO Shares – Unlisted Pond',
     description:
-      'Explore unlisted shares in India with Unlisted Pond. Discover private companies, pre-IPO shares, indicative share prices and company information.',
+      'Explore unlisted shares and pre-IPO investment opportunities in India with Unlisted Pond. Discover company profiles, indicative share prices and market insights.',
     images: ['https://www.unlistedpond.com/icon-192.png'],
   },
 };

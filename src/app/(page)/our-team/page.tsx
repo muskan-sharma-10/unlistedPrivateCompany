@@ -9,7 +9,9 @@ import ExpertiseSection from '@/components/team/expertise-section';
 import TeamCTA from '@/components/team/team-cta';
 
 export const metadata: Metadata = {
-  title: 'Our Founders | The People Behind Unlisted Pond',
+  title: {
+    absolute: 'Our Founders | The People Behind Unlisted Pond',
+  },
   description:
     'Meet the founders behind Unlisted Pond. Experienced professionals bringing specialized expertise to corporate finance, debt restructuring, borrowing advisory, and strategic business growth.',
   alternates: {

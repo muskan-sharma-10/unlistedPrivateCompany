@@ -383,7 +383,15 @@ function AllSharesContent() {
                           <Link href={`/shares/${stock.id}`} className="flex items-center space-x-3">
                             <div className="w-9 h-9 rounded-lg bg-slate-100 border border-slate-200 text-blue-700 flex items-center justify-center font-bold text-xs shrink-0 group-hover:border-blue-400 transition-colors">
                               {stock.logo ? (
-                                <img src={stock.logo} alt={stock.name} className="w-full h-full object-contain p-1 rounded-lg" />
+                                <img
+                                  src={stock.logo}
+                                  alt={`${stock.name} logo - Unlisted Shares India`}
+                                  loading="lazy"
+                                  decoding="async"
+                                  width={36}
+                                  height={36}
+                                  className="w-full h-full object-contain p-1 rounded-lg"
+                                />
                               ) : (
                                 <span>{stock.name.slice(0, 2).toUpperCase()}</span>
                               )}
